@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Hero from './components/Hero/Hero';
 import Reveal from './components/Reveal/Reveal';
+import StaggerGrid from './components/StaggerGrid/StaggerGrid';
+import AnimatedCard, { AnimatedIcon } from './components/AnimatedCard/AnimatedCard';
+import GlowCallout from './components/GlowCallout/GlowCallout';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
-import {
-  fadeUp,
-  fadeIn,
-  scaleFade,
-  staggerContainer,
-  reducedMotionVariants,
-} from './lib/animations';
+import { fadeIn, scaleFade, reducedMotionVariants } from './lib/animations';
 
 const MotionDiv = motion.div;
-const MotionSpan = motion.span;
-const MotionH1 = motion.h1;
-const MotionP = motion.p;
 
 const questions = [
   { text: 'تحب تحل الألغاز والمشاكل المنطقية؟', points: 25 },
@@ -49,9 +44,69 @@ const courses = [
   },
 ];
 
+const myths = [
+  {
+    myth: 'هندسة البرمجيات هي فقط تصليح كمبيوترات وتنزيل فورمات!',
+    fact: 'الفرع يعلمك تحليل المشاكل وبناء أنظمة برمجية كاملة، قواعد بيانات، ومواقع وتطبيقات ذكية.',
+  },
+  {
+    myth: 'لازم تكون عبقري بالرياضيات لتنجح بالبرمجة.',
+    fact: 'التفكير المنطقي وتسلسل الخطوات (Algorithms) أهم بكثير من تعقيدات الرياضيات العالية.',
+  },
+  {
+    myth: 'هندسة البرمجيات فقط كتابة أكواد',
+    fact: 'التخصص مليء بكل أنواع المفاهيم البرمجية والتحليلية، مثل تحليل البيانات، هندسة الأنظمة، وإدارة المشاريع.',
+  },
+  {
+    myth: 'الـ AI سيستبدل التخصص',
+    fact: 'الذكاء الاصطناعي يستبدل المبرمجين وليس مهندسي البرمجيات؛ لأن الهندسة تعتمد على فهم المشكلات وتصميم الأنظمة وحل العقبات المعقدة.',
+  },
+];
+
+const stackRoles = [
+  {
+    icon: '🎨',
+    title: 'الواجهة (Frontend)',
+    titleClass: 'text-sky-400',
+    borderClass: 'border-sky-500/30',
+    body: 'هو كل شيء بشوفه المستخدم وبيتفاعل معه بعيونه: الأزرار، الألوان، القوائم، والأشكال.',
+    calloutClass: 'bg-sky-950/40 border-sky-900/30 text-sky-200',
+    callout: (
+      <>
+        🍔 <strong>مثال المطعم:</strong> طاولة الطعام، قائمة الوجبات (المنيو)، والديكور اللي بتجلس فيه.
+      </>
+    ),
+  },
+  {
+    icon: '⚙️',
+    title: 'الخلفية (Backend)',
+    titleClass: 'text-purple-400',
+    borderClass: 'border-purple-500/30',
+    body: 'هو العقل الخفي والمحرك! بيحفظ معلوماتك، بيتأكد من كلمة السر، وبيجيب البيانات من قعدة البيانات.',
+    calloutClass: 'bg-purple-950/40 border-purple-900/30 text-purple-200',
+    callout: (
+      <>
+        👨‍🍳 <strong>مثال المطعم:</strong> المطبخ والطباخين اللي بيحضروا الأكل ورائهم المخزن بدون ما تشوفهم.
+      </>
+    ),
+  },
+  {
+    icon: '🚀',
+    title: 'الفول ستاك (Full-Stack)',
+    titleClass: 'text-amber-400',
+    borderClass: 'border-amber-500/30',
+    body: 'مهندس البرمجيات الشامل اللي بيقدر يبني الشاشة (Frontend) والمحرك الخفي (Backend) مع بعض!',
+    calloutClass: 'bg-amber-950/40 border-amber-900/30 text-amber-200',
+    callout: (
+      <>
+        ⭐ <strong>النتيجة:</strong> شخص قادر يصمم المطعم بأكمله ويعرف يديره من الطاولة حتى المطبخ!
+      </>
+    ),
+  },
+];
+
 export default function SoftwareEngApp() {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const variants = prefersReducedMotion ? reducedMotionVariants : fadeUp;
   const enterVariants = prefersReducedMotion ? reducedMotionVariants : fadeIn;
   const modalVariants = prefersReducedMotion ? reducedMotionVariants : scaleFade;
 
@@ -123,39 +178,7 @@ export default function SoftwareEngApp() {
       className="min-h-screen w-full bg-gradient-to-b from-violet-950 via-violet-950 to-violet-950 text-slate-100 font-sans flex flex-col justify-between overflow-x-hidden relative"
       dir="rtl"
     >
-      <header className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none" />
-
-        <MotionDiv
-          className="max-w-7xl mx-auto relative"
-          initial="hidden"
-          animate="visible"
-          variants={prefersReducedMotion ? reducedMotionVariants : staggerContainer}
-        >
-          <MotionSpan
-            variants={variants}
-            className="bg-violet-900/50 text-violet-300 text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-violet-500/20 inline-block mb-4 backdrop-blur-md"
-          >
-            جامعة اللاذقية - قسم البرمجيات
-          </MotionSpan>
-
-          <MotionH1
-            variants={variants}
-            className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 tracking-tight text-white drop-shadow-md"
-          >
-            اكتشف عالم <span className="text-violet-400">هندسة البرمجيات</span>
-          </MotionH1>
-
-          <MotionP
-            variants={variants}
-            className="text-slate-300/80 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
-          >
-            أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
-          </MotionP>
-        </MotionDiv>
-
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
-      </header>
+      <Hero />
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 space-y-12 md:space-y-16">
         <Reveal className="transition duration-300 ease-in-out hover:scale-[1.01] hover:bg-violet-900/40 bg-slate-900/60 p-6 md:p-8 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-xl space-y-4 motion-reduce:hover:scale-100">
@@ -169,78 +192,49 @@ export default function SoftwareEngApp() {
           </section>
         </Reveal>
 
-        <Reveal className="space-y-4 md:space-y-6">
-          <section className="space-y-4 md:space-y-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-violet-200">
-            ❓ حقيقة أم خرافة عن التخصص؟
-          </h2>
+        <section className="space-y-4 md:space-y-6">
+          <Reveal>
+            <h2 className="text-xl sm:text-2xl font-bold text-violet-200">
+              ❓ حقيقة أم خرافة عن التخصص؟
+            </h2>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div className="transform transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg">
-              <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
-              <p className="text-slate-200 mt-1 text-sm sm:text-base">
-                &quot;هندسة البرمجيات هي فقط تصليح كمبيوترات وتنزيل فورمات!&quot;
-              </p>
-              <span className="text-emerald-400 font-bold text-sm mt-3 block">✔ الحقيقة:</span>
-              <p className="text-slate-400 text-xs sm:text-sm">
-                الفرع يعلمك تحليل المشاكل وبناء أنظمة برمجية كاملة، قواعد بيانات، ومواقع وتطبيقات ذكية.
-              </p>
-            </div>
-            <div className="transform transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg">
-              <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
-              <p className="text-slate-200 mt-1 text-sm sm:text-base">
-                &quot;لازم تكون عبقري بالرياضيات لتنجح بالبرمجة.&quot;
-              </p>
-              <span className="text-emerald-400 font-bold text-sm mt-3 block">✔ الحقيقة:</span>
-              <p className="text-slate-400 text-xs sm:text-sm">
-                التفكير المنطقي وتسلسل الخطوات (Algorithms) أهم بكثير من تعقيدات الرياضيات العالية.
-              </p>
-            </div>
-            <div className="transform transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg">
-              <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
-              <p className="text-slate-200 mt-1 text-sm sm:text-base">
-                &quot;هندسة البرمجيات فقط كتابة أكواد&quot;
-              </p>
-              <span className="text-emerald-400 font-bold text-sm mt-3 block">✔ الحقيقة:</span>
-              <p className="text-slate-400 text-xs sm:text-sm">
-                التخصص مليء بكل أنواع المفاهيم البرمجية والتحليلية، مثل تحليل البيانات، هندسة الأنظمة، وإدارة المشاريع.
-              </p>
-            </div>
-            <div className="transform transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg">
-              <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
-              <p className="text-slate-200 mt-1 text-sm sm:text-base">
-                &quot;الـ AI سيستبدل التخصص&quot;
-              </p>
-              <span className="text-emerald-400 font-bold text-sm mt-3 block">✔ الحقيقة:</span>
-              <p className="text-slate-400 text-xs sm:text-sm">
-                الذكاء الاصطناعي يستبدل المبرمجين وليس مهندسي البرمجيات؛ لأن الهندسة تعتمد على فهم المشكلات وتصميم الأنظمة وحل العقبات المعقدة.
-              </p>
-            </div>
+            {myths.map((item) => (
+              <Reveal
+                key={item.myth}
+                className="bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg"
+              >
+                <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
+                <p className="text-slate-200 mt-1 text-sm sm:text-base">
+                  &quot;{item.myth}&quot;
+                </p>
+                <span className="text-emerald-400 font-bold text-sm mt-3 block">✔ الحقيقة:</span>
+                <p className="text-slate-400 text-xs sm:text-sm">{item.fact}</p>
+              </Reveal>
+            ))}
           </div>
-          </section>
-        </Reveal>
+        </section>
 
-        <Reveal className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+        <section className="space-y-6">
+          <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <h2 className="text-xl sm:text-2xl font-bold text-violet-200 flex items-center gap-2">
               📚 أهم 3 مواد ستدرسها بالفرع
             </h2>
             <span className="text-xs text-violet-400 font-medium">
               ✨ اضغط على المادة لقراءة الشرح المبسط
             </span>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {courses.map((course) => (
-              <button
+              <AnimatedCard
                 key={course.id}
-                type="button"
+                as="button"
                 onClick={() => setSelectedCourse(course)}
-                className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm transition duration-300 hover:border-violet-500 hover:bg-slate-900/90 hover:-translate-y-1 shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] motion-reduce:hover:transform-none"
+                className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] hover:border-violet-500 hover:bg-slate-900/90"
               >
                 <div>
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition duration-300 inline-block motion-reduce:group-hover:scale-100">
-                    {course.icon}
-                  </div>
+                  <AnimatedIcon className="text-4xl mb-4">{course.icon}</AnimatedIcon>
                   <h3 className="font-bold text-violet-300 text-lg mb-2 group-hover:text-violet-200">
                     {course.name}
                   </h3>
@@ -248,13 +242,13 @@ export default function SoftwareEngApp() {
                     {course.desc}
                   </p>
                 </div>
-                <div className="text-violet-400 text-xs font-semibold flex items-center gap-1 group-hover:translate-x-1 transition duration-300 pt-2 border-t border-violet-900/40 motion-reduce:group-hover:transform-none">
+                <div className="text-violet-400 text-xs font-semibold flex items-center gap-1 pt-2 border-t border-violet-900/40">
                   انقر للتوضيح المبسط ←
                 </div>
-              </button>
+              </AnimatedCard>
             ))}
-          </div>
-        </Reveal>
+          </StaggerGrid>
+        </section>
 
         <Reveal className="bg-slate-900/60 p-6 md:p-8 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-xl space-y-6">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -266,46 +260,27 @@ export default function SoftwareEngApp() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div className="bg-slate-950/70 p-5 rounded-xl border border-sky-500/30 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🎨</span>
-                <h3 className="font-bold text-sky-400 text-base sm:text-lg">الواجهة (Frontend)</h3>
-              </div>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                هو كل شيء بشوفه المستخدم وبيتفاعل معه بعيونه: الأزرار، الألوان، القوائم، والأشكال.
-              </p>
-              <div className="bg-sky-950/40 p-2.5 rounded-lg border border-sky-900/30 text-xs text-sky-200">
-                🍔 <strong>مثال المطعم:</strong> طاولة الطعام، قائمة الوجبات (المنيو)، والديكور اللي بتجلس فيه.
-              </div>
-            </div>
-
-            <div className="bg-slate-950/70 p-5 rounded-xl border border-purple-500/30 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">⚙️</span>
-                <h3 className="font-bold text-purple-400 text-base sm:text-lg">الخلفية (Backend)</h3>
-              </div>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                هو العقل الخفي والمحرك! بيحفظ معلوماتك، بيتأكد من كلمة السر، وبيجيب البيانات من قعدة البيانات.
-              </p>
-              <div className="bg-purple-950/40 p-2.5 rounded-lg border border-purple-900/30 text-xs text-purple-200">
-                👨‍🍳 <strong>مثال المطعم:</strong> المطبخ والطباخين اللي بيحضروا الأكل ورائهم المخزن بدون ما تشوفهم.
-              </div>
-            </div>
-
-            <div className="bg-slate-950/70 p-5 rounded-xl border border-amber-500/30 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🚀</span>
-                <h3 className="font-bold text-amber-400 text-base sm:text-lg">الفول ستاك (Full-Stack)</h3>
-              </div>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                مهندس البرمجيات الشامل اللي بيقدر يبني الشاشة (Frontend) والمحرك الخفي (Backend) مع بعض!
-              </p>
-              <div className="bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/30 text-xs text-amber-200">
-                ⭐ <strong>النتيجة:</strong> شخص قادر يصمم المطعم بأكمله ويعرف يديره من الطاولة حتى المطبخ!
-              </div>
-            </div>
-          </div>
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {stackRoles.map((role) => (
+              <AnimatedCard
+                key={role.title}
+                className={`bg-slate-950/70 p-5 rounded-xl border ${role.borderClass} space-y-3`}
+              >
+                <div className="flex items-center gap-2">
+                  <AnimatedIcon className="text-2xl">{role.icon}</AnimatedIcon>
+                  <h3 className={`font-bold ${role.titleClass} text-base sm:text-lg`}>
+                    {role.title}
+                  </h3>
+                </div>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{role.body}</p>
+                <GlowCallout
+                  className={`${role.calloutClass} p-2.5 rounded-lg border text-xs`}
+                >
+                  {role.callout}
+                </GlowCallout>
+              </AnimatedCard>
+            ))}
+          </StaggerGrid>
         </Reveal>
 
         <Reveal className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
@@ -325,7 +300,10 @@ export default function SoftwareEngApp() {
                 </button>
               </div>
 
-              <div className="bg-slate-950 p-4 rounded-lg font-mono text-xs sm:text-sm border border-violet-950 text-slate-300 overflow-x-auto text-left" dir="ltr">
+              <div
+                className="bg-slate-950 p-4 rounded-lg font-mono text-xs sm:text-sm border border-violet-950 text-slate-300 overflow-x-auto text-left"
+                dir="ltr"
+              >
                 <p className="text-slate-500">// C++ / JavaScript Code Example</p>
                 <p>
                   <span className="text-purple-400">console</span>.
