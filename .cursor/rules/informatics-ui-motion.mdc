@@ -1,0 +1,21 @@
+---
+description: Mobile-first responsiveness and animation conventions for the Faculty site
+alwaysApply: true
+---
+
+# Responsiveness & Motion
+
+## Responsiveness (non-negotiable)
+
+- Mobile-first. Verify every component at ~375px, ~768px, and ~1280px before done.
+- Prefer `clamp()` / flex / grid over fixed pixel widths.
+- No horizontal scroll at any breakpoint unless explicitly intended (e.g. carousel).
+- Touch targets ≥ 44px on mobile.
+
+## Animation
+
+- Use `motion` (framer-motion), `lenis` for smooth scroll, `react-intersection-observer` for scroll reveals.
+- Shared animation variants live only in `src/lib/animations.js` — reuse them; do not hand-roll easing/duration per component.
+- Respect `prefers-reduced-motion` globally (hook or CSS). Never ship motion that ignores it.
+- Entrance animations: 200–400ms. Do not animate form inputs or primary nav in ways that delay interaction.
+- Scroll reveals via `react-intersection-observer`, trigger once per element (no re-animation on scroll up/down) unless asked otherwise.
