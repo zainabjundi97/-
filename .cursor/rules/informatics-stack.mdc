@@ -1,0 +1,12 @@
+---
+description: Stack, language, ESLint, and GitHub Pages constraints for the Faculty site
+alwaysApply: true
+---
+
+# Stack & Deployment
+
+- JavaScript only. Do not add `.ts`/`.tsx` unless explicitly asked. `@types/*` packages are for editor intellisense only.
+- React 19 + Vite 8 (beta). Pin versions carefully; do not auto-upgrade.
+- ESLint uses flat config (`eslint.config.js`). Run `npm run lint` after changes and fix warnings before considering work done.
+- Deploy via `gh-pages`. Keep asset paths relative; check `vite.config.js` `base` before adding routes or assets.
+- Never edit files under `qader_backend/`.
