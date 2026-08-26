@@ -6,11 +6,88 @@ export const duration = {
   fast: 0.2,
   base: 0.3,
   slow: 0.4,
+  count: 0.9,
 };
 
 export const stagger = {
   word: 0.08,
   card: 0.12,
+  type: 0.03,
+};
+
+/** Magnetic CTA pull toward pointer. */
+export const magnetic = {
+  strength: 0.35,
+  spring: { stiffness: 280, damping: 22, mass: 0.5 },
+};
+
+/** Top scroll progress bar. */
+export const progress = {
+  height: 4,
+  spring: { stiffness: 120, damping: 28, mass: 0.4 },
+};
+
+/** Shared layoutId transitions (quiz steps, etc.). */
+export const layoutTransition = {
+  type: 'spring',
+  stiffness: 380,
+  damping: 32,
+  mass: 0.7,
+};
+
+/** Hero pointer parallax (glow vs text move opposite). */
+export const parallax = {
+  glow: 18,
+  text: 8,
+  spring: { stiffness: 160, damping: 22, mass: 0.5 },
+};
+
+/** Quiz high-score celebration. */
+export const celebrate = {
+  scale: [1, 1.12, 1],
+  spring: { type: 'spring', stiffness: 320, damping: 18 },
+  badge: {
+    hidden: { opacity: 0, scale: 0.85, y: 8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: duration.base, ease: EASE_OUT, delay: 0.15 },
+    },
+  },
+};
+
+/** 3D pointer-tilt (Motion useMotionValue pattern). */
+export const tilt = {
+  maxDeg: 10,
+  perspective: 800,
+  spring: { stiffness: 260, damping: 24, mass: 0.6 },
+};
+
+export const typeChar = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: duration.fast * 0.5, ease: EASE_OUT },
+  },
+};
+
+export const typeContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: stagger.type,
+    },
+  },
+};
+
+export const cursorBlink = {
+  opacity: [1, 0, 1],
+  transition: {
+    duration: duration.slow,
+    repeat: Infinity,
+    ease: 'linear',
+  },
 };
 
 export const fadeUp = {
