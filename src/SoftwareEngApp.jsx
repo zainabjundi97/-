@@ -209,10 +209,10 @@ export default function SoftwareEngApp() {
   return (
     <LayoutGroup>
       <div
-        className="min-h-screen w-full bg-gradient-to-b from-violet-950 via-violet-950 to-violet-950 text-slate-100 font-sans flex flex-col justify-between overflow-x-hidden relative"
+        className="w-full flex-1 bg-gradient-to-b from-violet-950 via-violet-950 to-violet-950 text-slate-100 font-sans flex flex-col overflow-x-hidden relative"
         dir="rtl"
       >
-        <Hero />
+        <Hero departmentId="software" />
         <SectionNav />
 
         <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 space-y-12 md:space-y-16">
@@ -534,13 +534,6 @@ export default function SoftwareEngApp() {
             </section>
           </Reveal>
         </main>
-
-        <footer className="w-full py-8 text-center text-slate-400 text-xs sm:text-sm border-t border-violet-950 mt-8 space-y-1">
-          <p className="font-semibold text-violet-200/90">
-            جامعة اللاذقية — قسم هندسة البرمجيات
-          </p>
-          <p>صفحة تعريفية للطلاب © {new Date().getFullYear()}</p>
-        </footer>
 
         <AnimatePresence>
           {selectedCourse && (
