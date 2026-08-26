@@ -1,4 +1,4 @@
-import { Suspense, lazy, useRef } from 'react';
+import { Suspense, lazy, useRef, useEffect } from 'react';
 import {
   motion,
   useMotionValue,
@@ -35,6 +35,7 @@ export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
+  const isScrollingRef = useRef(false);
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.15,
     rootMargin: '50px',
@@ -63,16 +64,99 @@ export default function Hero() {
     ? undefined
     : { delay: subtitleDelay(HEADING_WORDS.length) };
 
+  // #region agent log
+  useEffect(() => {
+    fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
+      body: JSON.stringify({
+        sessionId: '734eaa',
+        runId: 'post-fix',
+        hypothesisId: 'A-D',
+        location: 'Hero.jsx:inView-effect',
+        message: 'inView changed',
+        data: {
+          inView,
+          pointerRef: pointerRef.current,
+          pointerX: pointerX.get(),
+          pointerY: pointerY.get(),
+        },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+
+    if (!inView) {
+      pointerX.set(0);
+      pointerY.set(0);
+      pointerRef.current = { x: 0, y: 0 };
+    }
+  }, [inView, pointerX, pointerY]);
+
+  useEffect(() => {
+    let scrollEndTimer;
+    const onScroll = () => {
+      isScrollingRef.current = true;
+      pointerX.set(0);
+      pointerY.set(0);
+      pointerRef.current = { x: 0, y: 0 };
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 150);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(scrollEndTimer);
+    };
+  }, [pointerX, pointerY]);
+  // #endregion
+
   const onPointerMove = (event) => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !inView || isScrollingRef.current) return;
     const el = headerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    if (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    ) {
+      return;
+    }
+    const rawX = (event.clientX - rect.left) / rect.width - 0.5;
+    const rawY = (event.clientY - rect.top) / rect.height - 0.5;
+    const x = Math.max(-0.5, Math.min(0.5, rawX));
+    const y = Math.max(-0.5, Math.min(0.5, rawY));
     pointerX.set(x);
     pointerY.set(y);
     pointerRef.current = { x, y };
+
+    // #region agent log
+    if (Math.abs(x) > 0.35 || Math.abs(y) > 0.35) {
+      fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
+        body: JSON.stringify({
+          sessionId: '734eaa',
+          runId: 'post-fix',
+          hypothesisId: 'B-C',
+          location: 'Hero.jsx:onPointerMove',
+          message: 'large pointer offset',
+          data: {
+            x,
+            y,
+            inView,
+            rectTop: rect.top,
+            rectHeight: rect.height,
+            clientY: event.clientY,
+          },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+    }
+    // #endregion
   };
 
   const onPointerLeave = () => {

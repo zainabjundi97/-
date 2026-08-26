@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Line, Sparkles } from '@react-three/drei';
 import { MathUtils } from 'three';
@@ -53,16 +53,66 @@ function GraphEdge({ from, to }) {
 /**
  * Visible 3D network graph — core system + connected modules (software engineering).
  */
-function SoftwareGraph({ pointerRef }) {
+function SoftwareGraph({ pointerRef, active }) {
   const groupRef = useRef(null);
   const spin = useRef(0);
+  const wasActiveRef = useRef(active);
   const core = GRAPH_NODES[0];
+
+  // #region agent log
+  useEffect(() => {
+    fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
+      body: JSON.stringify({
+        sessionId: '734eaa',
+        runId: 'post-fix',
+        hypothesisId: 'A-E',
+        location: 'HeroScene.jsx:active-effect',
+        message: 'Canvas active changed',
+        data: { active, spin: spin.current, pointer: pointerRef?.current },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+  }, [active, pointerRef]);
+  // #endregion
 
   useFrame((_, delta) => {
     const group = groupRef.current;
-    if (!group) return;
+    if (!group || !active) return;
 
-    spin.current += delta * 0.22;
+    const dt = Math.min(delta, 0.033);
+
+    // #region agent log
+    const resumed = active && !wasActiveRef.current;
+    if (resumed || dt > 0.05) {
+      fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
+        body: JSON.stringify({
+          sessionId: '734eaa',
+          runId: 'post-fix',
+          hypothesisId: 'A-E',
+          location: 'HeroScene.jsx:useFrame',
+          message: resumed ? 'frameloop resumed' : 'large delta',
+          data: {
+            active,
+            resumed,
+            delta,
+            dt,
+            spin: spin.current,
+            pointer: pointerRef?.current,
+            rotX: group.rotation.x,
+            rotY: group.rotation.y,
+          },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+    }
+    wasActiveRef.current = active;
+    // #endregion
+
+    spin.current += dt * 0.22;
     const pointer = pointerRef?.current ?? { x: 0, y: 0 };
 
     const targetRotX = spin.current * 0.18 + pointer.y * 0.35;
@@ -125,7 +175,7 @@ export default function HeroScene({ pointerRef, active = true }) {
         <ambientLight intensity={0.45} />
         <directionalLight position={[3, 4, 2]} intensity={1.1} color="#ddd6fe" />
         <pointLight position={[-2, 1, 3]} intensity={0.6} color={VIOLET} />
-        <SoftwareGraph pointerRef={pointerRef} />
+        <SoftwareGraph pointerRef={pointerRef} active={active} />
       </Canvas>
     </div>
   );
