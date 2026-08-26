@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import {
   motion,
   useMotionValue,
   useSpring,
   useTransform,
 } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
 import {
   fadeScale,
   fadeUp,
@@ -15,6 +16,8 @@ import {
   parallax,
 } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+
+const HeroScene = lazy(() => import('../HeroScene/HeroScene'));
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
@@ -31,6 +34,16 @@ const HEADING_WORDS = [
 export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const headerRef = useRef(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const { ref: inViewRef, inView } = useInView({
+    threshold: 0.15,
+    rootMargin: '50px',
+  });
+
+  const setHeaderRefs = (node) => {
+    headerRef.current = node;
+    inViewRef(node);
+  };
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -55,25 +68,35 @@ export default function Hero() {
     const el = headerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    pointerX.set(x);
+    pointerY.set(y);
+    pointerRef.current = { x, y };
   };
 
   const onPointerLeave = () => {
     pointerX.set(0);
     pointerY.set(0);
+    pointerRef.current = { x: 0, y: 0 };
   };
 
   return (
     <header
-      ref={headerRef}
+      ref={setHeaderRefs}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden"
+      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden min-h-[70vh] sm:min-h-[28rem]"
     >
+      {!prefersReducedMotion && (
+        <Suspense fallback={null}>
+          <HeroScene pointerRef={pointerRef} active={inView} />
+        </Suspense>
+      )}
+
       <MotionDiv
         aria-hidden
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none z-[1]"
         style={
           prefersReducedMotion
             ? undefined
@@ -82,7 +105,7 @@ export default function Hero() {
       />
 
       <MotionDiv
-        className="max-w-7xl mx-auto relative"
+        className="max-w-7xl mx-auto relative z-10"
         style={
           prefersReducedMotion
             ? undefined
@@ -155,7 +178,7 @@ export default function Hero() {
         </div>
       </MotionDiv>
 
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent z-10" />
     </header>
   );
 }
