@@ -35,6 +35,12 @@ export const layoutTransition = {
   mass: 0.7,
 };
 
+/** Site header nav — sliding active pill. */
+export const navShell = {
+  layoutId: 'site-nav-active',
+  transition: layoutTransition,
+};
+
 /** Hero pointer parallax (glow vs text move opposite). */
 export const parallax = {
   glow: 18,
