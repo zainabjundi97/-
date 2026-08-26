@@ -10,6 +10,9 @@ export const SITE_THEME = {
   textHeading: '#e2e8f0',
   navInactive: 'rgba(37, 57, 142, 0.55)',
   navInactiveHover: '#2B2E71',
+  navAccent: '#4EB67B',
+  navText: 'rgba(241, 245, 249, 0.75)',
+  navTextActive: '#ffffff',
   footerBg: '#1B296B',
 };
 
