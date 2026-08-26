@@ -7,6 +7,8 @@ import AnimatedCard, { AnimatedIcon } from './components/AnimatedCard/AnimatedCa
 import GlowCallout from './components/GlowCallout/GlowCallout';
 import TiltCard from './components/TiltCard/TiltCard';
 import Typewriter from './components/Typewriter/Typewriter';
+import MagneticButton from './components/MagneticButton/MagneticButton';
+import CountUp from './components/CountUp/CountUp';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 import { fadeIn, scaleFade, reducedMotionVariants } from './lib/animations';
 
@@ -298,14 +300,14 @@ export default function SoftwareEngApp() {
                 <h2 className="text-lg sm:text-xl font-bold text-emerald-400">
                   💻 جرب شعور أول كود برمجي!
                 </h2>
-                <button
+                <MagneticButton
                   type="button"
                   onClick={runCode}
                   disabled={isRunning}
                   className="w-full sm:w-auto min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-lg font-medium text-xs sm:text-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md active:scale-95"
                 >
                   {isRunning ? '⏳ جاري التشغيل...' : '▶ تشغيل الكود (Run)'}
-                </button>
+                </MagneticButton>
               </div>
 
               <div
@@ -369,20 +371,20 @@ export default function SoftwareEngApp() {
                     {questions[currentQuestion].text}
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-3">
-                    <button
+                    <MagneticButton
                       type="button"
                       onClick={() => handleAnswer(questions[currentQuestion].points)}
                       className="w-full sm:w-auto min-h-[44px] bg-violet-600 hover:bg-violet-500 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer shadow-md"
                     >
                       نعم، ينطبق عليّ
-                    </button>
-                    <button
+                    </MagneticButton>
+                    <MagneticButton
                       type="button"
                       onClick={() => handleAnswer(0)}
                       className="w-full sm:w-auto min-h-[44px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer border border-violet-900/40"
                     >
                       لا أظن ذلك
-                    </button>
+                    </MagneticButton>
                   </div>
                 </MotionDiv>
               ) : (
@@ -394,9 +396,11 @@ export default function SoftwareEngApp() {
                   variants={enterVariants}
                   className="space-y-4"
                 >
-                  <div className="text-3xl sm:text-4xl font-extrabold text-emerald-400">
-                    {score}%
-                  </div>
+                  <CountUp
+                    value={score}
+                    suffix="%"
+                    className="text-3xl sm:text-4xl font-extrabold text-emerald-400"
+                  />
                   <p className="text-sm sm:text-lg text-slate-200">
                     {score >= 75
                       ? 'ترشيح ممتاز! لديك شغف وتفكير يناسب تخصص البرمجيات جداً.'

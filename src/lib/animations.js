@@ -6,12 +6,19 @@ export const duration = {
   fast: 0.2,
   base: 0.3,
   slow: 0.4,
+  count: 0.9,
 };
 
 export const stagger = {
   word: 0.08,
   card: 0.12,
   type: 0.03,
+};
+
+/** Magnetic CTA pull toward pointer. */
+export const magnetic = {
+  strength: 0.35,
+  spring: { stiffness: 280, damping: 22, mass: 0.5 },
 };
 
 /** 3D pointer-tilt (Motion useMotionValue pattern). */
