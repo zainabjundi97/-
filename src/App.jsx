@@ -1,5 +1,5 @@
 import React from 'react';
-import SoftwareEngApp from './SoftwareEngApp';
+import AcademicApp from './pages/AcademicApp';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import { useLenis } from './hooks/useLenis';
 import 'lenis/dist/lenis.css';
@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <ScrollProgress />
-      <SoftwareEngApp />
+      <AcademicApp />
     </>
   );
 }
