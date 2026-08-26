@@ -15,6 +15,7 @@ import {
   reducedMotionVariants,
   parallax,
 } from '../../lib/animations';
+import { getDepartment } from '../../lib/departments';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const HeroScene = lazy(() => import('../HeroScene/HeroScene'));
@@ -31,7 +32,11 @@ const HEADING_WORDS = [
   { text: 'البرمجيات', accent: true },
 ];
 
-export default function Hero() {
+/**
+ * @param {{ departmentId?: string }} props
+ */
+export default function Hero({ departmentId = 'software' }) {
+  const dept = getDepartment(departmentId);
   const prefersReducedMotion = usePrefersReducedMotion();
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
@@ -64,27 +69,7 @@ export default function Hero() {
     ? undefined
     : { delay: subtitleDelay(HEADING_WORDS.length) };
 
-  // #region agent log
   useEffect(() => {
-    fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
-      body: JSON.stringify({
-        sessionId: '734eaa',
-        runId: 'post-fix',
-        hypothesisId: 'A-D',
-        location: 'Hero.jsx:inView-effect',
-        message: 'inView changed',
-        data: {
-          inView,
-          pointerRef: pointerRef.current,
-          pointerX: pointerX.get(),
-          pointerY: pointerY.get(),
-        },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-
     if (!inView) {
       pointerX.set(0);
       pointerY.set(0);
@@ -94,7 +79,7 @@ export default function Hero() {
 
   useEffect(() => {
     let scrollEndTimer;
-    const onScroll = () => {
+    const markScrolling = () => {
       isScrollingRef.current = true;
       pointerX.set(0);
       pointerY.set(0);
@@ -102,15 +87,16 @@ export default function Hero() {
       clearTimeout(scrollEndTimer);
       scrollEndTimer = setTimeout(() => {
         isScrollingRef.current = false;
-      }, 150);
+      }, 400);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', markScrolling, { passive: true });
+    window.addEventListener('wheel', markScrolling, { passive: true });
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', markScrolling);
+      window.removeEventListener('wheel', markScrolling);
       clearTimeout(scrollEndTimer);
     };
   }, [pointerX, pointerY]);
-  // #endregion
 
   const onPointerMove = (event) => {
     if (prefersReducedMotion || !inView || isScrollingRef.current) return;
@@ -118,6 +104,8 @@ export default function Hero() {
     if (!el) return;
     const rect = el.getBoundingClientRect();
     if (
+      rect.top < -10 ||
+      rect.bottom > window.innerHeight + 10 ||
       event.clientX < rect.left ||
       event.clientX > rect.right ||
       event.clientY < rect.top ||
@@ -132,31 +120,6 @@ export default function Hero() {
     pointerX.set(x);
     pointerY.set(y);
     pointerRef.current = { x, y };
-
-    // #region agent log
-    if (Math.abs(x) > 0.35 || Math.abs(y) > 0.35) {
-      fetch('http://127.0.0.1:7839/ingest/3657478a-a2a8-4aa6-9876-254e7f496f2d', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '734eaa' },
-        body: JSON.stringify({
-          sessionId: '734eaa',
-          runId: 'post-fix',
-          hypothesisId: 'B-C',
-          location: 'Hero.jsx:onPointerMove',
-          message: 'large pointer offset',
-          data: {
-            x,
-            y,
-            inView,
-            rectTop: rect.top,
-            rectHeight: rect.height,
-            clientY: event.clientY,
-          },
-          timestamp: Date.now(),
-        }),
-      }).catch(() => {});
-    }
-    // #endregion
   };
 
   const onPointerLeave = () => {
@@ -170,37 +133,45 @@ export default function Hero() {
       ref={setHeaderRefs}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden min-h-[70vh] sm:min-h-[28rem]"
+      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[70vh] sm:min-h-[28rem]"
+      style={{
+        background: `linear-gradient(to bottom, ${dept.heroFrom}, ${dept.heroTo}cc, transparent)`,
+      }}
     >
       {!prefersReducedMotion && (
         <Suspense fallback={null}>
-          <HeroScene pointerRef={pointerRef} active={inView} />
+          <HeroScene
+            pointerRef={pointerRef}
+            active={inView}
+            variant={dept.sceneVariant}
+            accent={dept.accent}
+            accentSecondary={dept.accentSecondary}
+          />
         </Suspense>
       )}
 
       <MotionDiv
         aria-hidden
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none z-[1]"
-        style={
-          prefersReducedMotion
-            ? undefined
-            : { x: glowX, y: glowY }
-        }
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 blur-3xl rounded-full pointer-events-none z-[1]"
+        style={{
+          backgroundColor: `${dept.accent}22`,
+          ...(prefersReducedMotion ? {} : { x: glowX, y: glowY }),
+        }}
       />
 
       <MotionDiv
         className="max-w-7xl mx-auto relative z-10"
-        style={
-          prefersReducedMotion
-            ? undefined
-            : { x: textX, y: textY }
-        }
+        style={prefersReducedMotion ? undefined : { x: textX, y: textY }}
       >
         <MotionSpan
           initial="hidden"
           animate="visible"
           variants={badgeVariants}
-          className="bg-violet-900/50 text-violet-300 text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-violet-500/20 inline-block mb-4 backdrop-blur-md"
+          className="text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border inline-block mb-4 backdrop-blur-md text-white"
+          style={{
+            backgroundColor: `${dept.accentSecondary}44`,
+            borderColor: `${dept.accent}44`,
+          }}
         >
           جامعة اللاذقية - قسم البرمجيات
         </MotionSpan>
@@ -215,7 +186,7 @@ export default function Hero() {
             <MotionSpan
               key={word.text}
               variants={wordVariants}
-              className={word.accent ? 'text-violet-400' : undefined}
+              style={word.accent ? { color: dept.accent } : undefined}
             >
               {word.text}
             </MotionSpan>
@@ -242,7 +213,8 @@ export default function Hero() {
                 block: 'start',
               });
             }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition shadow-md"
+            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition shadow-md"
+            style={{ backgroundColor: dept.accentSecondary }}
           >
             استكشف المواد
           </a>
@@ -255,14 +227,20 @@ export default function Hero() {
                 block: 'start',
               });
             }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition border border-violet-500/30"
+            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition border"
+            style={{ borderColor: `${dept.accent}44` }}
           >
             هل يناسبني؟
           </a>
         </div>
       </MotionDiv>
 
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent z-10" />
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] z-10"
+        style={{
+          background: `linear-gradient(to right, transparent, ${dept.accent}33, transparent)`,
+        }}
+      />
     </header>
   );
 }
