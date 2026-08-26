@@ -35,6 +35,13 @@ export const layoutTransition = {
   mass: 0.7,
 };
 
+/** Hero pointer parallax (glow vs text move opposite). */
+export const parallax = {
+  glow: 18,
+  text: 8,
+  spring: { stiffness: 160, damping: 22, mass: 0.5 },
+};
+
 /** 3D pointer-tilt (Motion useMotionValue pattern). */
 export const tilt = {
   maxDeg: 10,

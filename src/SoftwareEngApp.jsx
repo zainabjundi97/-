@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
 import Hero from './components/Hero/Hero';
 import Reveal from './components/Reveal/Reveal';
 import StaggerGrid from './components/StaggerGrid/StaggerGrid';
@@ -11,7 +11,12 @@ import MagneticButton from './components/MagneticButton/MagneticButton';
 import CountUp from './components/CountUp/CountUp';
 import QuizSteps from './components/QuizSteps/QuizSteps';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
-import { fadeIn, scaleFade, reducedMotionVariants } from './lib/animations';
+import {
+  fadeIn,
+  scaleFade,
+  reducedMotionVariants,
+  layoutTransition,
+} from './lib/animations';
 
 const MotionDiv = motion.div;
 
@@ -182,6 +187,7 @@ export default function SoftwareEngApp() {
   };
 
   return (
+    <LayoutGroup>
     <div
       className="min-h-screen w-full bg-gradient-to-b from-violet-950 via-violet-950 to-violet-950 text-slate-100 font-sans flex flex-col justify-between overflow-x-hidden relative"
       dir="rtl"
@@ -240,6 +246,12 @@ export default function SoftwareEngApp() {
                   as="button"
                   disableHoverMotion
                   skipVariants
+                  layoutId={
+                    selectedCourse?.id === course.id
+                      ? undefined
+                      : `course-card-${course.id}`
+                  }
+                  transition={layoutTransition}
                   onClick={() => setSelectedCourse(course)}
                   className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full hover:border-violet-500 hover:bg-slate-900/90"
                 >
@@ -446,10 +458,16 @@ export default function SoftwareEngApp() {
             onClick={closeModal}
           >
             <MotionDiv
-              variants={modalVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              layoutId={
+                prefersReducedMotion
+                  ? undefined
+                  : `course-card-${selectedCourse.id}`
+              }
+              transition={layoutTransition}
+              variants={prefersReducedMotion ? modalVariants : undefined}
+              initial={prefersReducedMotion ? 'hidden' : false}
+              animate={prefersReducedMotion ? 'visible' : undefined}
+              exit={prefersReducedMotion ? 'exit' : undefined}
               className="bg-slate-900 border border-violet-500/50 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl space-y-4 relative"
               onClick={(event) => event.stopPropagation()}
             >
@@ -488,5 +506,6 @@ export default function SoftwareEngApp() {
         )}
       </AnimatePresence>
     </div>
+    </LayoutGroup>
   );
 }

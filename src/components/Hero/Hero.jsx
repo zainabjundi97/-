@@ -1,4 +1,10 @@
-import { motion } from 'motion/react';
+import { useRef } from 'react';
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from 'motion/react';
 import {
   fadeScale,
   fadeUp,
@@ -6,9 +12,11 @@ import {
   wordContainer,
   subtitleDelay,
   reducedMotionVariants,
+  parallax,
 } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
+const MotionDiv = motion.div;
 const MotionSpan = motion.span;
 const MotionH1 = motion.h1;
 const MotionP = motion.p;
@@ -22,6 +30,18 @@ const HEADING_WORDS = [
 
 export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const headerRef = useRef(null);
+
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const springX = useSpring(pointerX, parallax.spring);
+  const springY = useSpring(pointerY, parallax.spring);
+
+  const glowX = useTransform(springX, [-0.5, 0.5], [-parallax.glow, parallax.glow]);
+  const glowY = useTransform(springY, [-0.5, 0.5], [-parallax.glow, parallax.glow]);
+  const textX = useTransform(springX, [-0.5, 0.5], [parallax.text, -parallax.text]);
+  const textY = useTransform(springY, [-0.5, 0.5], [parallax.text, -parallax.text]);
+
   const badgeVariants = prefersReducedMotion ? reducedMotionVariants : fadeScale;
   const wordVariants = prefersReducedMotion ? reducedMotionVariants : wordReveal;
   const containerVariants = prefersReducedMotion ? reducedMotionVariants : wordContainer;
@@ -30,11 +50,45 @@ export default function Hero() {
     ? undefined
     : { delay: subtitleDelay(HEADING_WORDS.length) };
 
-  return (
-    <header className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none" />
+  const onPointerMove = (event) => {
+    if (prefersReducedMotion) return;
+    const el = headerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
 
-      <div className="max-w-7xl mx-auto relative">
+  const onPointerLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
+
+  return (
+    <header
+      ref={headerRef}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#06030e] via-violet-950/80 to-transparent relative overflow-hidden"
+    >
+      <MotionDiv
+        aria-hidden
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-40 bg-violet-600/10 blur-3xl rounded-full pointer-events-none"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : { x: glowX, y: glowY }
+        }
+      />
+
+      <MotionDiv
+        className="max-w-7xl mx-auto relative"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : { x: textX, y: textY }
+        }
+      >
         <MotionSpan
           initial="hidden"
           animate="visible"
@@ -70,7 +124,7 @@ export default function Hero() {
         >
           أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
         </MotionP>
-      </div>
+      </MotionDiv>
 
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
     </header>

@@ -34,6 +34,8 @@ export default function AnimatedCard({
   type = 'button',
   disableHoverMotion = false,
   skipVariants = false,
+  layoutId,
+  transition,
 }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const itemVariants = prefersReducedMotion ? reducedMotionVariants : cardItem;
@@ -44,6 +46,8 @@ export default function AnimatedCard({
     whileHover: useHover ? 'hover' : undefined,
     className,
     onClick,
+    layoutId: prefersReducedMotion ? undefined : layoutId,
+    transition,
   };
 
   if (as === 'button') {
