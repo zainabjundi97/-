@@ -50,7 +50,11 @@ export default function SectionNav() {
   return (
     <nav
       aria-label="أقسام الصفحة"
-      className="sticky top-1 z-40 w-full border-b border-violet-900/40 bg-violet-950/85 backdrop-blur-md"
+      className="sticky top-0 z-40 w-full border-b backdrop-blur-md"
+      style={{
+        borderColor: '#7957A844',
+        backgroundColor: 'rgba(30, 27, 75, 0.9)',
+      }}
     >
       <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 overflow-x-auto">
         <ul className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 min-w-max mx-auto">
@@ -64,16 +68,17 @@ export default function SectionNav() {
                   className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition cursor-pointer ${
                     isActive
                       ? 'text-white'
-                      : 'text-slate-400 hover:text-violet-200'
+                      : 'text-slate-400 hover:text-[#a78bfa]'
                   }`}
                 >
                   {isActive &&
                     (prefersReducedMotion ? (
-                      <span className="absolute inset-0 rounded-lg bg-violet-700/50 border border-violet-500/30" />
+                      <span className="absolute inset-0 rounded-lg border" style={{ backgroundColor: '#7957A880', borderColor: '#5DBB7844' }} />
                     ) : (
                       <MotionSpan
                         layoutId="section-nav-active"
-                        className="absolute inset-0 rounded-lg bg-violet-700/50 border border-violet-500/30"
+                        className="absolute inset-0 rounded-lg border"
+                        style={{ backgroundColor: '#7957A880', borderColor: '#5DBB7844' }}
                         transition={layoutTransition}
                       />
                     ))}
