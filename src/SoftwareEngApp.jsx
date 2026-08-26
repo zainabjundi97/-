@@ -5,10 +5,15 @@ import Reveal from './components/Reveal/Reveal';
 import StaggerGrid from './components/StaggerGrid/StaggerGrid';
 import AnimatedCard, { AnimatedIcon } from './components/AnimatedCard/AnimatedCard';
 import GlowCallout from './components/GlowCallout/GlowCallout';
+import TiltCard from './components/TiltCard/TiltCard';
+import Typewriter from './components/Typewriter/Typewriter';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 import { fadeIn, scaleFade, reducedMotionVariants } from './lib/animations';
 
 const MotionDiv = motion.div;
+
+const CODE_OUTPUT =
+  'Hello, World! أهلاً بك في قسم هندسة البرمجيات بجامعة اللاذقية 🚀';
 
 const questions = [
   { text: 'تحب تحل الألغاز والمشاكل المنطقية؟', points: 25 },
@@ -111,6 +116,7 @@ export default function SoftwareEngApp() {
   const modalVariants = prefersReducedMotion ? reducedMotionVariants : scaleFade;
 
   const [codeOutput, setCodeOutput] = useState('');
+  const [typeReplayKey, setTypeReplayKey] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -165,9 +171,8 @@ export default function SoftwareEngApp() {
     setIsRunning(true);
     setCodeOutput('');
     runTimeoutRef.current = setTimeout(() => {
-      setCodeOutput(
-        'Hello, World! أهلاً بك في قسم هندسة البرمجيات بجامعة اللاذقية 🚀',
-      );
+      setCodeOutput(CODE_OUTPUT);
+      setTypeReplayKey((key) => key + 1);
       setIsRunning(false);
       runTimeoutRef.current = null;
     }, 600);
@@ -227,25 +232,28 @@ export default function SoftwareEngApp() {
 
           <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {courses.map((course) => (
-              <AnimatedCard
-                key={course.id}
-                as="button"
-                onClick={() => setSelectedCourse(course)}
-                className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] hover:border-violet-500 hover:bg-slate-900/90"
-              >
-                <div>
-                  <AnimatedIcon className="text-4xl mb-4">{course.icon}</AnimatedIcon>
-                  <h3 className="font-bold text-violet-300 text-lg mb-2 group-hover:text-violet-200">
-                    {course.name}
-                  </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-                    {course.desc}
-                  </p>
-                </div>
-                <div className="text-violet-400 text-xs font-semibold flex items-center gap-1 pt-2 border-t border-violet-900/40">
-                  انقر للتوضيح المبسط ←
-                </div>
-              </AnimatedCard>
+              <TiltCard key={course.id} className="h-full">
+                <AnimatedCard
+                  as="button"
+                  disableHoverMotion
+                  skipVariants
+                  onClick={() => setSelectedCourse(course)}
+                  className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full hover:border-violet-500 hover:bg-slate-900/90"
+                >
+                  <div>
+                    <AnimatedIcon className="text-4xl mb-4">{course.icon}</AnimatedIcon>
+                    <h3 className="font-bold text-violet-300 text-lg mb-2 group-hover:text-violet-200">
+                      {course.name}
+                    </h3>
+                    <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                      {course.desc}
+                    </p>
+                  </div>
+                  <div className="text-violet-400 text-xs font-semibold flex items-center gap-1 pt-2 border-t border-violet-900/40">
+                    انقر للتوضيح المبسط ←
+                  </div>
+                </AnimatedCard>
+              </TiltCard>
             ))}
           </StaggerGrid>
         </section>
@@ -319,7 +327,7 @@ export default function SoftwareEngApp() {
             <AnimatePresence>
               {codeOutput && (
                 <MotionDiv
-                  key="code-output"
+                  key={`code-output-${typeReplayKey}`}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
@@ -329,7 +337,11 @@ export default function SoftwareEngApp() {
                   <span className="text-slate-500 block text-xs mb-1">
                     &gt; الشاشة الناتجة (Output):
                   </span>
-                  {codeOutput}
+                  <Typewriter
+                    text={codeOutput}
+                    replayKey={typeReplayKey}
+                    showCursor
+                  />
                 </MotionDiv>
               )}
             </AnimatePresence>

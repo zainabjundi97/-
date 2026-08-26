@@ -11,6 +11,40 @@ export const duration = {
 export const stagger = {
   word: 0.08,
   card: 0.12,
+  type: 0.03,
+};
+
+/** 3D pointer-tilt (Motion useMotionValue pattern). */
+export const tilt = {
+  maxDeg: 10,
+  perspective: 800,
+  spring: { stiffness: 260, damping: 24, mass: 0.6 },
+};
+
+export const typeChar = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: duration.fast * 0.5, ease: EASE_OUT },
+  },
+};
+
+export const typeContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: stagger.type,
+    },
+  },
+};
+
+export const cursorBlink = {
+  opacity: [1, 0, 1],
+  transition: {
+    duration: duration.slow,
+    repeat: Infinity,
+    ease: 'linear',
+  },
 };
 
 export const fadeUp = {

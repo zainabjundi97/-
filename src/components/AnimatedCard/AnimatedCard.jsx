@@ -32,13 +32,16 @@ export default function AnimatedCard({
   as = 'div',
   onClick,
   type = 'button',
+  disableHoverMotion = false,
+  skipVariants = false,
 }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const itemVariants = prefersReducedMotion ? reducedMotionVariants : cardItem;
+  const useHover = !prefersReducedMotion && !disableHoverMotion;
 
   const sharedProps = {
-    variants: itemVariants,
-    whileHover: prefersReducedMotion ? undefined : 'hover',
+    variants: skipVariants ? undefined : itemVariants,
+    whileHover: useHover ? 'hover' : undefined,
     className,
     onClick,
   };
