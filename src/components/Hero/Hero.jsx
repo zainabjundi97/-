@@ -124,6 +124,35 @@ export default function Hero() {
         >
           أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
         </MotionP>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+          <a
+            href="#courses"
+            onClick={(event) => {
+              event.preventDefault();
+              document.getElementById('courses')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }}
+            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition shadow-md"
+          >
+            استكشف المواد
+          </a>
+          <a
+            href="#quiz"
+            onClick={(event) => {
+              event.preventDefault();
+              document.getElementById('quiz')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+            }}
+            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition border border-violet-500/30"
+          >
+            هل يناسبني؟
+          </a>
+        </div>
       </MotionDiv>
 
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />

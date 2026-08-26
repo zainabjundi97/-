@@ -42,6 +42,21 @@ export const parallax = {
   spring: { stiffness: 160, damping: 22, mass: 0.5 },
 };
 
+/** Quiz high-score celebration. */
+export const celebrate = {
+  scale: [1, 1.12, 1],
+  spring: { type: 'spring', stiffness: 320, damping: 18 },
+  badge: {
+    hidden: { opacity: 0, scale: 0.85, y: 8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: duration.base, ease: EASE_OUT, delay: 0.15 },
+    },
+  },
+};
+
 /** 3D pointer-tilt (Motion useMotionValue pattern). */
 export const tilt = {
   maxDeg: 10,
