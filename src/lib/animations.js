@@ -21,6 +21,20 @@ export const magnetic = {
   spring: { stiffness: 280, damping: 22, mass: 0.5 },
 };
 
+/** Top scroll progress bar. */
+export const progress = {
+  height: 4,
+  spring: { stiffness: 120, damping: 28, mass: 0.4 },
+};
+
+/** Shared layoutId transitions (quiz steps, etc.). */
+export const layoutTransition = {
+  type: 'spring',
+  stiffness: 380,
+  damping: 32,
+  mass: 0.7,
+};
+
 /** 3D pointer-tilt (Motion useMotionValue pattern). */
 export const tilt = {
   maxDeg: 10,

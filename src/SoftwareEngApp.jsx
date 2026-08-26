@@ -9,6 +9,7 @@ import TiltCard from './components/TiltCard/TiltCard';
 import Typewriter from './components/Typewriter/Typewriter';
 import MagneticButton from './components/MagneticButton/MagneticButton';
 import CountUp from './components/CountUp/CountUp';
+import QuizSteps from './components/QuizSteps/QuizSteps';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 import { fadeIn, scaleFade, reducedMotionVariants } from './lib/animations';
 
@@ -354,6 +355,15 @@ export default function SoftwareEngApp() {
               ✨ هل التخصص يناسبك؟ (اختبار سريع)
             </h2>
 
+            {!showResult && (
+              <div className="space-y-3 max-w-md mx-auto w-full">
+                <QuizSteps total={questions.length} current={currentQuestion} />
+                <div className="text-xs sm:text-sm text-slate-400">
+                  السؤال {currentQuestion + 1} من {questions.length}
+                </div>
+              </div>
+            )}
+
             <AnimatePresence mode="wait">
               {!showResult ? (
                 <MotionDiv
@@ -364,9 +374,6 @@ export default function SoftwareEngApp() {
                   variants={enterVariants}
                   className="space-y-6 max-w-md mx-auto w-full"
                 >
-                  <div className="text-xs sm:text-sm text-slate-400">
-                    السؤال {currentQuestion + 1} من {questions.length}
-                  </div>
                   <p className="text-base sm:text-lg font-medium text-slate-100">
                     {questions[currentQuestion].text}
                   </p>
