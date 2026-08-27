@@ -3,7 +3,7 @@ import SiteHeader from '../components/SiteHeader/SiteHeader';
 import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
 import ComingSoonPage from './ComingSoonPage';
-import SoftwareEngApp from '../SoftwareEngApp';
+import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
 
 function renderTab(activeTab) {
@@ -12,11 +12,11 @@ function renderTab(activeTab) {
     case 'basics':
       return <HomePage departmentId={activeTab} />;
     case 'software':
-      return <SoftwareEngApp />;
     case 'networks':
     case 'ai':
+      return <SpecialtyPage key={activeTab} departmentId={activeTab} />;
     case 'contest':
-      return <ComingSoonPage departmentId={activeTab} />;
+      return <ComingSoonPage departmentId="contest" />;
     default:
       return <HomePage departmentId="home" />;
   }

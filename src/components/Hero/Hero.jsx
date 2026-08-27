@@ -16,6 +16,7 @@ import {
   parallax,
 } from '../../lib/animations';
 import { getDepartment } from '../../lib/departments';
+import { getSpecialtyContent } from '../../data/specialtyContent';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const HeroScene = lazy(() => import('../HeroScene/HeroScene'));
@@ -25,18 +26,13 @@ const MotionSpan = motion.span;
 const MotionH1 = motion.h1;
 const MotionP = motion.p;
 
-const HEADING_WORDS = [
-  { text: 'اكتشف', accent: false },
-  { text: 'عالم', accent: false },
-  { text: 'هندسة', accent: true },
-  { text: 'البرمجيات', accent: true },
-];
-
 /**
  * @param {{ departmentId?: string }} props
  */
 export default function Hero({ departmentId = 'software' }) {
   const dept = getDepartment(departmentId);
+  const hero = getSpecialtyContent(departmentId).hero;
+  const headingWords = hero.headingWords;
   const prefersReducedMotion = usePrefersReducedMotion();
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
@@ -67,7 +63,7 @@ export default function Hero({ departmentId = 'software' }) {
   const subtitleVariants = prefersReducedMotion ? reducedMotionVariants : fadeUp;
   const subtitleTransition = prefersReducedMotion
     ? undefined
-    : { delay: subtitleDelay(HEADING_WORDS.length) };
+    : { delay: subtitleDelay(headingWords.length) };
 
   useEffect(() => {
     if (!inView) {
@@ -173,7 +169,7 @@ export default function Hero({ departmentId = 'software' }) {
             borderColor: `${dept.accent}44`,
           }}
         >
-          جامعة اللاذقية - قسم البرمجيات
+          {hero.badge}
         </MotionSpan>
 
         <MotionH1
@@ -182,7 +178,7 @@ export default function Hero({ departmentId = 'software' }) {
           animate="visible"
           variants={containerVariants}
         >
-          {HEADING_WORDS.map((word) => (
+          {headingWords.map((word) => (
             <MotionSpan
               key={word.text}
               variants={wordVariants}
@@ -200,7 +196,7 @@ export default function Hero({ departmentId = 'software' }) {
           transition={subtitleTransition}
           className="text-white/90 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
         >
-          أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
+          {hero.subtitle}
         </MotionP>
 
         <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
