@@ -8,7 +8,7 @@ const MotionDiv = motion.div;
 /**
  * Callout box with a one-shot glow pulse when scrolled into view.
  */
-export default function GlowCallout({ children, className = '' }) {
+export default function GlowCallout({ children, className = '', style }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
 
@@ -16,6 +16,7 @@ export default function GlowCallout({ children, className = '' }) {
     <MotionDiv
       ref={ref}
       className={className}
+      style={style}
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={prefersReducedMotion ? reducedMotionVariants : glowPulseOnce}

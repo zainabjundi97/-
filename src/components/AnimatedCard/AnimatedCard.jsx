@@ -36,6 +36,7 @@ export default function AnimatedCard({
   skipVariants = false,
   layoutId,
   transition,
+  style,
 }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const itemVariants = prefersReducedMotion ? reducedMotionVariants : cardItem;
@@ -48,6 +49,7 @@ export default function AnimatedCard({
     onClick,
     layoutId: prefersReducedMotion ? undefined : layoutId,
     transition,
+    style,
   };
 
   if (as === 'button') {

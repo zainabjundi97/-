@@ -126,6 +126,30 @@ function LayeredStack({ colors }) {
   );
 }
 
+function TorusRing({ colors }) {
+  return (
+    <group>
+      <mesh rotation={[Math.PI / 2.4, 0.15, 0]}>
+        <torusGeometry args={[1.25, 0.38, 24, 64]} />
+        <meshStandardMaterial
+          color={colors.main}
+          emissive={colors.deep}
+          emissiveIntensity={0.65}
+          metalness={0.4}
+          roughness={0.22}
+          transparent
+          opacity={0.9}
+        />
+      </mesh>
+      <mesh rotation={[Math.PI / 2.4, 0.15, 0]} scale={1.01}>
+        <torusGeometry args={[1.25, 0.38, 16, 48]} />
+        <meshBasicMaterial color={colors.wire} wireframe transparent opacity={0.3} />
+      </mesh>
+      <Sparkles count={18} scale={[3.6, 2.8, 2.6]} size={2} speed={0.28} opacity={0.36} color={colors.wire} />
+    </group>
+  );
+}
+
 function TorusKnotShape({ colors }) {
   return (
     <group>
@@ -178,6 +202,8 @@ function SceneContent({ variant, colors }) {
   switch (variant) {
     case 'layers':
       return <LayeredStack colors={colors} />;
+    case 'torus':
+      return <TorusRing colors={colors} />;
     case 'torusKnot':
       return <TorusKnotShape colors={colors} />;
     case 'stackCrystal':

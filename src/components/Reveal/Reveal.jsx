@@ -8,7 +8,7 @@ const MotionDiv = motion.div;
 /**
  * Once-only scroll reveal wrapper. No re-animation on scroll up/down.
  */
-export default function Reveal({ children, className = '', id }) {
+export default function Reveal({ children, className = '', id, style }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.12 });
 
@@ -17,6 +17,7 @@ export default function Reveal({ children, className = '', id }) {
       id={id}
       ref={ref}
       className={className}
+      style={style}
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={prefersReducedMotion ? reducedMotionVariants : fadeUp}

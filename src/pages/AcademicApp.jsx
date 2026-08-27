@@ -2,23 +2,25 @@ import { useState, useCallback } from 'react';
 import SiteHeader from '../components/SiteHeader/SiteHeader';
 import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
+import BasicsPage from './BasicsPage';
 import ComingSoonPage from './ComingSoonPage';
-import SoftwareEngApp from '../SoftwareEngApp';
+import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
 
-function renderTab(activeTab) {
+function renderTab(activeTab, onNavigate) {
   switch (activeTab) {
     case 'home':
+      return <HomePage key="home" onNavigate={onNavigate} />;
     case 'basics':
-      return <HomePage departmentId={activeTab} />;
+      return <BasicsPage key="basics" onNavigate={onNavigate} />;
     case 'software':
-      return <SoftwareEngApp />;
     case 'networks':
     case 'ai':
+      return <SpecialtyPage key={activeTab} departmentId={activeTab} />;
     case 'contest':
-      return <ComingSoonPage departmentId={activeTab} />;
+      return <ComingSoonPage departmentId="contest" />;
     default:
-      return <HomePage departmentId="home" />;
+      return <HomePage key="home" onNavigate={onNavigate} />;
   }
 }
 
@@ -36,13 +38,13 @@ export default function AcademicApp() {
       lang="ar"
       className="min-h-screen w-full flex flex-col font-sans overflow-x-hidden"
       style={{
-        background: `linear-gradient(180deg, ${SITE_THEME.headerBg}22 0%, ${SITE_THEME.shellBg} 12rem)`,
+        backgroundColor: SITE_THEME.shellBg,
         color: SITE_THEME.textPrimary,
       }}
     >
       <SiteHeader activeTab={activeTab} onTabChange={handleTabChange} />
-      {renderTab(activeTab)}
-      <SiteFooter />
+      {renderTab(activeTab, handleTabChange)}
+      <SiteFooter activeTab={activeTab} />
     </div>
   );
 }

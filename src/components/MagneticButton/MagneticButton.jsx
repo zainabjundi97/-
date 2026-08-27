@@ -38,6 +38,8 @@ export default function MagneticButton({
     );
   }
 
+  const { style: restStyle, ...restProps } = rest;
+
   const onPointerMove = (event) => {
     if (disabled) return;
     const el = ref.current;
@@ -61,10 +63,10 @@ export default function MagneticButton({
       disabled={disabled}
       onClick={onClick}
       className={className}
-      style={{ x: springX, y: springY }}
+      style={{ ...restStyle, x: springX, y: springY }}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      {...rest}
+      {...restProps}
     >
       {children}
     </MotionButton>

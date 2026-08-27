@@ -1,4 +1,4 @@
-import { Suspense, lazy, useRef, useEffect } from 'react';
+import { Suspense, lazy, useRef, useEffect, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -16,28 +16,37 @@ import {
   parallax,
 } from '../../lib/animations';
 import { getDepartment } from '../../lib/departments';
+import { getSpecialtyContent } from '../../data/specialtyContent';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const HeroScene = lazy(() => import('../HeroScene/HeroScene'));
+const JellyHeroScene = lazy(() => import('../HeroScene/JellyHeroScene'));
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
 const MotionH1 = motion.h1;
 const MotionP = motion.p;
 
-const HEADING_WORDS = [
-  { text: 'اكتشف', accent: false },
-  { text: 'عالم', accent: false },
-  { text: 'هندسة', accent: true },
-  { text: 'البرمجيات', accent: true },
+const DEFAULT_SPECIALTY_CTAS = [
+  { label: 'استكشف المواد', href: '#courses', type: 'scroll' },
+  { label: 'هل يناسبني؟', href: '#quiz', type: 'scroll' },
 ];
 
 /**
- * @param {{ departmentId?: string }} props
+ * Specialty full-bleed hero with optional 3D scene.
+ * @param {{
+ *   departmentId?: string,
+ *   onNavigate?: (id: string) => void,
+ * }} props
  */
-export default function Hero({ departmentId = 'software' }) {
+export default function Hero({ departmentId = 'software', onNavigate }) {
   const dept = getDepartment(departmentId);
+  const hero = getSpecialtyContent(departmentId).hero;
+  const headingWords = hero.headingWords;
+  const ctas = hero.ctas ?? DEFAULT_SPECIALTY_CTAS;
   const prefersReducedMotion = usePrefersReducedMotion();
+  const useJelly = dept.sceneVariant === 'jelly';
+  const [jellyFailed, setJellyFailed] = useState(false);
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
   const isScrollingRef = useRef(false);
@@ -67,7 +76,20 @@ export default function Hero({ departmentId = 'software' }) {
   const subtitleVariants = prefersReducedMotion ? reducedMotionVariants : fadeUp;
   const subtitleTransition = prefersReducedMotion
     ? undefined
-    : { delay: subtitleDelay(HEADING_WORDS.length) };
+    : { delay: subtitleDelay(headingWords.length) };
+
+  const handleCta = (cta, event) => {
+    event.preventDefault();
+    if (cta.type === 'tab' && onNavigate) {
+      onNavigate(cta.href);
+      return;
+    }
+    const id = cta.href?.startsWith('#') ? cta.href.slice(1) : cta.href;
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
   useEffect(() => {
     if (!inView) {
@@ -128,6 +150,9 @@ export default function Hero({ departmentId = 'software' }) {
     pointerRef.current = { x: 0, y: 0 };
   };
 
+  const showJelly = useJelly && !jellyFailed;
+  const fallbackVariant = useJelly ? 'torusKnot' : dept.sceneVariant;
+
   return (
     <header
       ref={setHeaderRefs}
@@ -140,13 +165,23 @@ export default function Hero({ departmentId = 'software' }) {
     >
       {!prefersReducedMotion && (
         <Suspense fallback={null}>
-          <HeroScene
-            pointerRef={pointerRef}
-            active={inView}
-            variant={dept.sceneVariant}
-            accent={dept.accent}
-            accentSecondary={dept.accentSecondary}
-          />
+          {showJelly ? (
+            <JellyHeroScene
+              key={`jelly-${departmentId}`}
+              active={inView}
+              accent={dept.accent}
+              accentSecondary={dept.accentSecondary}
+              onFallback={() => setJellyFailed(true)}
+            />
+          ) : (
+            <HeroScene
+              pointerRef={pointerRef}
+              active={inView}
+              variant={fallbackVariant}
+              accent={dept.accent}
+              accentSecondary={dept.accentSecondary}
+            />
+          )}
         </Suspense>
       )}
 
@@ -160,7 +195,7 @@ export default function Hero({ departmentId = 'software' }) {
       />
 
       <MotionDiv
-        className="max-w-7xl mx-auto relative z-10"
+        className="max-w-7xl mx-auto relative z-10 pointer-events-none"
         style={prefersReducedMotion ? undefined : { x: textX, y: textY }}
       >
         <MotionSpan
@@ -173,7 +208,7 @@ export default function Hero({ departmentId = 'software' }) {
             borderColor: `${dept.accent}44`,
           }}
         >
-          جامعة اللاذقية - قسم البرمجيات
+          {hero.badge}
         </MotionSpan>
 
         <MotionH1
@@ -182,11 +217,11 @@ export default function Hero({ departmentId = 'software' }) {
           animate="visible"
           variants={containerVariants}
         >
-          {HEADING_WORDS.map((word) => (
+          {headingWords.map((word) => (
             <MotionSpan
               key={word.text}
               variants={wordVariants}
-              style={word.accent ? { color: dept.accent } : undefined}
+              style={word.accent ? { color: '#F5F7FA' } : undefined}
             >
               {word.text}
             </MotionSpan>
@@ -198,41 +233,37 @@ export default function Hero({ departmentId = 'software' }) {
           animate="visible"
           variants={subtitleVariants}
           transition={subtitleTransition}
-          className="text-slate-300/80 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
+          className="text-white/90 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
         >
-          أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
+          {hero.subtitle}
         </MotionP>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-          <a
-            href="#courses"
-            onClick={(event) => {
-              event.preventDefault();
-              document.getElementById('courses')?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition shadow-md"
-            style={{ backgroundColor: dept.accentSecondary }}
-          >
-            استكشف المواد
-          </a>
-          <a
-            href="#quiz"
-            onClick={(event) => {
-              event.preventDefault();
-              document.getElementById('quiz')?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition border"
-            style={{ borderColor: `${dept.accent}44` }}
-          >
-            هل يناسبني؟
-          </a>
-        </div>
+        {ctas.length > 0 && (
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pointer-events-auto">
+            {ctas.map((cta, index) => {
+              const isPrimary = index === 0;
+              return (
+                <a
+                  key={cta.label}
+                  href={cta.type === 'tab' ? `#${cta.href}` : cta.href}
+                  onClick={(event) => handleCta(cta, event)}
+                  className={`min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
+                    isPrimary
+                      ? 'text-white shadow-md'
+                      : 'bg-white/20 hover:bg-white/30 text-white border backdrop-blur-md'
+                  }`}
+                  style={
+                    isPrimary
+                      ? { backgroundColor: dept.accentSecondary }
+                      : { borderColor: 'rgba(245,247,250,0.35)' }
+                  }
+                >
+                  {cta.label}
+                </a>
+              );
+            })}
+          </div>
+        )}
       </MotionDiv>
 
       <div
