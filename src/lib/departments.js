@@ -73,7 +73,7 @@ export const DEPARTMENTS = {
     heroTo: '#2B2E71',
     accent: '#5191CE',
     accentSecondary: '#4EB67B',
-    sceneVariant: 'torusKnot',
+    sceneVariant: 'jelly',
   },
   contest: {
     id: 'contest',

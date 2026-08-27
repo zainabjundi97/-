@@ -1,4 +1,4 @@
-import { Suspense, lazy, useRef, useEffect } from 'react';
+import { Suspense, lazy, useRef, useEffect, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -20,6 +20,7 @@ import { getSpecialtyContent } from '../../data/specialtyContent';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const HeroScene = lazy(() => import('../HeroScene/HeroScene'));
+const JellyHeroScene = lazy(() => import('../HeroScene/JellyHeroScene'));
 
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
@@ -44,6 +45,8 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
   const headingWords = hero.headingWords;
   const ctas = hero.ctas ?? DEFAULT_SPECIALTY_CTAS;
   const prefersReducedMotion = usePrefersReducedMotion();
+  const useJelly = dept.sceneVariant === 'jelly';
+  const [jellyFailed, setJellyFailed] = useState(false);
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
   const isScrollingRef = useRef(false);
@@ -147,6 +150,9 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
     pointerRef.current = { x: 0, y: 0 };
   };
 
+  const showJelly = useJelly && !jellyFailed;
+  const fallbackVariant = useJelly ? 'torusKnot' : dept.sceneVariant;
+
   return (
     <header
       ref={setHeaderRefs}
@@ -159,13 +165,23 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
     >
       {!prefersReducedMotion && (
         <Suspense fallback={null}>
-          <HeroScene
-            pointerRef={pointerRef}
-            active={inView}
-            variant={dept.sceneVariant}
-            accent={dept.accent}
-            accentSecondary={dept.accentSecondary}
-          />
+          {showJelly ? (
+            <JellyHeroScene
+              key={`jelly-${departmentId}`}
+              active={inView}
+              accent={dept.accent}
+              accentSecondary={dept.accentSecondary}
+              onFallback={() => setJellyFailed(true)}
+            />
+          ) : (
+            <HeroScene
+              pointerRef={pointerRef}
+              active={inView}
+              variant={fallbackVariant}
+              accent={dept.accent}
+              accentSecondary={dept.accentSecondary}
+            />
+          )}
         </Suspense>
       )}
 
@@ -179,7 +195,7 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
       />
 
       <MotionDiv
-        className="max-w-7xl mx-auto relative z-10"
+        className="max-w-7xl mx-auto relative z-10 pointer-events-none"
         style={prefersReducedMotion ? undefined : { x: textX, y: textY }}
       >
         <MotionSpan
@@ -223,7 +239,7 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
         </MotionP>
 
         {ctas.length > 0 && (
-          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pointer-events-auto">
             {ctas.map((cta, index) => {
               const isPrimary = index === 0;
               return (
