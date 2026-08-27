@@ -58,6 +58,7 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           <ul className="rounded-full bg-white border border-slate-200 shadow-sm px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 max-w-full">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
+              const activeBg = dept.navActive ?? dept.accent;
               const activeTextColor =
                 dept.id === 'contest' ? SITE_THEME.textPrimary : SITE_THEME.navTextActive;
 
@@ -75,13 +76,13 @@ export default function SiteHeader({ activeTab, onTabChange }) {
                       (prefersReducedMotion ? (
                         <span
                           className="absolute inset-0 rounded-full"
-                          style={{ backgroundColor: dept.accent }}
+                          style={{ backgroundColor: activeBg }}
                         />
                       ) : (
                         <MotionSpan
                           layoutId={navShell.layoutId}
                           className="absolute inset-0 rounded-full"
-                          style={{ backgroundColor: dept.accent }}
+                          style={{ backgroundColor: activeBg }}
                           transition={navShell.transition}
                         />
                       ))}
