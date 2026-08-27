@@ -26,13 +26,23 @@ const MotionSpan = motion.span;
 const MotionH1 = motion.h1;
 const MotionP = motion.p;
 
+const DEFAULT_SPECIALTY_CTAS = [
+  { label: 'استكشف المواد', href: '#courses', type: 'scroll' },
+  { label: 'هل يناسبني؟', href: '#quiz', type: 'scroll' },
+];
+
 /**
- * @param {{ departmentId?: string }} props
+ * Specialty full-bleed hero with optional 3D scene.
+ * @param {{
+ *   departmentId?: string,
+ *   onNavigate?: (id: string) => void,
+ * }} props
  */
-export default function Hero({ departmentId = 'software' }) {
+export default function Hero({ departmentId = 'software', onNavigate }) {
   const dept = getDepartment(departmentId);
   const hero = getSpecialtyContent(departmentId).hero;
   const headingWords = hero.headingWords;
+  const ctas = hero.ctas ?? DEFAULT_SPECIALTY_CTAS;
   const prefersReducedMotion = usePrefersReducedMotion();
   const headerRef = useRef(null);
   const pointerRef = useRef({ x: 0, y: 0 });
@@ -64,6 +74,19 @@ export default function Hero({ departmentId = 'software' }) {
   const subtitleTransition = prefersReducedMotion
     ? undefined
     : { delay: subtitleDelay(headingWords.length) };
+
+  const handleCta = (cta, event) => {
+    event.preventDefault();
+    if (cta.type === 'tab' && onNavigate) {
+      onNavigate(cta.href);
+      return;
+    }
+    const id = cta.href?.startsWith('#') ? cta.href.slice(1) : cta.href;
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
   useEffect(() => {
     if (!inView) {
@@ -199,36 +222,32 @@ export default function Hero({ departmentId = 'software' }) {
           {hero.subtitle}
         </MotionP>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-          <a
-            href="#courses"
-            onClick={(event) => {
-              event.preventDefault();
-              document.getElementById('courses')?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition shadow-md"
-            style={{ backgroundColor: dept.accentSecondary }}
-          >
-            استكشف المواد
-          </a>
-          <a
-            href="#quiz"
-            onClick={(event) => {
-              event.preventDefault();
-              document.getElementById('quiz')?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-              });
-            }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-sm font-semibold transition border backdrop-blur-md"
-            style={{ borderColor: 'rgba(245,247,250,0.35)' }}
-          >
-            هل يناسبني؟
-          </a>
-        </div>
+        {ctas.length > 0 && (
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+            {ctas.map((cta, index) => {
+              const isPrimary = index === 0;
+              return (
+                <a
+                  key={cta.label}
+                  href={cta.type === 'tab' ? `#${cta.href}` : cta.href}
+                  onClick={(event) => handleCta(cta, event)}
+                  className={`min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
+                    isPrimary
+                      ? 'text-white shadow-md'
+                      : 'bg-white/20 hover:bg-white/30 text-white border backdrop-blur-md'
+                  }`}
+                  style={
+                    isPrimary
+                      ? { backgroundColor: dept.accentSecondary }
+                      : { borderColor: 'rgba(245,247,250,0.35)' }
+                  }
+                >
+                  {cta.label}
+                </a>
+              );
+            })}
+          </div>
+        )}
       </MotionDiv>
 
       <div

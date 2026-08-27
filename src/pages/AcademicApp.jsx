@@ -2,15 +2,17 @@ import { useState, useCallback } from 'react';
 import SiteHeader from '../components/SiteHeader/SiteHeader';
 import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
+import BasicsPage from './BasicsPage';
 import ComingSoonPage from './ComingSoonPage';
 import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
 
-function renderTab(activeTab) {
+function renderTab(activeTab, onNavigate) {
   switch (activeTab) {
     case 'home':
+      return <HomePage key="home" onNavigate={onNavigate} />;
     case 'basics':
-      return <HomePage departmentId={activeTab} />;
+      return <BasicsPage key="basics" onNavigate={onNavigate} />;
     case 'software':
     case 'networks':
     case 'ai':
@@ -18,7 +20,7 @@ function renderTab(activeTab) {
     case 'contest':
       return <ComingSoonPage departmentId="contest" />;
     default:
-      return <HomePage departmentId="home" />;
+      return <HomePage key="home" onNavigate={onNavigate} />;
   }
 }
 
@@ -41,7 +43,7 @@ export default function AcademicApp() {
       }}
     >
       <SiteHeader activeTab={activeTab} onTabChange={handleTabChange} />
-      {renderTab(activeTab)}
+      {renderTab(activeTab, handleTabChange)}
       <SiteFooter activeTab={activeTab} />
     </div>
   );
