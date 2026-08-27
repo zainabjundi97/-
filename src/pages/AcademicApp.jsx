@@ -42,7 +42,7 @@ export default function AcademicApp() {
     >
       <SiteHeader activeTab={activeTab} onTabChange={handleTabChange} />
       {renderTab(activeTab)}
-      <SiteFooter />
+      <SiteFooter activeTab={activeTab} />
     </div>
   );
 }

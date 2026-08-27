@@ -1,19 +1,27 @@
-import { SITE_THEME } from '../../lib/departments';
+import { getDepartment, SITE_THEME } from '../../lib/departments';
 
-export default function SiteFooter() {
+/**
+ * @param {{ activeTab: string }} props
+ */
+export default function SiteFooter({ activeTab }) {
+  const dept = getDepartment(activeTab);
   const year = new Date().getFullYear();
 
   return (
     <footer
-      className="w-full text-white py-3 text-center text-xs sm:text-sm flex-shrink-0 border-t-2"
+      className="w-full py-3 text-center text-xs sm:text-sm flex-shrink-0 border-t"
       style={{
-        backgroundColor: SITE_THEME.footerBg,
-        borderTopColor: SITE_THEME.navAccent,
+        backgroundColor: SITE_THEME.headerGlass,
+        borderTopWidth: 2,
+        borderTopColor: dept.accent,
+        color: SITE_THEME.textPrimary,
       }}
     >
       <div className="w-full px-3 sm:px-6">
-        <p className="font-bold tracking-wide">وجهتك الأكاديمية © {year}</p>
-        <p className="hidden sm:block text-xs mt-1" style={{ color: 'rgba(245,247,250,0.75)' }}>
+        <p className="font-bold tracking-wide" style={{ color: SITE_THEME.brandDark }}>
+          وجهتك الأكاديمية © {year}
+        </p>
+        <p className="hidden sm:block text-xs mt-1" style={{ color: SITE_THEME.textMuted }}>
           منصة مخصصة لطلاب البكالوريا لمساعدتهم في اختيار مسارهم الأكاديمي بثقة وشغف.
         </p>
       </div>

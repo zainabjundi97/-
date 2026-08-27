@@ -58,6 +58,9 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           <ul className="rounded-full bg-white border border-slate-200 shadow-sm px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 max-w-full">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
+              const activeTextColor =
+                dept.id === 'contest' ? SITE_THEME.textPrimary : SITE_THEME.navTextActive;
+
               return (
                 <li key={dept.id} className="relative">
                   <button
@@ -65,20 +68,20 @@ export default function SiteHeader({ activeTab, onTabChange }) {
                     onClick={() => onTabChange(dept.id)}
                     className="relative min-h-[44px] px-2.5 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
                     style={{
-                      color: isActive ? SITE_THEME.navTextActive : SITE_THEME.navText,
+                      color: isActive ? activeTextColor : SITE_THEME.navText,
                     }}
                   >
                     {isActive &&
                       (prefersReducedMotion ? (
                         <span
                           className="absolute inset-0 rounded-full"
-                          style={{ backgroundColor: SITE_THEME.navAccent }}
+                          style={{ backgroundColor: dept.accent }}
                         />
                       ) : (
                         <MotionSpan
                           layoutId={navShell.layoutId}
                           className="absolute inset-0 rounded-full"
-                          style={{ backgroundColor: SITE_THEME.navAccent }}
+                          style={{ backgroundColor: dept.accent }}
                           transition={navShell.transition}
                         />
                       ))}
@@ -90,15 +93,13 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           </ul>
         </nav>
 
-        <div className="shrink-0 self-stretch lg:self-auto flex justify-end">
-          <button
-            type="button"
-            onClick={() => onTabChange('software')}
-            className="min-h-[44px] rounded-full px-5 sm:px-6 py-2.5 text-sm text-white hover:opacity-90 transition-all cursor-pointer whitespace-nowrap shadow-sm"
-            style={{ backgroundColor: SITE_THEME.brandDark }}
+        <div className="shrink-0 self-stretch lg:self-auto flex justify-end items-center">
+          <p
+            className="min-h-[44px] inline-flex items-center rounded-full bg-white border border-slate-200 shadow-sm px-4 py-2.5 text-sm font-semibold whitespace-nowrap"
+            style={{ color: SITE_THEME.brandDark }}
           >
-            ابدأ الآن
-          </button>
+            جامعة اللاذقية
+          </p>
         </div>
       </div>
     </header>
