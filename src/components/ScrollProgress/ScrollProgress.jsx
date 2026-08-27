@@ -15,11 +15,12 @@ export default function ScrollProgress() {
   return (
     <MotionDiv
       aria-hidden
-      className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-gradient-to-l from-violet-400 via-violet-500 to-fuchsia-500"
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
       style={{
         height: progress.height,
         scaleX: prefersReducedMotion ? scrollYProgress : scaleX,
         transformOrigin: '100% 50%',
+        background: 'linear-gradient(to left, #5191CE, #7957A8, #4EB67B)',
       }}
     />
   );

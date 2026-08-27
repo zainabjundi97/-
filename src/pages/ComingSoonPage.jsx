@@ -24,8 +24,8 @@ export default function ComingSoonPage({ departmentId }) {
             />
             <div className="relative z-10">
               <h2 className="text-2xl sm:text-3xl font-black mb-2">{dept.label}</h2>
-              <p className="text-slate-200 text-sm sm:text-base">
-                قريبا
+              <p className="text-white/90 text-sm sm:text-base">
+                محتوى هذا القسم قيد الإعداد.
               </p>
             </div>
           </section>

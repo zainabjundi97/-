@@ -12,10 +12,8 @@ export default function SiteFooter() {
       }}
     >
       <div className="w-full px-3 sm:px-6">
-        <p className="font-bold tracking-wide">
-          وجهتك الأكاديمية © {year}
-        </p>
-        <p className="hidden sm:block text-xs text-slate-300 mt-1">
+        <p className="font-bold tracking-wide">وجهتك الأكاديمية © {year}</p>
+        <p className="hidden sm:block text-xs mt-1" style={{ color: 'rgba(245,247,250,0.75)' }}>
           منصة مخصصة لطلاب البكالوريا لمساعدتهم في اختيار مسارهم الأكاديمي بثقة وشغف.
         </p>
       </div>

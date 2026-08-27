@@ -186,7 +186,7 @@ export default function Hero({ departmentId = 'software' }) {
             <MotionSpan
               key={word.text}
               variants={wordVariants}
-              style={word.accent ? { color: dept.accent } : undefined}
+              style={word.accent ? { color: '#F5F7FA' } : undefined}
             >
               {word.text}
             </MotionSpan>
@@ -198,7 +198,7 @@ export default function Hero({ departmentId = 'software' }) {
           animate="visible"
           variants={subtitleVariants}
           transition={subtitleTransition}
-          className="text-slate-300/80 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
+          className="text-white/90 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
         >
           أكثر من مجرد تكويد.. إنها صياغة المستقبل وبناء الأنظمة الذكية!
         </MotionP>
@@ -227,8 +227,8 @@ export default function Hero({ departmentId = 'software' }) {
                 block: 'start',
               });
             }}
-            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-100 text-sm font-semibold transition border"
-            style={{ borderColor: `${dept.accent}44` }}
+            className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-sm font-semibold transition border backdrop-blur-md"
+            style={{ borderColor: 'rgba(245,247,250,0.35)' }}
           >
             هل يناسبني؟
           </a>

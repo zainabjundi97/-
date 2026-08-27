@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
 import Hero from './components/Hero/Hero';
 import Reveal from './components/Reveal/Reveal';
@@ -84,11 +84,11 @@ const stackRoles = [
     id: 'frontend',
     icon: '🎨',
     title: 'الواجهة (Frontend)',
-    titleClass: 'text-sky-400',
-    borderClass: 'border-sky-500/40',
-    activeRing: 'ring-sky-400/40',
+    titleClass: 'text-[#5191CE]',
+    borderClass: 'border-[#5191CE]/40',
+    activeRing: 'ring-[#5191CE]/40',
     body: 'هو كل شيء بشوفه المستخدم وبيتفاعل معه بعيونه: الأزرار، الألوان، القوائم، والأشكال.',
-    calloutClass: 'bg-sky-950/40 border-sky-900/30 text-sky-200',
+    calloutClass: 'bg-[#5191CE]/10 border-[#5191CE]/25 text-[#2B2E71]',
     calloutLabel: 'مثال المطعم',
     calloutText: 'طاولة الطعام، قائمة الوجبات (المنيو)، والديكور اللي بتجلس فيه.',
     calloutEmoji: '🍔',
@@ -97,11 +97,11 @@ const stackRoles = [
     id: 'backend',
     icon: '⚙️',
     title: 'الخلفية (Backend)',
-    titleClass: 'text-purple-400',
-    borderClass: 'border-purple-500/40',
-    activeRing: 'ring-purple-400/40',
+    titleClass: 'text-[#7957A8]',
+    borderClass: 'border-[#7957A8]/40',
+    activeRing: 'ring-[#7957A8]/40',
     body: 'هو العقل الخفي والمحرك! بيحفظ معلوماتك، بيتأكد من كلمة السر، وبيجيب البيانات من قعدة البيانات.',
-    calloutClass: 'bg-purple-950/40 border-purple-900/30 text-purple-200',
+    calloutClass: 'bg-[#7957A8]/10 border-[#7957A8]/25 text-[#2B2E71]',
     calloutLabel: 'مثال المطعم',
     calloutText: 'المطبخ والطباخين اللي بيحضروا الأكل ورائهم المخزن بدون ما تشوفهم.',
     calloutEmoji: '👨‍🍳',
@@ -110,11 +110,11 @@ const stackRoles = [
     id: 'fullstack',
     icon: '🚀',
     title: 'الفول ستاك (Full-Stack)',
-    titleClass: 'text-amber-400',
-    borderClass: 'border-amber-500/40',
-    activeRing: 'ring-amber-400/40',
+    titleClass: 'text-[#E6B84A]',
+    borderClass: 'border-[#E6B84A]/40',
+    activeRing: 'ring-[#E6B84A]/40',
     body: 'مهندس البرمجيات الشامل اللي بيقدر يبني الشاشة (Frontend) والمحرك الخفي (Backend) مع بعض!',
-    calloutClass: 'bg-amber-950/40 border-amber-900/30 text-amber-200',
+    calloutClass: 'bg-[#E6B84A]/15 border-[#E6B84A]/30 text-[#171A24]',
     calloutLabel: 'النتيجة',
     calloutText: 'شخص قادر يصمم المطعم بأكمله ويعرف يديره من الطاولة حتى المطبخ!',
     calloutEmoji: '⭐',
@@ -209,7 +209,7 @@ export default function SoftwareEngApp() {
   return (
     <LayoutGroup>
       <div
-        className="w-full flex-1 bg-gradient-to-b from-violet-950 via-violet-950 to-violet-950 text-slate-100 font-sans flex flex-col overflow-x-hidden relative"
+        className="w-full flex-1 bg-[#F5F7FA] text-[#171A24] font-sans flex flex-col overflow-x-hidden relative"
         dir="rtl"
       >
         <Hero departmentId="software" />
@@ -218,13 +218,13 @@ export default function SoftwareEngApp() {
         <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 space-y-12 md:space-y-16">
           <Reveal
             id="about"
-            className="scroll-mt-24 transition duration-300 hover:bg-violet-900/40 bg-slate-900/60 p-6 md:p-8 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-xl space-y-4"
+            className="scroll-mt-24 transition duration-300 hover:bg-white bg-white p-6 md:p-8 rounded-2xl border border-[#7957A8]/20 shadow-sm backdrop-blur-sm shadow-xl space-y-4"
           >
             <section>
-              <h2 className="text-xl sm:text-2xl font-bold text-violet-300 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#7957A8] flex items-center gap-2">
                 💡 ما هو تخصص هندسة البرمجيات؟
               </h2>
-              <p className="text-slate-300 leading-relaxed text-sm sm:text-base mt-4">
+              <p className="text-[#5B6475] leading-relaxed text-sm sm:text-base mt-4">
                 هندسة البرمجيات (Software Engineering) هي الفرع الذي يجمع بين التفكير المنطقي والهندسي لبناء وتطوير البرامج والتطبيقات المعقدة. لا يقتصر المجال على كتابة الأكواد فحسب، بل يشمل تحليل احتياجات المستخدمين، تصميم بنية الأنظمة (Architecture)، إدارة قواعد البيانات، وتأمين البرمجيات لتكون عالية الكفاءة وسهلة الاستخدام.
               </p>
             </section>
@@ -232,7 +232,7 @@ export default function SoftwareEngApp() {
 
           <section id="myths" className="scroll-mt-24 space-y-4 md:space-y-6">
             <Reveal>
-              <h2 className="text-xl sm:text-2xl font-bold text-violet-200">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#7957A8]">
                 ❓ حقيقة أم خرافة عن التخصص؟
               </h2>
             </Reveal>
@@ -240,16 +240,16 @@ export default function SoftwareEngApp() {
               {myths.map((item) => (
                 <Reveal
                   key={item.myth}
-                  className="bg-slate-900/80 backdrop-blur-sm p-5 sm:p-6 rounded-xl border border-violet-900/30 shadow-lg"
+                  className="bg-white p-5 sm:p-6 rounded-xl border border-[#7957A8]/20 shadow-sm"
                 >
-                  <span className="text-rose-400 font-bold text-sm">❌ خرافة:</span>
-                  <p className="text-slate-200 mt-1 text-sm sm:text-base">
+                  <span className="text-[#c45c5c] font-bold text-sm">❌ خرافة:</span>
+                  <p className="text-[#171A24] mt-1 text-sm sm:text-base">
                     &quot;{item.myth}&quot;
                   </p>
-                  <span className="text-emerald-400 font-bold text-sm mt-3 block">
+                  <span className="text-[#4EB67B] font-bold text-sm mt-3 block">
                     ✔ الحقيقة:
                   </span>
-                  <p className="text-slate-400 text-xs sm:text-sm">{item.fact}</p>
+                  <p className="text-[#5B6475] text-xs sm:text-sm">{item.fact}</p>
                 </Reveal>
               ))}
             </div>
@@ -257,10 +257,10 @@ export default function SoftwareEngApp() {
 
           <section id="courses" className="scroll-mt-24 space-y-6">
             <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-violet-200 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#7957A8] flex items-center gap-2">
                 📚 أهم 3 مواد ستدرسها بالفرع
               </h2>
-              <span className="text-xs text-violet-400 font-medium">
+              <span className="text-xs text-[#7957A8] font-medium">
                 ✨ اضغط على المادة لقراءة الشرح المبسط
               </span>
             </Reveal>
@@ -279,18 +279,18 @@ export default function SoftwareEngApp() {
                     }
                     transition={layoutTransition}
                     onClick={() => setSelectedCourse(course)}
-                    className="text-right bg-slate-900/70 p-6 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-lg cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full hover:border-violet-500 hover:bg-slate-900/90"
+                    className="text-right bg-white p-6 rounded-2xl border border-[#7957A8]/20 shadow-sm cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full hover:border-[#7957A8] hover:shadow-md"
                   >
                     <div>
                       <AnimatedIcon className="text-4xl mb-4">{course.icon}</AnimatedIcon>
-                      <h3 className="font-bold text-violet-300 text-lg mb-2 group-hover:text-violet-200">
+                      <h3 className="font-bold text-[#7957A8] text-lg mb-2 group-hover:text-[#7957A8]">
                         {course.name}
                       </h3>
-                      <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                      <p className="text-[#5B6475] text-xs sm:text-sm leading-relaxed mb-4">
                         {course.desc}
                       </p>
                     </div>
-                    <div className="text-violet-400 text-xs font-semibold flex items-center gap-1 pt-2 border-t border-violet-900/40">
+                    <div className="text-[#7957A8] text-xs font-semibold flex items-center gap-1 pt-2 border-t border-[#7957A8]/20">
                       انقر للتوضيح المبسط ←
                     </div>
                   </AnimatedCard>
@@ -301,13 +301,13 @@ export default function SoftwareEngApp() {
 
           <Reveal
             id="stack"
-            className="scroll-mt-24 bg-slate-900/60 p-6 md:p-8 rounded-2xl border border-violet-900/30 backdrop-blur-sm shadow-xl space-y-6"
+            className="scroll-mt-24 bg-white p-6 md:p-8 rounded-2xl border border-[#7957A8]/20 shadow-sm space-y-6"
           >
             <div className="text-center max-w-2xl mx-auto space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-violet-200 flex items-center justify-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#7957A8] flex items-center justify-center gap-2">
                 ⚙️ كيف يعمل أي موقع أو تطبيق بالدنيا؟
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-[#5B6475]">
                 اضغط على أي دور لفهمه — تخيل التطبيق مثل المطعم: ما يشوفه الزبون وما يحدث بالكواليس.
               </p>
             </div>
@@ -320,7 +320,7 @@ export default function SoftwareEngApp() {
                     key={role.id}
                     type="button"
                     onClick={() => setActiveStackId(role.id)}
-                    className={`relative text-right bg-slate-950/70 p-5 rounded-xl border ${role.borderClass} space-y-3 min-h-[44px] cursor-pointer transition ${
+                    className={`relative text-right bg-[#F5F7FA] p-5 rounded-xl border ${role.borderClass} space-y-3 min-h-[44px] cursor-pointer transition ${
                       isActive ? `ring-2 ${role.activeRing}` : 'opacity-85 hover:opacity-100'
                     }`}
                   >
@@ -328,7 +328,7 @@ export default function SoftwareEngApp() {
                       !prefersReducedMotion && (
                         <MotionDiv
                           layoutId="stack-active"
-                          className="absolute inset-0 rounded-xl border-2 border-violet-400/50 pointer-events-none"
+                          className="absolute inset-0 rounded-xl border-2 border-[#7957A8]/50 pointer-events-none"
                           transition={layoutTransition}
                         />
                       )}
@@ -338,7 +338,7 @@ export default function SoftwareEngApp() {
                         {role.title}
                       </h3>
                     </div>
-                    <p className="relative text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    <p className="relative text-[#5B6475] text-xs sm:text-sm leading-relaxed">
                       {role.body}
                     </p>
                   </button>
@@ -368,31 +368,31 @@ export default function SoftwareEngApp() {
             id="try"
             className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start"
           >
-            <section className="bg-slate-900/90 p-5 sm:p-6 rounded-2xl border border-violet-900/40 shadow-xl space-y-4 backdrop-blur-md h-full flex flex-col justify-between">
+            <section className="bg-white p-5 sm:p-6 rounded-2xl border border-[#7957A8]/20 shadow-sm space-y-4 h-full flex flex-col justify-between">
               <div>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-                  <h2 className="text-lg sm:text-xl font-bold text-emerald-400">
+                  <h2 className="text-lg sm:text-xl font-bold text-[#4EB67B]">
                     💻 جرب شعور أول كود برمجي!
                   </h2>
                   <MagneticButton
                     type="button"
                     onClick={runCode}
                     disabled={isRunning}
-                    className="w-full sm:w-auto min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-lg font-medium text-xs sm:text-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md active:scale-95"
+                    className="w-full sm:w-auto min-h-[44px] bg-[#4EB67B] hover:bg-[#3fa06a] text-white px-4 py-2.5 rounded-lg font-medium text-xs sm:text-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md active:scale-95"
                   >
                     {isRunning ? '⏳ جاري التشغيل...' : '▶ تشغيل الكود (Run)'}
                   </MagneticButton>
                 </div>
 
                 <div
-                  className="bg-slate-950 p-4 rounded-lg font-mono text-xs sm:text-sm border border-violet-950 text-slate-300 overflow-x-auto text-left"
+                  className="bg-[#F5F7FA] p-4 rounded-lg font-mono text-xs sm:text-sm border border-[#7957A8]/20 text-[#5B6475] overflow-x-auto text-left"
                   dir="ltr"
                 >
                   <p className="text-slate-500">// C++ / JavaScript Code Example</p>
                   <p>
                     <span className="text-purple-400">console</span>.
                     <span className="text-blue-400">log</span>(
-                    <span className="text-emerald-300">
+                    <span className="text-[#2B2E71]">
                       &quot;مرحباً بك في تخصص هندسة البرمجيات!&quot;
                     </span>
                     );
@@ -408,7 +408,7 @@ export default function SoftwareEngApp() {
                     animate="visible"
                     exit="exit"
                     variants={enterVariants}
-                    className="bg-slate-950/90 p-4 rounded-lg font-mono text-xs sm:text-sm border border-emerald-500/30 text-emerald-400 mt-4"
+                    className="bg-[#F5F7FA] p-4 rounded-lg font-mono text-xs sm:text-sm border border-[#4EB67B]/40 text-[#2B2E71] mt-4"
                   >
                     <span className="text-slate-500 block text-xs mb-1">
                       &gt; الشاشة الناتجة (Output):
@@ -425,7 +425,7 @@ export default function SoftwareEngApp() {
 
             <section
               id="quiz"
-              className="scroll-mt-24 bg-slate-900/60 p-5 sm:p-6 rounded-2xl border border-violet-900/30 text-center space-y-6 backdrop-blur-sm h-full flex flex-col justify-center"
+              className="scroll-mt-24 bg-white p-5 sm:p-6 rounded-2xl border border-[#7957A8]/20 text-center space-y-6 shadow-sm h-full flex flex-col justify-center"
             >
               <h2 className="text-xl sm:text-2xl font-bold text-amber-300">
                 ✨ هل التخصص يناسبك؟ (اختبار سريع)
@@ -434,7 +434,7 @@ export default function SoftwareEngApp() {
               {!showResult && (
                 <div className="space-y-3 max-w-md mx-auto w-full">
                   <QuizSteps total={questions.length} current={currentQuestion} />
-                  <div className="text-xs sm:text-sm text-slate-400">
+                  <div className="text-xs sm:text-sm text-[#5B6475]">
                     السؤال {currentQuestion + 1} من {questions.length}
                   </div>
                 </div>
@@ -450,7 +450,7 @@ export default function SoftwareEngApp() {
                     variants={enterVariants}
                     className="space-y-6 max-w-md mx-auto w-full"
                   >
-                    <p className="text-base sm:text-lg font-medium text-slate-100">
+                    <p className="text-base sm:text-lg font-medium text-[#171A24]">
                       {questions[currentQuestion].text}
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-3">
@@ -459,14 +459,14 @@ export default function SoftwareEngApp() {
                         onClick={() =>
                           handleAnswer(questions[currentQuestion].points)
                         }
-                        className="w-full sm:w-auto min-h-[44px] bg-violet-600 hover:bg-violet-500 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer shadow-md"
+                        className="w-full sm:w-auto min-h-[44px] bg-[#7957A8] hover:bg-[#6a4a96] text-white px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer shadow-md"
                       >
                         نعم، ينطبق عليّ
                       </MagneticButton>
                       <MagneticButton
                         type="button"
                         onClick={() => handleAnswer(0)}
-                        className="w-full sm:w-auto min-h-[44px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer border border-violet-900/40"
+                        className="w-full sm:w-auto min-h-[44px] bg-[#F5F7FA] hover:bg-white text-[#171A24] px-5 py-2.5 rounded-xl font-medium text-sm transition cursor-pointer border border-[#7957A8]/25"
                       >
                         لا أظن ذلك
                       </MagneticButton>
@@ -497,13 +497,13 @@ export default function SoftwareEngApp() {
                       <CountUp
                         value={score}
                         suffix="%"
-                        className="text-3xl sm:text-4xl font-extrabold text-emerald-400"
+                        className="text-3xl sm:text-4xl font-extrabold text-[#4EB67B]"
                       />
                     </MotionDiv>
 
                     {score >= 75 && (
                       <MotionSpan
-                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-xs sm:text-sm font-semibold px-3 py-1.5"
+                        className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-[#2B2E71] text-xs sm:text-sm font-semibold px-3 py-1.5"
                         initial="hidden"
                         animate="visible"
                         variants={
@@ -516,7 +516,7 @@ export default function SoftwareEngApp() {
                       </MotionSpan>
                     )}
 
-                    <p className="text-sm sm:text-lg text-slate-200">
+                    <p className="text-sm sm:text-lg text-[#171A24]">
                       {score >= 75
                         ? 'لديك شغف وتفكير يناسب تخصص البرمجيات جداً.'
                         : 'التخصص يحتاج رغبة في حل المشاكل، يمكنك التجربة والاستكشاف أكثر!'}
@@ -524,7 +524,7 @@ export default function SoftwareEngApp() {
                     <button
                       type="button"
                       onClick={resetQuiz}
-                      className="min-h-[44px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-lg text-xs sm:text-sm transition cursor-pointer border border-violet-900/40"
+                      className="min-h-[44px] bg-[#F5F7FA] hover:bg-white text-[#171A24] px-4 py-2.5 rounded-lg text-xs sm:text-sm transition cursor-pointer border border-[#7957A8]/25"
                     >
                       إعادة الاختبار
                     </button>
@@ -542,7 +542,7 @@ export default function SoftwareEngApp() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="course-modal-title"
-              className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+              className="fixed inset-0 z-50 bg-[#171A24]/55 backdrop-blur-sm flex items-center justify-center p-4"
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -560,7 +560,7 @@ export default function SoftwareEngApp() {
                 initial={prefersReducedMotion ? 'hidden' : false}
                 animate={prefersReducedMotion ? 'visible' : undefined}
                 exit={prefersReducedMotion ? 'exit' : undefined}
-                className="bg-slate-900 border border-violet-500/50 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl space-y-4 relative"
+                className="bg-white border border-[#7957A8]/40 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl space-y-4 relative"
                 onClick={(event) => event.stopPropagation()}
               >
                 <button
@@ -568,7 +568,7 @@ export default function SoftwareEngApp() {
                   type="button"
                   onClick={closeModal}
                   aria-label="إغلاق"
-                  className="absolute top-4 left-4 text-slate-400 hover:text-white bg-slate-800 rounded-full min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center text-sm transition cursor-pointer"
+                  className="absolute top-4 left-4 text-[#5B6475] hover:text-white bg-[#F5F7FA] rounded-full min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center text-sm transition cursor-pointer"
                 >
                   ✕
                 </button>
@@ -576,20 +576,20 @@ export default function SoftwareEngApp() {
                   <span className="text-4xl">{selectedCourse.icon}</span>
                   <h3
                     id="course-modal-title"
-                    className="text-xl sm:text-2xl font-bold text-violet-300"
+                    className="text-xl sm:text-2xl font-bold text-[#7957A8]"
                   >
                     {selectedCourse.name}
                   </h3>
                 </div>
-                <div className="border-t border-violet-900/50 my-2" />
-                <p className="text-slate-200 leading-relaxed text-sm sm:text-base">
+                <div className="border-t border-[#7957A8]/20 my-2" />
+                <p className="text-[#171A24] leading-relaxed text-sm sm:text-base">
                   {selectedCourse.details}
                 </p>
                 <div className="pt-4 flex justify-end">
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="min-h-[44px] bg-violet-600 hover:bg-violet-500 text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm transition cursor-pointer font-medium"
+                    className="min-h-[44px] bg-[#7957A8] hover:bg-[#6a4a96] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm transition cursor-pointer font-medium"
                   >
                     فهمت المبدأ 👍
                   </button>

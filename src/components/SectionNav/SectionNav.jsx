@@ -4,6 +4,7 @@ import { layoutTransition } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const MotionSpan = motion.span;
+const PURPLE = '#7957A8';
 
 const SECTIONS = [
   { id: 'about', label: 'تعريف' },
@@ -50,11 +51,8 @@ export default function SectionNav() {
   return (
     <nav
       aria-label="أقسام الصفحة"
-      className="sticky top-0 z-40 w-full border-b backdrop-blur-md"
-      style={{
-        borderColor: '#7957A844',
-        backgroundColor: 'rgba(30, 27, 75, 0.9)',
-      }}
+      className="sticky top-0 z-40 w-full border-b backdrop-blur-md bg-white/90"
+      style={{ borderColor: `${PURPLE}33` }}
     >
       <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 overflow-x-auto">
         <ul className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 min-w-max mx-auto">
@@ -68,17 +66,20 @@ export default function SectionNav() {
                   className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition cursor-pointer ${
                     isActive
                       ? 'text-white'
-                      : 'text-slate-400 hover:text-[#a78bfa]'
+                      : 'text-[#5B6475] hover:text-[#7957A8]'
                   }`}
                 >
                   {isActive &&
                     (prefersReducedMotion ? (
-                      <span className="absolute inset-0 rounded-lg border" style={{ backgroundColor: '#7957A880', borderColor: '#5DBB7844' }} />
+                      <span
+                        className="absolute inset-0 rounded-lg"
+                        style={{ backgroundColor: PURPLE }}
+                      />
                     ) : (
                       <MotionSpan
                         layoutId="section-nav-active"
-                        className="absolute inset-0 rounded-lg border"
-                        style={{ backgroundColor: '#7957A880', borderColor: '#5DBB7844' }}
+                        className="absolute inset-0 rounded-lg"
+                        style={{ backgroundColor: PURPLE }}
                         transition={layoutTransition}
                       />
                     ))}

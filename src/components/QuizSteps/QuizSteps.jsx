@@ -25,16 +25,16 @@ export default function QuizSteps({ total, current }) {
             key={index}
             role="listitem"
             className={`relative h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full ${
-              isPast ? 'bg-violet-500/50' : 'bg-slate-700'
+              isPast ? 'bg-[#7957A8]/40' : 'bg-slate-300'
             }`}
           >
             {isActive &&
               (prefersReducedMotion ? (
-                <span className="absolute inset-0 rounded-full bg-violet-400" />
+                <span className="absolute inset-0 rounded-full bg-[#7957A8]" />
               ) : (
                 <MotionDiv
                   layoutId="quiz-active-step"
-                  className="absolute inset-0 rounded-full bg-violet-400 shadow-[0_0_12px_rgba(167,139,250,0.7)]"
+                  className="absolute inset-0 rounded-full bg-[#7957A8] shadow-[0_0_12px_rgba(121,87,168,0.45)]"
                   transition={layoutTransition}
                 />
               ))}

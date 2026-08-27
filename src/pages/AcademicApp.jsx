@@ -36,7 +36,7 @@ export default function AcademicApp() {
       lang="ar"
       className="min-h-screen w-full flex flex-col font-sans overflow-x-hidden"
       style={{
-        background: `linear-gradient(180deg, ${SITE_THEME.headerBg}22 0%, ${SITE_THEME.shellBg} 12rem)`,
+        backgroundColor: SITE_THEME.shellBg,
         color: SITE_THEME.textPrimary,
       }}
     >
