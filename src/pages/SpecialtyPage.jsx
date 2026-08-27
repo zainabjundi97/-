@@ -46,6 +46,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   const enterVariants = prefersReducedMotion ? reducedMotionVariants : fadeIn;
   const modalVariants = prefersReducedMotion ? reducedMotionVariants : scaleFade;
 
+  const [snippetLine, setSnippetLine] = useState(content.trySnippetLine);
   const [codeOutput, setCodeOutput] = useState('');
   const [typeReplayKey, setTypeReplayKey] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -125,10 +126,11 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
   const runCode = () => {
     if (runTimeoutRef.current) clearTimeout(runTimeoutRef.current);
+    const output = snippetLine.trim() || content.trySnippetLine;
     setIsRunning(true);
     setCodeOutput('');
     runTimeoutRef.current = setTimeout(() => {
-      setCodeOutput(content.codeOutput);
+      setCodeOutput(output);
       setTypeReplayKey((key) => key + 1);
       setIsRunning(false);
       runTimeoutRef.current = null;
@@ -354,13 +356,29 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                   dir="ltr"
                 >
                   <p className="text-slate-500">{content.trySnippetComment}</p>
-                  <p>
-                    <span style={{ color: accent }}>console</span>.
-                    <span className="text-[#5191CE]">log</span>(
-                    <span className="text-[#2B2E71]">
-                      &quot;{content.trySnippetLine}&quot;
+                  <p className="flex flex-wrap items-baseline gap-x-0 gap-y-1">
+                    <span>
+                      <span style={{ color: accent }}>console</span>.
+                      <span className="text-[#5191CE]">log</span>(
+                      <span className="text-[#2B2E71]">&quot;</span>
                     </span>
-                    );
+                    <input
+                      type="text"
+                      value={snippetLine}
+                      onChange={(event) => setSnippetLine(event.target.value)}
+                      disabled={isRunning}
+                      maxLength={80}
+                      dir="ltr"
+                      aria-label="نص الرسالة داخل console.log"
+                      className="min-w-[12ch] flex-1 max-w-full bg-transparent border-b border-[#4EB67B]/50 focus:border-[#4EB67B] outline-none text-[#2B2E71] font-mono text-xs sm:text-sm px-0.5 py-0.5 disabled:opacity-60"
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' && !isRunning) {
+                          event.preventDefault();
+                          runCode();
+                        }
+                      }}
+                    />
+                    <span className="text-[#2B2E71]">&quot;);</span>
                   </p>
                 </div>
               </div>
