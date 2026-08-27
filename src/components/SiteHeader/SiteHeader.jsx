@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { NAV_ITEMS, SITE_THEME } from '../../lib/departments';
+import { NAV_ITEMS } from '../../lib/departments';
 import { navShell } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
@@ -19,46 +19,36 @@ function SiteLogo() {
 }
 
 /**
- * Shared site header with department navigation.
+ * Sticky floating glassmorphic site header.
  * @param {{ activeTab: string, onTabChange: (id: string) => void }} props
  */
 export default function SiteHeader({ activeTab, onTabChange }) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <header
-      className="w-full flex-shrink-0 z-50 shadow-sm overflow-x-hidden"
-      style={{
-        backgroundColor: SITE_THEME.headerBg,
-        borderBottom: `1px solid ${SITE_THEME.headerBorder}`,
-      }}
-    >
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-2.5 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div
-            className="flex items-center justify-center w-8 h-8 rounded-lg border"
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.06)',
-              borderColor: SITE_THEME.headerBorder,
-            }}
-          >
+    <header className="sticky top-0 z-50 w-full overflow-x-hidden bg-transparent">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-4 px-4 sm:px-8 py-3 sm:py-4">
+        {/* Brand — start (RTL) */}
+        <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/5 backdrop-blur-md shrink-0">
             <SiteLogo />
           </div>
-          <div>
-            <h1
-              className="text-base sm:text-lg font-black leading-tight"
-              style={{ color: SITE_THEME.textPrimary }}
-            >
-              وجهتك الأكاديمية
-            </h1>
-            <p className="hidden sm:block text-[10px] font-bold text-[#498BC9] tracking-wider uppercase">
+          <div className="min-w-0">
+            <p className="text-xs text-slate-300 leading-snug">
+              منصة طلاب البكالوريا
+            </p>
+            <p className="hidden sm:block text-xs text-slate-300/80 leading-snug tracking-wide">
               YOUR ACADEMIC DESTINATION
             </p>
           </div>
         </div>
 
-        <nav aria-label="أقسام الكلية" className="w-full md:w-auto md:flex-1">
-          <ul className="flex flex-wrap justify-center gap-1 sm:gap-1.5 w-full">
+        {/* Center floating glass pill nav */}
+        <nav
+          aria-label="أقسام الكلية"
+          className="w-full lg:w-auto lg:flex-1 flex justify-center order-3 lg:order-none"
+        >
+          <ul className="rounded-full bg-slate-800/40 backdrop-blur-md border border-white/10 px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 max-w-full">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
               return (
@@ -66,23 +56,19 @@ export default function SiteHeader({ activeTab, onTabChange }) {
                   <button
                     type="button"
                     onClick={() => onTabChange(dept.id)}
-                    className={`relative min-h-[44px] px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
+                    className={`relative min-h-[44px] px-2.5 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap ${
                       isActive
                         ? 'text-white'
-                        : 'text-slate-300/80 hover:text-white'
+                        : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     {isActive &&
                       (prefersReducedMotion ? (
-                        <span
-                          className="absolute inset-0 rounded-lg"
-                          style={{ backgroundColor: SITE_THEME.navAccent }}
-                        />
+                        <span className="absolute inset-0 rounded-full bg-white/15 border border-white/20" />
                       ) : (
                         <MotionSpan
                           layoutId={navShell.layoutId}
-                          className="absolute inset-0 rounded-lg"
-                          style={{ backgroundColor: SITE_THEME.navAccent }}
+                          className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
                           transition={navShell.transition}
                         />
                       ))}
@@ -93,6 +79,17 @@ export default function SiteHeader({ activeTab, onTabChange }) {
             })}
           </ul>
         </nav>
+
+        {/* CTA — end (RTL) */}
+        <div className="shrink-0 self-stretch lg:self-auto flex justify-end">
+          <button
+            type="button"
+            onClick={() => onTabChange('software')}
+            className="min-h-[44px] rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-5 sm:px-6 py-2.5 text-sm text-white hover:bg-white/25 transition-all cursor-pointer whitespace-nowrap"
+          >
+            ابدأ الآن
+          </button>
+        </div>
       </div>
     </header>
   );
