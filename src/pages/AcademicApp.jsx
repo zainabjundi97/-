@@ -3,7 +3,7 @@ import SiteHeader from '../components/SiteHeader/SiteHeader';
 import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
 import BasicsPage from './BasicsPage';
-import ComingSoonPage from './ComingSoonPage';
+import ContestPage from './ContestPage';
 import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
 
@@ -18,7 +18,7 @@ function renderTab(activeTab, onNavigate) {
     case 'ai':
       return <SpecialtyPage key={activeTab} departmentId={activeTab} />;
     case 'contest':
-      return <ComingSoonPage departmentId="contest" />;
+      return <ContestPage key="contest" />;
     default:
       return <HomePage key="home" onNavigate={onNavigate} />;
   }
