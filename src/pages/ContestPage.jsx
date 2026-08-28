@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal/Reveal';
 import CountUp from '../components/CountUp/CountUp';
 import { SITE_THEME } from '../lib/departments';
 import { getContestContent } from '../data/contestContent';
+import { useUiSound } from '../hooks/useUiSound';
 
 const GOLD = '#E6B84A';
 const NAVY = '#2B2E71';
@@ -30,7 +31,17 @@ function SectionTitle({ children }) {
  */
 export default function ContestPage() {
   const content = getContestContent();
+  const { play } = useUiSound();
   const [puzzleStep, setPuzzleStep] = useState(0);
+
+  const advancePuzzle = () => {
+    if (puzzleStep === 0) {
+      play('confirm');
+    } else {
+      play('success');
+    }
+    setPuzzleStep((step) => step + 1);
+  };
 
   return (
     <div className="w-full flex-1 flex flex-col overflow-x-hidden bg-[#F5F7FA]">
@@ -246,7 +257,7 @@ export default function ContestPage() {
               {puzzleStep < 2 && (
                 <button
                   type="button"
-                  onClick={() => setPuzzleStep((step) => step + 1)}
+                  onClick={advancePuzzle}
                   className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition"
                   style={{
                     backgroundColor: GOLD,

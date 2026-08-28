@@ -12,6 +12,7 @@ import CountUp from '../components/CountUp/CountUp';
 import QuizSteps from '../components/QuizSteps/QuizSteps';
 import SectionNav from '../components/SectionNav/SectionNav';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { useUiSound } from '../hooks/useUiSound';
 import { getDepartment } from '../lib/departments';
 import { getSpecialtyContent } from '../data/specialtyContent';
 import {
@@ -43,6 +44,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   const accentHover = dept.accent;
 
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { play } = useUiSound();
   const enterVariants = prefersReducedMotion ? reducedMotionVariants : fadeIn;
   const modalVariants = prefersReducedMotion ? reducedMotionVariants : scaleFade;
 
@@ -109,12 +111,14 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   }, [selectedCourse, closeModal]);
 
   const handleAnswer = (points) => {
+    play('confirm');
     const nextScore = score + points;
     setScore(nextScore);
     if (currentQuestion + 1 < content.questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResult(true);
+      if (nextScore >= 75) play('success');
     }
   };
 
@@ -125,6 +129,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   };
 
   const runCode = () => {
+    play('confirm');
     if (runTimeoutRef.current) clearTimeout(runTimeoutRef.current);
     const output = snippetLine.trim() || content.trySnippetLine;
     setIsRunning(true);
