@@ -1,0 +1,22 @@
+.site-header-nav {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.site-header-nav::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .site-header-nav {
+    mask-image: linear-gradient(
+      to left,
+      transparent,
+      #000 1rem,
+      #000 calc(100% - 1rem),
+      transparent
+    );
+  }
+}
