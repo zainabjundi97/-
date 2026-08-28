@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { NAV_ITEMS, SITE_THEME } from '../../lib/departments';
 import { navShell } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useUiSound } from '../../hooks/useUiSound';
 import './SiteHeader.css';
 
 const MotionSpan = motion.span;
@@ -25,6 +26,7 @@ function SiteLogo() {
  */
 export default function SiteHeader({ activeTab, onTabChange }) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { play } = useUiSound();
 
   return (
     <header
@@ -67,7 +69,10 @@ export default function SiteHeader({ activeTab, onTabChange }) {
                 <li key={dept.id} className="relative shrink-0 snap-start">
                   <button
                     type="button"
-                    onClick={() => onTabChange(dept.id)}
+                    onClick={() => {
+                      play('tap');
+                      onTabChange(dept.id);
+                    }}
                     className="relative min-h-[44px] px-3 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
                     style={{
                       color: isActive ? activeTextColor : SITE_THEME.navText,

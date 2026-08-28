@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { layoutTransition } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useUiSound } from '../../hooks/useUiSound';
 
 const MotionSpan = motion.span;
 
@@ -29,6 +30,7 @@ function scrollToId(id) {
  */
 export default function SectionNav({ accent = '#7957A8' }) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { play } = useUiSound();
   const [activeId, setActiveId] = useState('about');
 
   useEffect(() => {
@@ -62,7 +64,10 @@ export default function SectionNav({ accent = '#7957A8' }) {
               <li key={section.id} className="relative">
                 <button
                   type="button"
-                  onClick={() => scrollToId(section.id)}
+                  onClick={() => {
+                    play('tap');
+                    scrollToId(section.id);
+                  }}
                   className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition cursor-pointer ${
                     isActive
                       ? 'text-white'
