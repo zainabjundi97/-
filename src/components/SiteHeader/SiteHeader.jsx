@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { NAV_ITEMS, SITE_THEME } from '../../lib/departments';
 import { navShell } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import './SiteHeader.css';
 
 const MotionSpan = motion.span;
 
@@ -30,8 +31,8 @@ export default function SiteHeader({ activeTab, onTabChange }) {
       className="sticky top-0 z-50 w-full overflow-x-hidden backdrop-blur-md border-b border-slate-200/80"
       style={{ backgroundColor: SITE_THEME.headerGlass }}
     >
-      <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-4 px-4 sm:px-8 py-3 sm:py-4">
-        <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
+        <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto">
           <div
             className="flex items-center justify-center w-10 h-10 rounded-full border backdrop-blur-md shrink-0 bg-white shadow-sm"
             style={{ borderColor: SITE_THEME.headerBorder }}
@@ -43,7 +44,7 @@ export default function SiteHeader({ activeTab, onTabChange }) {
               منصة طلاب البكالوريا
             </p>
             <p
-              className="hidden sm:block text-xs leading-snug tracking-wide"
+              className="hidden lg:block text-xs leading-snug tracking-wide"
               style={{ color: SITE_THEME.brandBlue }}
             >
               YOUR ACADEMIC DESTINATION
@@ -53,9 +54,9 @@ export default function SiteHeader({ activeTab, onTabChange }) {
 
         <nav
           aria-label="أقسام الكلية"
-          className="w-full lg:w-auto lg:flex-1 flex justify-center order-3 lg:order-none"
+          className="w-full lg:w-auto lg:flex-1 flex justify-stretch lg:justify-center order-3 lg:order-none min-w-0"
         >
-          <ul className="rounded-full bg-white border border-slate-200 shadow-sm px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 max-w-full">
+          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-6 w-full lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
@@ -63,11 +64,11 @@ export default function SiteHeader({ activeTab, onTabChange }) {
                 dept.id === 'contest' ? SITE_THEME.textPrimary : SITE_THEME.navTextActive;
 
               return (
-                <li key={dept.id} className="relative">
+                <li key={dept.id} className="relative shrink-0 snap-start">
                   <button
                     type="button"
                     onClick={() => onTabChange(dept.id)}
-                    className="relative min-h-[44px] px-2.5 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
+                    className="relative min-h-[44px] px-3 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
                     style={{
                       color: isActive ? activeTextColor : SITE_THEME.navText,
                     }}
@@ -94,7 +95,7 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           </ul>
         </nav>
 
-        <div className="shrink-0 self-stretch lg:self-auto flex justify-end items-center">
+        <div className="hidden lg:flex shrink-0 self-auto justify-end items-center">
           <p
             className="min-h-[44px] inline-flex items-center rounded-full bg-white border border-slate-200 shadow-sm px-4 py-2.5 text-sm font-semibold whitespace-nowrap"
             style={{ color: SITE_THEME.brandDark }}

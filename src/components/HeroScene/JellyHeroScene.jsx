@@ -286,7 +286,7 @@ export default function JellyHeroScene({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 z-0 pointer-events-auto"
+      className="absolute inset-0 z-0 pointer-events-auto scale-[0.58] origin-center opacity-80 sm:scale-[0.82] sm:opacity-90 md:scale-100 md:opacity-100"
       aria-hidden
     />
   );
