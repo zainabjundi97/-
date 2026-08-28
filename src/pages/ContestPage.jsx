@@ -5,8 +5,8 @@ import { SITE_THEME } from '../lib/departments';
 import { getContestContent } from '../data/contestContent';
 import { useUiSound } from '../hooks/useUiSound';
 
-const GOLD = '#E6B84A';
-const NAVY = '#2B2E71';
+const GOLD = '#FFCC00';
+const BLUE = '#5191CE';
 
 function SectionTitle({ children }) {
   return (
@@ -48,7 +48,7 @@ export default function ContestPage() {
       <header
         className="relative w-full overflow-hidden text-white"
         style={{
-          background: `linear-gradient(to bottom right, ${NAVY}, ${GOLD})`,
+          background: `linear-gradient(to bottom right, ${BLUE}, ${GOLD})`,
         }}
       >
         <div
@@ -65,7 +65,7 @@ export default function ContestPage() {
           <span
             className="inline-block text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full border mb-4"
             style={{
-              color: NAVY,
+              color: BLUE,
               backgroundColor: GOLD,
               borderColor: GOLD,
             }}
@@ -73,8 +73,7 @@ export default function ContestPage() {
             {content.badge}
           </span>
           <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-3xl"
-            style={{ color: GOLD }}
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-3xl text-white"
           >
             {content.title}
           </h1>
@@ -147,7 +146,7 @@ export default function ContestPage() {
                     </div>
                     <span
                       className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-sm font-black shrink-0"
-                      style={{ backgroundColor: GOLD, color: NAVY }}
+                      style={{ backgroundColor: GOLD, color: BLUE }}
                       aria-hidden
                     >
                       {String(index + 1).padStart(2, '0')}
@@ -261,7 +260,7 @@ export default function ContestPage() {
                   className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition"
                   style={{
                     backgroundColor: GOLD,
-                    color: NAVY,
+                    color: BLUE,
                   }}
                 >
                   {puzzleStep === 0 ? content.puzzleHintLabel : content.puzzleAnswerLabel}
