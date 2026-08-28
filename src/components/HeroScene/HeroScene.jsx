@@ -233,7 +233,7 @@ export default function HeroScene({
   const colors = getSceneColors(accent, accentSecondary);
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+    <div className="absolute inset-0 z-0 pointer-events-none scale-[0.58] origin-center opacity-80 sm:scale-[0.82] sm:opacity-90 md:scale-100 md:opacity-100" aria-hidden>
       <Canvas
         dpr={[1, 1.5]}
         frameloop={active ? 'always' : 'never'}

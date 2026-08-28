@@ -158,7 +158,7 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
       ref={setHeaderRefs}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[70vh] sm:min-h-[28rem]"
+      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[22rem] sm:min-h-[28rem]"
       style={{
         background: `linear-gradient(to bottom, ${dept.heroFrom}, ${dept.heroTo}cc, transparent)`,
       }}
