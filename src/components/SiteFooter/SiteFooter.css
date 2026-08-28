@@ -1,0 +1,15 @@
+.site-footer-social {
+  transition: color 0.2s ease;
+}
+
+.site-footer-social:hover,
+.site-footer-social:focus-visible {
+  color: #5191CE;
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-social {
+    transition: none;
+  }
+}

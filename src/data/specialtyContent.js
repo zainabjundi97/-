@@ -21,7 +21,7 @@ export const specialtyContent = {
     stackHint:
       'اضغط على أي دور لفهمه — تخيل التطبيق مثل المطعم: ما يشوفه الزبون وما يحدث بالكواليس.',
     tryTitle: '💻 جرب شعور أول كود برمجي!',
-    trySnippetComment: '// C++ / JavaScript Code Example',
+    trySnippetComment: '// JavaScript Code Example',
     trySnippetLine: 'مرحباً بك في تخصص هندسة البرمجيات!',
     quizTitle: '✨ هل التخصص يناسبك؟ (اختبار سريع)',
     quizPass: 'لديك شغف وتفكير يناسب تخصص البرمجيات جداً.',

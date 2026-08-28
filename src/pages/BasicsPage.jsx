@@ -1,6 +1,6 @@
 import PageMasthead from '../components/PageMasthead/PageMasthead';
 import Reveal from '../components/Reveal/Reveal';
-import { getDepartment, SITE_THEME } from '../lib/departments';
+import { DEPARTMENTS, getDepartment, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
 
 /**
@@ -9,6 +9,7 @@ import { getShellContent } from '../data/shellContent';
  */
 export default function BasicsPage({ onNavigate }) {
   const content = getShellContent('basics');
+  const tracks = getShellContent('home').tracks;
   const dept = getDepartment('basics');
   const { hero } = content;
   const accents = [dept.accentSecondary, '#4EB67B', dept.accent, '#5191CE'];
@@ -103,14 +104,39 @@ export default function BasicsPage({ onNavigate }) {
               >
                 {content.noteBody}
               </p>
-              <button
-                type="button"
-                onClick={() => onNavigate?.('home')}
-                className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition shadow-sm"
-                style={{ backgroundColor: dept.accentSecondary }}
-              >
-                استكشف التخصصات من الرئيسية
-              </button>
+              <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
+                {tracks.map((track) => {
+                  const trackDept = DEPARTMENTS[track.id];
+                  return (
+                    <li key={track.id}>
+                      <button
+                        type="button"
+                        onClick={() => onNavigate?.(track.id)}
+                        className="w-full min-h-[44px] h-full text-right rounded-xl border bg-white p-4 sm:p-5 flex flex-col gap-3 cursor-pointer transition shadow-sm"
+                        style={{ borderColor: `${trackDept.accent}55` }}
+                      >
+                        <span
+                          className="block h-1.5 w-12 rounded-full shrink-0"
+                          style={{ backgroundColor: trackDept.accent }}
+                          aria-hidden
+                        />
+                        <span
+                          className="text-base sm:text-lg font-bold"
+                          style={{ color: trackDept.accent }}
+                        >
+                          {track.title}
+                        </span>
+                        <span
+                          className="text-sm leading-relaxed"
+                          style={{ color: SITE_THEME.textMuted }}
+                        >
+                          {track.blurb}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             </aside>
           </Reveal>
         </div>

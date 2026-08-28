@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { NAV_ITEMS, SITE_THEME } from '../../lib/departments';
+import { getDepartment, NAV_ITEMS, SITE_THEME } from '../../lib/departments';
 import { navShell } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useUiSound } from '../../hooks/useUiSound';
@@ -27,11 +27,17 @@ function SiteLogo() {
 export default function SiteHeader({ activeTab, onTabChange }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { play } = useUiSound();
+  const activeDept = getDepartment(activeTab);
+  const borderColor = activeDept.navActive ?? activeDept.accent;
 
   return (
     <header
-      className="sticky top-0 z-50 w-full overflow-x-hidden backdrop-blur-md border-b border-slate-200/80"
-      style={{ backgroundColor: SITE_THEME.headerGlass }}
+      className="sticky top-0 z-50 w-full overflow-x-hidden backdrop-blur-md border-b"
+      style={{
+        backgroundColor: SITE_THEME.headerGlass,
+        borderBottomWidth: 2,
+        borderBottomColor: borderColor,
+      }}
     >
       <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
         <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto">
