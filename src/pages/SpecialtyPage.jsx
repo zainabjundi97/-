@@ -26,6 +26,30 @@ import {
 const MotionDiv = motion.div;
 const MotionSpan = motion.span;
 
+function FutureGroup({ title, items, accent, borderSoft }) {
+  return (
+    <div className="space-y-3">
+      <h3 className="text-base sm:text-lg font-bold" style={{ color: accent }}>
+        {title}
+      </h3>
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
+        {items.map((item) => (
+          <li
+            key={item.title}
+            className="bg-white p-4 sm:p-5 rounded-xl border shadow-sm min-h-[44px]"
+            style={borderSoft}
+          >
+            <p className="text-sm sm:text-base font-bold mb-1.5" style={{ color: accent }}>
+              {item.title}
+            </p>
+            <p className="text-xs sm:text-sm leading-relaxed text-[#5B6475]">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function roleColor(tone, accent) {
   if (tone === 'accent') return accent;
   if (tone === 'blue') return '#5191CE';
@@ -172,6 +196,34 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
               </p>
             </section>
           </Reveal>
+
+          <section id="future" className="scroll-mt-24 space-y-6">
+            <Reveal>
+              <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
+                {content.futureTitle}
+              </h2>
+            </Reveal>
+            <Reveal className="space-y-8">
+              <FutureGroup
+                title={content.projectsTitle}
+                items={content.projects}
+                accent={accent}
+                borderSoft={borderSoft}
+              />
+              <FutureGroup
+                title={content.careersTitle}
+                items={content.careers}
+                accent={accent}
+                borderSoft={borderSoft}
+              />
+              <FutureGroup
+                title={content.contrastTitle}
+                items={content.contrast}
+                accent={accent}
+                borderSoft={borderSoft}
+              />
+            </Reveal>
+          </section>
 
           <section id="myths" className="scroll-mt-24 space-y-4 md:space-y-6">
             <Reveal>

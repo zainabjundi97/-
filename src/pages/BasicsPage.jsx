@@ -77,6 +77,27 @@ export default function BasicsPage({ onNavigate }) {
                       >
                         {item.body}
                       </p>
+                      {item.tracks?.length > 0 && (
+                        <ul className="space-y-2 pt-2 list-none p-0 m-0">
+                          {item.tracks.map((track) => {
+                            const trackDept = DEPARTMENTS[track.id];
+                            return (
+                              <li
+                                key={track.id}
+                                className="text-sm leading-relaxed flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3"
+                              >
+                                <span
+                                  className="font-semibold shrink-0"
+                                  style={{ color: trackDept.accent }}
+                                >
+                                  {trackDept.label}
+                                </span>
+                                <span style={{ color: SITE_THEME.textMuted }}>{track.line}</span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
                     </div>
                   </Reveal>
                 </li>

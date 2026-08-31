@@ -212,6 +212,59 @@ export default function ContestPage() {
             </ul>
           </section>
 
+          <section className="space-y-6">
+            <Reveal>
+              <SectionTitle>{content.prepareTitle}</SectionTitle>
+            </Reveal>
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
+              {content.prepare.map((item) => (
+                <li
+                  key={item.id}
+                  className="rounded-2xl border bg-white p-5 sm:p-6 min-h-[44px]"
+                  style={{ borderColor: `${GOLD}66` }}
+                >
+                  <Reveal>
+                    <h3
+                      className="text-base sm:text-lg font-bold mb-2"
+                      style={{ color: SITE_THEME.textHeading }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
+                      {item.body}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="space-y-6">
+            <Reveal>
+              <SectionTitle>{content.rolesTitle}</SectionTitle>
+            </Reveal>
+            <ul
+              className="grid grid-cols-1 md:grid-cols-3 gap-px list-none p-0 m-0 rounded-2xl overflow-hidden border"
+              style={{ borderColor: GOLD, backgroundColor: GOLD }}
+            >
+              {content.roles.map((item) => (
+                <li key={item.id} className="bg-white p-5 sm:p-6 min-h-[44px]">
+                  <Reveal>
+                    <h3
+                      className="text-base sm:text-lg font-bold mb-2"
+                      style={{ color: GOLD }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
+                      {item.body}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <Reveal>
             <section
               className="rounded-2xl border p-5 sm:p-8 space-y-4"
