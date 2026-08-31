@@ -2,6 +2,7 @@ import PageMasthead from '../components/PageMasthead/PageMasthead';
 import Reveal from '../components/Reveal/Reveal';
 import { getDepartment, DEPARTMENTS, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 /**
  * الصفحة الرئيسية — welcome + intro to the three specialties.
@@ -11,6 +12,7 @@ export default function HomePage({ onNavigate }) {
   const content = getShellContent('home');
   const dept = getDepartment('home');
   const { hero } = content;
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <div className="w-full flex-1 flex flex-col overflow-x-hidden">
@@ -39,6 +41,73 @@ export default function HomePage({ onNavigate }) {
               {content.introBody}
             </p>
           </Reveal>
+
+          <section id="choose" className="scroll-mt-24 space-y-6">
+            <Reveal className="max-w-3xl space-y-2">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-1.5 h-7 rounded-full shrink-0"
+                  style={{ backgroundColor: dept.accentSecondary }}
+                  aria-hidden
+                />
+                <h2
+                  className="text-xl sm:text-2xl font-extrabold"
+                  style={{ color: SITE_THEME.textHeading }}
+                >
+                  {content.chooseTitle}
+                </h2>
+              </div>
+              <p
+                className="text-sm sm:text-base leading-relaxed pe-4"
+                style={{ color: SITE_THEME.textMuted }}
+              >
+                {content.chooseSubtitle}
+              </p>
+            </Reveal>
+            <ol className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
+              {content.chooseSteps.map((step, index) => (
+                <li key={step.id}>
+                  <Reveal className="h-full">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (step.action.startsWith('#')) {
+                          document.getElementById(step.action.slice(1))?.scrollIntoView({
+                            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                            block: 'start',
+                          });
+                          return;
+                        }
+                        onNavigate?.(step.action);
+                      }}
+                      className="w-full h-full min-h-[44px] text-right rounded-2xl border bg-white p-5 flex flex-col gap-2 cursor-pointer shadow-sm"
+                      style={{ borderColor: SITE_THEME.cardBorder }}
+                    >
+                      <span
+                        className="text-2xl font-black tabular-nums"
+                        style={{ color: dept.accentSecondary }}
+                        aria-hidden
+                      >
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span
+                        className="text-base sm:text-lg font-bold"
+                        style={{ color: SITE_THEME.textHeading }}
+                      >
+                        {step.title}
+                      </span>
+                      <span
+                        className="text-sm leading-relaxed"
+                        style={{ color: SITE_THEME.textMuted }}
+                      >
+                        {step.body}
+                      </span>
+                    </button>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </section>
 
           <section id="tracks" className="scroll-mt-24 space-y-8">
             <Reveal className="max-w-3xl space-y-2">

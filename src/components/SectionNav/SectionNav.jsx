@@ -8,6 +8,7 @@ const MotionSpan = motion.span;
 
 const SECTIONS = [
   { id: 'about', label: 'تعريف' },
+  { id: 'future', label: 'مستقبلك' },
   { id: 'myths', label: 'خرافات' },
   { id: 'courses', label: 'مواد' },
   { id: 'stack', label: 'كيف يعمل' },
