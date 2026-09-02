@@ -27,7 +27,7 @@ function SectionTitle({ children }) {
 }
 
 /**
- * المسابقة البرمجية — arena layout (not a specialty clone).
+ * المسابقة البرمجية — comprehensive contest guide.
  */
 export default function ContestPage() {
   const content = getContestContent();
@@ -72,9 +72,7 @@ export default function ContestPage() {
           >
             {content.badge}
           </span>
-          <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-3xl text-white"
-          >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-3xl text-white">
             {content.title}
           </h1>
           <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white/90 max-w-2xl">
@@ -110,114 +108,27 @@ export default function ContestPage() {
             </ul>
           </Reveal>
 
-          <section className="space-y-6">
-            <Reveal className="space-y-2 max-w-3xl">
-              <SectionTitle>{content.roundTitle}</SectionTitle>
-              <p
-                className="text-sm sm:text-base pe-5"
-                style={{ color: SITE_THEME.textMuted }}
-              >
-                {content.roundSubtitle}
-              </p>
-            </Reveal>
-
-            <ol className="relative list-none p-0 m-0 space-y-0">
-              <div
-                className="absolute top-3 bottom-3 w-0.5 end-5 sm:end-6"
-                style={{ backgroundColor: GOLD }}
-                aria-hidden
-              />
-              {content.steps.map((step, index) => (
-                <li key={step.id} className="relative">
-                  <Reveal className="grid grid-cols-[1fr_auto] gap-4 sm:gap-6 py-5 sm:py-6">
-                    <div className="min-w-0 space-y-1.5 pe-2">
-                      <h3
-                        className="text-lg sm:text-xl font-bold"
-                        style={{ color: SITE_THEME.textHeading }}
-                      >
-                        {step.title}
-                      </h3>
-                      <p
-                        className="text-sm sm:text-base leading-relaxed max-w-2xl"
-                        style={{ color: SITE_THEME.textMuted }}
-                      >
-                        {step.body}
-                      </p>
-                    </div>
-                    <span
-                      className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-sm font-black shrink-0"
-                      style={{ backgroundColor: GOLD, color: BLUE }}
-                      aria-hidden
-                    >
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </Reveal>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section className="space-y-6">
-            <Reveal>
-              <SectionTitle>{content.typesTitle}</SectionTitle>
-            </Reveal>
-            <ul
-              className="list-none p-0 m-0 divide-y border-y"
+          <Reveal>
+            <section
+              className="rounded-2xl border bg-white p-5 sm:p-8 space-y-3"
               style={{ borderColor: `${GOLD}66` }}
             >
-              {content.types.map((item) => (
-                <li key={item.id}>
-                  <Reveal className="py-5 sm:py-6 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8">
-                    <h3
-                      className="sm:w-48 shrink-0 text-base sm:text-lg font-bold"
-                      style={{ color: GOLD }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-sm sm:text-base leading-relaxed"
-                      style={{ color: SITE_THEME.textMuted }}
-                    >
-                      {item.body}
-                    </p>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </section>
+              <SectionTitle>{content.aboutTitle}</SectionTitle>
+              <p
+                className="text-sm sm:text-base leading-relaxed max-w-3xl"
+                style={{ color: SITE_THEME.textPrimary }}
+              >
+                {content.aboutBody}
+              </p>
+            </section>
+          </Reveal>
 
           <section className="space-y-6">
             <Reveal>
-              <SectionTitle>{content.whyTitle}</SectionTitle>
+              <SectionTitle>{content.benefitsTitle}</SectionTitle>
             </Reveal>
-            <ul
-              className="grid grid-cols-1 md:grid-cols-3 gap-px list-none p-0 m-0 rounded-2xl overflow-hidden border"
-              style={{ borderColor: GOLD, backgroundColor: GOLD }}
-            >
-              {content.why.map((item) => (
-                <li key={item.id} className="bg-white p-5 sm:p-6">
-                  <Reveal>
-                    <h3
-                      className="text-base sm:text-lg font-bold mb-2"
-                      style={{ color: GOLD }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                      {item.body}
-                    </p>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="space-y-6">
-            <Reveal>
-              <SectionTitle>{content.prepareTitle}</SectionTitle>
-            </Reveal>
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
-              {content.prepare.map((item) => (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+              {content.benefits.map((item) => (
                 <li
                   key={item.id}
                   className="rounded-2xl border bg-white p-5 sm:p-6 min-h-[44px]"
@@ -240,14 +151,17 @@ export default function ContestPage() {
           </section>
 
           <section className="space-y-6">
-            <Reveal>
-              <SectionTitle>{content.rolesTitle}</SectionTitle>
+            <Reveal className="space-y-2 max-w-3xl">
+              <SectionTitle>{content.careerTitle}</SectionTitle>
+              <p className="text-sm sm:text-base pe-5" style={{ color: SITE_THEME.textMuted }}>
+                {content.careerIntro}
+              </p>
             </Reveal>
             <ul
               className="grid grid-cols-1 md:grid-cols-3 gap-px list-none p-0 m-0 rounded-2xl overflow-hidden border"
               style={{ borderColor: GOLD, backgroundColor: GOLD }}
             >
-              {content.roles.map((item) => (
+              {content.career.map((item) => (
                 <li key={item.id} className="bg-white p-5 sm:p-6 min-h-[44px]">
                   <Reveal>
                     <h3
@@ -263,6 +177,113 @@ export default function ContestPage() {
                 </li>
               ))}
             </ul>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+              {content.qualify.map((item) => (
+                <li
+                  key={item.label}
+                  className="rounded-2xl border px-5 py-5 text-center"
+                  style={{
+                    borderColor: BLUE,
+                    backgroundColor: `${BLUE}12`,
+                  }}
+                >
+                  <p
+                    className="text-3xl sm:text-4xl font-black tabular-nums"
+                    style={{ color: BLUE }}
+                  >
+                    {item.value === 10 ? (
+                      <CountUp value={10} suffix={item.suffix} />
+                    ) : (
+                      <>
+                        {item.value}
+                        {item.suffix}
+                      </>
+                    )}
+                  </p>
+                  <p className="mt-1 text-sm" style={{ color: SITE_THEME.textMuted }}>
+                    {item.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <Reveal>
+            <section
+              className="rounded-2xl border p-5 sm:p-8 space-y-3"
+              style={{
+                borderColor: GOLD,
+                backgroundColor: `${GOLD}14`,
+              }}
+            >
+              <SectionTitle>{content.campTitle}</SectionTitle>
+              <p
+                className="text-sm sm:text-base leading-relaxed max-w-3xl font-medium"
+                style={{ color: SITE_THEME.textHeading }}
+              >
+                {content.campLead}
+              </p>
+              <p
+                className="text-sm sm:text-base leading-relaxed max-w-3xl"
+                style={{ color: SITE_THEME.textPrimary }}
+              >
+                {content.campBody}
+              </p>
+            </section>
+          </Reveal>
+
+          <section className="space-y-6">
+            <Reveal className="space-y-2 max-w-3xl">
+              <SectionTitle>{content.startTitle}</SectionTitle>
+              <p className="text-sm sm:text-base pe-5" style={{ color: SITE_THEME.textMuted }}>
+                {content.startSubtitle}
+              </p>
+            </Reveal>
+            <ol className="relative list-none p-0 m-0 space-y-0">
+              <div
+                className="absolute top-3 bottom-3 w-0.5 end-5 sm:end-6"
+                style={{ backgroundColor: GOLD }}
+                aria-hidden
+              />
+              {content.startSteps.map((step, index) => (
+                <li key={step.id} className="relative">
+                  <Reveal className="grid grid-cols-[1fr_auto] gap-4 sm:gap-6 py-5 sm:py-6">
+                    <div className="min-w-0 space-y-1.5 pe-2">
+                      <h3
+                        className="text-lg sm:text-xl font-bold"
+                        style={{ color: SITE_THEME.textHeading }}
+                      >
+                        {step.title}
+                      </h3>
+                      <p
+                        className="text-sm sm:text-base leading-relaxed max-w-2xl"
+                        style={{ color: SITE_THEME.textMuted }}
+                      >
+                        {step.body}
+                      </p>
+                      {step.href && (
+                        <a
+                          href={step.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center min-h-[44px] text-sm font-semibold"
+                          style={{ color: BLUE }}
+                        >
+                          {step.hrefLabel}
+                        </a>
+                      )}
+                    </div>
+                    <span
+                      className="relative z-10 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-sm font-black shrink-0"
+                      style={{ backgroundColor: GOLD, color: BLUE }}
+                      aria-hidden
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
           </section>
 
           <Reveal>
@@ -274,6 +295,12 @@ export default function ContestPage() {
               }}
             >
               <SectionTitle>{content.puzzleTitle}</SectionTitle>
+              <p
+                className="text-sm sm:text-base leading-relaxed max-w-3xl"
+                style={{ color: SITE_THEME.textMuted }}
+              >
+                {content.puzzleLead}
+              </p>
               <p
                 className="text-sm sm:text-base leading-relaxed max-w-3xl"
                 style={{ color: SITE_THEME.textPrimary }}
