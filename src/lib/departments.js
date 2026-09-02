@@ -38,11 +38,11 @@ export const DEPARTMENTS = {
   basics: {
     id: 'basics',
     label: 'علوم أساسية',
-    navActive: '#5191CE',
+    navActive: '#7EB8E4',
     heroFrom: '#2B2E71',
     heroTo: '#4EB67B',
     accent: '#2B2E71',
-    accentSecondary: '#5191CE',
+    accentSecondary: '#7EB8E4',
     sceneVariant: 'layers',
   },
   software: {
@@ -68,10 +68,10 @@ export const DEPARTMENTS = {
   ai: {
     id: 'ai',
     label: 'الذكاء الاصطناعي',
-    navActive: '#5191CE',
-    heroFrom: '#5191CE',
+    navActive: '#2E6BA8',
+    heroFrom: '#2E6BA8',
     heroTo: '#2B2E71',
-    accent: '#5191CE',
+    accent: '#2E6BA8',
     accentSecondary: '#4EB67B',
     sceneVariant: 'jelly',
   },
