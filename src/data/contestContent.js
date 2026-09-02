@@ -95,6 +95,23 @@ export const contestContent = {
   puzzleAnswerLabel: 'أظهر الفكرة',
   puzzleAnswer:
     'نعم إذا كان و زوجياً وأكبر من 2. الاثنان زوجي لكن لا ينقسم إلى جزءين زوجيين موجبين. مثال: 8 ← 2 و 6.',
+  puzzleLink: 'https://codeforces.com/problemset/problem/4/A',
+  puzzleLinkLabel: 'جرّب على Codeforces',
+  puzzleCode: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    int w;
+    cin >> w;
+
+    if (w % 2 == 0 && w != 2)
+        cout << "YES";
+    else 
+        cout << "NO";
+
+    return 0;
+}`,
 };
 
 export function getContestContent() {

@@ -305,8 +305,17 @@ export default function ContestPage() {
                 className="text-sm sm:text-base leading-relaxed max-w-3xl"
                 style={{ color: SITE_THEME.textPrimary }}
               >
-                {content.puzzlePrompt}
+                {content.puzzlePrompt} 
               </p>
+              <a
+                href={content.puzzleLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex me-2 items-center min-h-[44px] mt-2 text-sm font-semibold"
+                style={{ color: BLUE }}
+              >
+                {content.puzzleLinkLabel} 
+              </a>
 
               {puzzleStep >= 1 && (
                 <p
@@ -321,23 +330,35 @@ export default function ContestPage() {
               )}
 
               {puzzleStep >= 2 && (
-                <p
-                  className="text-sm sm:text-base leading-relaxed rounded-xl px-4 py-3 border"
-                  style={{
-                    borderColor: GOLD,
-                    backgroundColor: '#FFFFFF',
-                    color: SITE_THEME.textPrimary,
-                  }}
-                >
-                  {content.puzzleAnswer}
-                </p>
+                <>
+                  <p
+                    className="text-sm sm:text-base leading-relaxed rounded-xl px-4 py-3 border"
+                    style={{
+                      borderColor: GOLD,
+                      backgroundColor: '#FFFFFF',
+                      color: SITE_THEME.textPrimary,
+                    }}
+                  >
+                    {content.puzzleAnswer}
+                  </p>
+                  <pre
+                    dir="ltr"
+                    className="bg-[#F5F7FA] p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto text-left"
+                    style={{
+                      border: `1px solid ${GOLD}`,
+                      color: SITE_THEME.textHeading,
+                    }}
+                  >
+                    <code>{content.puzzleCode}</code>
+                  </pre>
+                </>
               )}
 
               {puzzleStep < 2 && (
                 <button
                   type="button"
                   onClick={advancePuzzle}
-                  className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition"
+                  className="min-h-[44px] mt-2 inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition"
                   style={{
                     backgroundColor: GOLD,
                     color: BLUE,
