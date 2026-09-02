@@ -12,7 +12,7 @@ export default function BasicsPage({ onNavigate }) {
   const tracks = getShellContent('home').tracks;
   const dept = getDepartment('basics');
   const { hero } = content;
-  const accents = [dept.accentSecondary, '#4EB67B', dept.accent, '#5191CE'];
+  const accents = [dept.accentSecondary, '#4EB67B', dept.accent, dept.accentSecondary];
 
   return (
     <div className="w-full flex-1 flex flex-col overflow-x-hidden">
