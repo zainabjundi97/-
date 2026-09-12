@@ -63,7 +63,7 @@ export const DEPARTMENTS = {
     heroTo: '#2B2E71',
     accent: '#5DBB78',
     accentSecondary: '#5191CE',
-    sceneVariant: 'torus',
+    sceneVariant: 'networkCore',
   },
   ai: {
     id: 'ai',
@@ -73,7 +73,7 @@ export const DEPARTMENTS = {
     heroTo: '#2B2E71',
     accent: '#2E6BA8',
     accentSecondary: '#4EB67B',
-    sceneVariant: 'jelly',
+    sceneVariant: 'robot',
   },
   contest: {
     id: 'contest',
