@@ -198,6 +198,192 @@ function StackCrystal({ colors }) {
   );
 }
 
+function RobotFigure({ colors }) {
+  return (
+    <group position={[0, -0.35, 0]} scale={0.78}>
+      <mesh position={[0, 1.7, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.5, 1.1, 0.9]} />
+        <meshStandardMaterial
+          color={colors.main}
+          emissive={colors.deep}
+          emissiveIntensity={0.55}
+          metalness={0.4}
+          roughness={0.24}
+          transparent
+          opacity={0.96}
+        />
+      </mesh>
+
+      <mesh position={[0, 2.35, 0]} castShadow>
+        <cylinderGeometry args={[0.08, 0.08, 0.5, 18]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.8} />
+      </mesh>
+      <mesh position={[0, 2.72, 0]} castShadow>
+        <sphereGeometry args={[0.18, 24, 24]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.8} />
+      </mesh>
+
+      <mesh position={[-0.38, 1.78, 0.52]} castShadow>
+        <sphereGeometry args={[0.13, 20, 20]} />
+        <meshStandardMaterial color={colors.wire} emissive={colors.deep} emissiveIntensity={0.8} />
+      </mesh>
+      <mesh position={[0.38, 1.78, 0.52]} castShadow>
+        <sphereGeometry args={[0.13, 20, 20]} />
+        <meshStandardMaterial color={colors.wire} emissive={colors.deep} emissiveIntensity={0.8} />
+      </mesh>
+
+      <mesh position={[0, 1.35, 0.56]} castShadow>
+        <boxGeometry args={[0.42, 0.12, 0.08]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.7} />
+      </mesh>
+
+      <mesh position={[0, 0.75, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.9, 1.3, 1.1]} />
+        <meshStandardMaterial
+          color={colors.main}
+          emissive={colors.deep}
+          emissiveIntensity={0.42}
+          metalness={0.45}
+          roughness={0.3}
+          transparent
+          opacity={0.92}
+        />
+      </mesh>
+
+      <mesh position={[0, 0.78, 0.62]} castShadow>
+        <boxGeometry args={[0.68, 0.52, 0.12]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.7} />
+      </mesh>
+
+      <mesh position={[-1.3, 0.95, 0]} rotation={[0, 0, 0.5]} castShadow>
+        <boxGeometry args={[0.5, 1.5, 0.38]} />
+        <meshStandardMaterial color={colors.main} emissive={colors.deep} emissiveIntensity={0.52} metalness={0.38} roughness={0.24} />
+      </mesh>
+      <mesh position={[1.3, 0.95, 0]} rotation={[0, 0, -0.5]} castShadow>
+        <boxGeometry args={[0.5, 1.5, 0.38]} />
+        <meshStandardMaterial color={colors.main} emissive={colors.deep} emissiveIntensity={0.52} metalness={0.38} roughness={0.24} />
+      </mesh>
+
+      <mesh position={[-0.55, -0.65, 0]} castShadow>
+        <boxGeometry args={[0.5, 1.4, 0.42]} />
+        <meshStandardMaterial color={colors.main} emissive={colors.deep} emissiveIntensity={0.45} metalness={0.38} roughness={0.24} />
+      </mesh>
+      <mesh position={[0.55, -0.65, 0]} castShadow>
+        <boxGeometry args={[0.5, 1.4, 0.42]} />
+        <meshStandardMaterial color={colors.main} emissive={colors.deep} emissiveIntensity={0.45} metalness={0.38} roughness={0.24} />
+      </mesh>
+
+      <mesh position={[-0.55, -1.75, 0.22]} castShadow>
+        <boxGeometry args={[0.68, 0.22, 0.7]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.7} />
+      </mesh>
+      <mesh position={[0.55, -1.75, 0.22]} castShadow>
+        <boxGeometry args={[0.68, 0.22, 0.7]} />
+        <meshStandardMaterial color={colors.bright} emissive={colors.deep} emissiveIntensity={0.7} />
+      </mesh>
+
+      <Sparkles count={16} scale={[3.6, 3.4, 2.8]} size={2} speed={0.25} opacity={0.4} color={colors.wire} />
+    </group>
+  );
+}
+
+function NetworkCoreFigure({ colors }) {
+  const nodes = [
+    { position: [-1.9, 0.6, 0.3], scale: 0.24 },
+    { position: [1.85, 0.8, -0.2], scale: 0.22 },
+    { position: [0.2, -1.75, 0.5], scale: 0.2 },
+    { position: [-0.8, 1.8, -0.5], scale: 0.18 },
+    { position: [0.9, 1.3, 0.8], scale: 0.2 },
+    { position: [-1.2, -1.1, -0.7], scale: 0.18 },
+  ];
+
+  return (
+    <group position={[0, 0.15, 0]} scale={0.95}>
+      <mesh scale={1.1}>
+        <sphereGeometry args={[0.9, 36, 36]} />
+        <meshStandardMaterial
+          color={colors.main}
+          emissive={colors.deep}
+          emissiveIntensity={0.9}
+          metalness={0.4}
+          roughness={0.18}
+          transparent
+          opacity={0.92}
+        />
+      </mesh>
+
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.7, 0.06, 28, 120]} />
+        <meshStandardMaterial
+          color={colors.bright}
+          emissive={colors.deep}
+          emissiveIntensity={0.8}
+          metalness={0.38}
+          roughness={0.2}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+
+      <mesh rotation={[0.7, 1.1, 0.4]}>
+        <torusGeometry args={[1.35, 0.05, 24, 110]} />
+        <meshStandardMaterial
+          color={colors.wire}
+          emissive={colors.deep}
+          emissiveIntensity={0.75}
+          metalness={0.32}
+          roughness={0.22}
+          transparent
+          opacity={0.72}
+        />
+      </mesh>
+
+      <mesh rotation={[0.2, 1.8, 0.6]}>
+        <torusGeometry args={[1.95, 0.03, 18, 140]} />
+        <meshStandardMaterial
+          color={colors.wire}
+          emissive={colors.deep}
+          emissiveIntensity={0.7}
+          metalness={0.28}
+          roughness={0.24}
+          transparent
+          opacity={0.4}
+        />
+      </mesh>
+
+      {nodes.map((node, index) => (
+        <group key={`network-node-${index}`} position={node.position}>
+          <mesh scale={node.scale}>
+            <sphereGeometry args={[1, 22, 22]} />
+            <meshStandardMaterial
+              color={colors.bright}
+              emissive={colors.deep}
+              emissiveIntensity={0.9}
+              metalness={0.45}
+              roughness={0.18}
+              transparent
+              opacity={0.96}
+            />
+          </mesh>
+        </group>
+      ))}
+
+      {nodes.map((node, index) => (
+        <Line
+          key={`network-link-${index}`}
+          points={[[0, 0, 0], node.position]}
+          color={colors.wire}
+          lineWidth={1.1}
+          transparent
+          opacity={0.34}
+        />
+      ))}
+
+      <Sparkles count={20} scale={[4.2, 3.8, 3.2]} size={2.2} speed={0.32} opacity={0.5} color={colors.wire} />
+    </group>
+  );
+}
+
 function SceneContent({ variant, colors }) {
   switch (variant) {
     case 'layers':
@@ -206,6 +392,10 @@ function SceneContent({ variant, colors }) {
       return <TorusRing colors={colors} />;
     case 'torusKnot':
       return <TorusKnotShape colors={colors} />;
+    case 'robot':
+      return <RobotFigure colors={colors} />;
+    case 'networkCore':
+      return <NetworkCoreFigure colors={colors} />;
     case 'stackCrystal':
       return <StackCrystal colors={colors} />;
     case 'network':
