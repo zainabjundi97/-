@@ -64,7 +64,7 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           aria-label="أقسام الكلية"
           className="w-full max-w-full lg:w-auto lg:flex-1 flex justify-stretch lg:justify-center order-3 lg:order-none min-w-0"
         >
-          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-6 w-full max-w-full lg:max-w-[760px] lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
+          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-6 w-full max-w-full  lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
