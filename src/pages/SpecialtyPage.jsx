@@ -225,6 +225,89 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
             </Reveal>
           </section>
 
+          <section id="stories" className="scroll-mt-24 space-y-4 md:space-y-6">
+            <Reveal>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base shadow-sm bg-white" style={borderSoft}>
+                  🚀
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
+                  {content.successStoriesTitle}
+                </h2>
+              </div>
+            </Reveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {content.successStories?.map((story) => (
+                <Reveal
+                  key={story.title}
+                  className="group relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-white p-5 sm:p-6 rounded-2xl border shadow-sm transition-transform duration-300 hover:-translate-y-1"
+                  style={borderSoft}
+                >
+                  <div
+                    className="absolute inset-x-0 top-0 h-1"
+                    style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
+                  />
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm"
+                      style={{ backgroundColor: `${accent}1A`, color: accent }}
+                    >
+                      ✨
+                    </span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full border" style={{ ...borderSoft, color: accent }}>
+                      قصة نجاح
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-lg mb-2" style={textAccent}>
+                    {story.title}
+                  </h3>
+                  <p className="text-[#5B6475] text-xs sm:text-sm leading-relaxed">
+                    {story.body}
+                  </p>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section id="faq" className="scroll-mt-24 space-y-4 md:space-y-6">
+            <Reveal>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base shadow-sm bg-white" style={borderSoft}>
+                  ❓
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
+                  {content.faqTitle}
+                </h2>
+              </div>
+            </Reveal>
+            <div className="space-y-4">
+              {content.faqs?.map((item) => (
+                <Reveal
+                  key={item.question}
+                  className="bg-white p-5 sm:p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
+                  style={borderSoft}
+                >
+                  <div className="flex items-start gap-3">
+                    <span
+                      className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                      style={{ backgroundColor: `${accent}15`, color: accent }}
+                    >
+                      Q
+                    </span>
+                    <div className="flex-1">
+                      <p className="font-bold text-[#171A24] text-sm sm:text-base mb-2">
+                        {item.question}
+                      </p>
+                      <p className="text-[#5B6475] text-xs sm:text-sm leading-relaxed">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
           <section id="myths" className="scroll-mt-24 space-y-4 md:space-y-6">
             <Reveal>
               <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
