@@ -32,15 +32,15 @@ export default function SiteHeader({ activeTab, onTabChange }) {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full overflow-x-hidden backdrop-blur-md border-b"
+      className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden backdrop-blur-md border-b"
       style={{
         backgroundColor: SITE_THEME.headerGlass,
         borderBottomWidth: 2,
         borderBottomColor: borderColor,
       }}
     >
-      <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
-        <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto">
+      <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
+        <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto max-w-full">
           <div
             className="flex items-center justify-center w-10 h-10 rounded-full border backdrop-blur-md shrink-0 bg-white shadow-sm"
             style={{ borderColor: SITE_THEME.headerBorder }}
@@ -62,9 +62,9 @@ export default function SiteHeader({ activeTab, onTabChange }) {
 
         <nav
           aria-label="أقسام الكلية"
-          className="w-full lg:w-auto lg:flex-1 flex justify-stretch lg:justify-center order-3 lg:order-none min-w-0"
+          className="w-full max-w-full lg:w-auto lg:flex-1 flex justify-stretch lg:justify-center order-3 lg:order-none min-w-0"
         >
-          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-6 w-full lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
+          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-6 w-full max-w-full  lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
