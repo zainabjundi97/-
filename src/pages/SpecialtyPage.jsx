@@ -81,6 +81,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   const [showResult, setShowResult] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [activeStackId, setActiveStackId] = useState(content.stackRoles[0]?.id);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   const runTimeoutRef = useRef(null);
   const modalCloseRef = useRef(null);
@@ -269,42 +270,102 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
             </div>
           </section>
 
-          <section id="faq" className="scroll-mt-24 space-y-4 md:space-y-6">
+          <section id="faq" className="scroll-mt-24 space-y-6">
             <Reveal>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base shadow-sm bg-white" style={borderSoft}>
+              <div className="flex items-center gap-3">
+                <div
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl text-lg shadow-sm border"
+                  style={{ backgroundColor: `${accent}12`, borderColor: `${accent}33`, color: accent }}
+                >
                   ❓
-                </span>
-                <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                  {content.faqTitle}
-                </h2>
+                </div>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
+                    {content.faqTitle}
+                  </h2>
+                  <p className="text-xs text-[#5B6475] mt-0.5">اضغط على السؤال لعرض الإجابة</p>
+                </div>
               </div>
             </Reveal>
-            <div className="space-y-4">
-              {content.faqs?.map((item) => (
-                <Reveal
-                  key={item.question}
-                  className="bg-white p-5 sm:p-6 rounded-2xl border shadow-sm hover:shadow-md transition-shadow"
-                  style={borderSoft}
-                >
-                  <div className="flex items-start gap-3">
-                    <span
-                      className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                      style={{ backgroundColor: `${accent}15`, color: accent }}
+
+            <div className="rounded-2xl border overflow-hidden shadow-sm" style={{ borderColor: `${accent}33` }}>
+              {content.faqs?.map((item, index) => {
+                const isOpen = openFaqIndex === index;
+                const isLast = index === (content.faqs?.length ?? 0) - 1;
+                return (
+                  <Reveal key={item.question}>
+                    <div
+                      className={`border-b ${isLast ? 'border-b-0' : ''}`}
+                      style={{ borderColor: `${accent}22` }}
                     >
-                      Q 
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-bold text-[#171A24] text-sm sm:text-base mb-2">
-                        {item.question}
-                      </p>
-                      <p className="text-[#5B6475] text-xs sm:text-sm leading-relaxed">
-                        {item.answer}
-                      </p>
+                      {/* Question row — clickable trigger */}
+                      <button
+                        type="button"
+                        onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                        aria-expanded={isOpen}
+                        className="w-full min-h-[56px] flex items-center gap-4 px-5 sm:px-6 py-4 text-right transition-colors"
+                        style={{ backgroundColor: isOpen ? `${accent}08` : '#FFFFFF' }}
+                      >
+                        {/* Index badge */}
+                        <span
+                          className="shrink-0 inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-extrabold tabular-nums transition-colors"
+                          style={{
+                            backgroundColor: isOpen ? accent : `${accent}14`,
+                            color: isOpen ? '#FFFFFF' : accent,
+                          }}
+                        >
+                          {index + 1}
+                        </span>
+
+                        {/* Question text */}
+                        <span
+                          className="flex-1 text-sm sm:text-base font-bold text-right leading-snug"
+                          style={{ color: isOpen ? accent : '#171A24' }}
+                        >
+                          {item.question}
+                        </span>
+
+                        {/* Chevron */}
+                        <MotionDiv
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          className="shrink-0 text-xs"
+                          style={{ color: accent }}
+                          aria-hidden
+                        >
+                          ▼
+                        </MotionDiv>
+                      </button>
+
+                      {/* Answer — animated expand/collapse */}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <MotionDiv
+                            key="answer"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.28, ease: 'easeInOut' }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div className="px-5 sm:px-6 pb-5 pt-1 flex gap-4">
+                              {/* Left accent line */}
+                              <div
+                                className="shrink-0 w-0.5 rounded-full self-stretch"
+                                style={{ backgroundColor: accent, opacity: 0.35 }}
+                                aria-hidden
+                              />
+                              <p className="text-[#5B6475] text-sm sm:text-base leading-relaxed">
+                                {item.answer}
+                              </p>
+                            </div>
+                          </MotionDiv>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                );
+              })}
             </div>
           </section>
 
