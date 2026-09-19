@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import Reveal from '../components/Reveal/Reveal';
 import CountUp from '../components/CountUp/CountUp';
 import { SITE_THEME } from '../lib/departments';
@@ -83,108 +83,29 @@ export default function ContestPage() {
 
       <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
         <div className="max-w-7xl mx-auto space-y-14 sm:space-y-16">
-          {/* ── تفاصيل المسابقة ── */}
           <Reveal>
-            <div
-              className="rounded-2xl border overflow-hidden shadow-sm"
-              style={{ borderColor: `${GOLD}55` }}
-            >
-              {/* header */}
-              <div
-                className="px-5 sm:px-8 py-4 flex items-center gap-3 border-b"
-                style={{ backgroundColor: `${GOLD}14`, borderColor: `${GOLD}44` }}
-              >
-                <div
-                  className="w-1 h-6 rounded-full shrink-0"
-                  style={{ backgroundColor: GOLD }}
-                  aria-hidden
-                />
-                <h2
-                  className="text-lg sm:text-xl font-extrabold"
-                  style={{ color: SITE_THEME.textHeading }}
-                >
-                  تفاصيل المسابقة
-                </h2>
-              </div>
-
-              {/* three cards */}
-              <ul className="grid grid-cols-1 sm:grid-cols-3 list-none p-0 m-0 bg-white">
-                {/* Card 1 — الفريق */}
+            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 list-none p-0 m-0">
+              {content.stats.map((stat) => (
                 <li
-                  className="px-6 py-7 flex flex-col gap-3 border-b sm:border-b-0 sm:border-e"
-                  style={{ borderColor: `${GOLD}33` }}
+                  key={stat.label}
+                  className="rounded-2xl border px-5 py-5 text-center"
+                  style={{
+                    borderColor: GOLD,
+                    backgroundColor: `${GOLD}22`,
+                  }}
                 >
-                  <div
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl"
-                    style={{ backgroundColor: `${GOLD}18`, color: GOLD }}
+                  <p
+                    className="text-3xl sm:text-4xl font-black tabular-nums"
+                    style={{ color: GOLD }}
                   >
-                    👥
-                  </div>
-                  <h3
-                    className="text-base sm:text-lg font-bold"
-                    style={{ color: SITE_THEME.textHeading }}
-                  >
-                    الفريق
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                    يتكون الفريق من{' '}
-                    <span className="font-extrabold" style={{ color: GOLD }}>
-                      3 أشخاص
-                    </span>{' '}
-                    يتنافسون مع الفرق الأخرى لحل المسائل بكفاءة عالية.
+                    <CountUp value={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className="mt-1 text-sm" style={{ color: SITE_THEME.textMuted }}>
+                    {stat.label}
                   </p>
                 </li>
-
-                {/* Card 2 — المسائل */}
-                <li
-                  className="px-6 py-7 flex flex-col gap-3 border-b sm:border-b-0 sm:border-e"
-                  style={{ borderColor: `${GOLD}33` }}
-                >
-                  <div
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl"
-                    style={{ backgroundColor: `${GOLD}18`, color: GOLD }}
-                  >
-                    💻
-                  </div>
-                  <h3
-                    className="text-base sm:text-lg font-bold"
-                    style={{ color: SITE_THEME.textHeading }}
-                  >
-                    المسائل
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                    تتضمن المسابقة من{' '}
-                    <span className="font-extrabold" style={{ color: GOLD }}>
-                      12 إلى 15 مسألة
-                    </span>{' '}
-                    برمجية متدرجة الصعوبة.
-                  </p>
-                </li>
-
-                {/* Card 3 — الوقت */}
-                <li className="px-6 py-7 flex flex-col gap-3">
-                  <div
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl"
-                    style={{ backgroundColor: `${GOLD}18`, color: GOLD }}
-                  >
-                    ⏱️
-                  </div>
-                  <h3
-                    className="text-base sm:text-lg font-bold"
-                    style={{ color: SITE_THEME.textHeading }}
-                  >
-                    الوقت
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                    يجب حل أكبر عدد ممكن من المسائل خلال{' '}
-                    <span className="font-extrabold" style={{ color: GOLD }}>
-                      5 ساعات
-                    </span>{' '}
-                    متواصلة.
-                  </p>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </Reveal>
 
           <Reveal>
