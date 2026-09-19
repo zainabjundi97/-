@@ -292,7 +292,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                       className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold"
                       style={{ backgroundColor: `${accent}15`, color: accent }}
                     >
-                      Q
+                      Q 
                     </span>
                     <div className="flex-1">
                       <p className="font-bold text-[#171A24] text-sm sm:text-base mb-2">
