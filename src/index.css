@@ -20,3 +20,13 @@ button:focus-visible {
   outline: 2px solid #5191CE;
   outline-offset: 2px;
 }
+
+/* Hide number input spinners */
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-spinners {
+  -moz-appearance: textfield;
+}
