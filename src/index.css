@@ -7,6 +7,33 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme tokens — light (default) */
+  --shell-bg: #F5F7FA;
+  --card-bg: #FFFFFF;
+  --card-border: rgba(43, 46, 113, 0.12);
+  --text-primary: #171A24;
+  --text-muted: #5B6475;
+  --text-heading: #2B2E71;
+  --header-glass: rgba(255, 255, 255, 0.72);
+  --nav-inactive: rgba(43, 46, 113, 0.08);
+  --nav-inactive-hover: rgba(43, 46, 113, 0.14);
+  --nav-text: rgba(43, 46, 113, 0.7);
+  --step-inactive: #cbd5e1;
+}
+
+:root[data-theme='dark'] {
+  --shell-bg: #12141C;
+  --card-bg: #1B1E29;
+  --card-border: rgba(255, 255, 255, 0.12);
+  --text-primary: #EDEFF5;
+  --text-muted: #9AA3B5;
+  --text-heading: #C9D2FF;
+  --header-glass: rgba(20, 22, 30, 0.72);
+  --nav-inactive: rgba(255, 255, 255, 0.08);
+  --nav-inactive-hover: rgba(255, 255, 255, 0.14);
+  --nav-text: rgba(255, 255, 255, 0.7);
+  --step-inactive: #3a3f52;
 }
 
 body {
@@ -14,6 +41,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-size: 1rem;
+  background-color: var(--shell-bg);
+  transition: background-color 0.2s ease;
 }
 
 button:focus-visible {

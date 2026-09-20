@@ -54,8 +54,12 @@ export default function SectionNav({ accent = '#7957A8' }) {
   return (
     <nav
       aria-label="أقسام الصفحة"
-      className="sticky top-0 z-40 w-full border-b backdrop-blur-md bg-white/90"
-      style={{ borderColor: `${accent}33`, '--section-nav-accent': accent }}
+      className="sticky top-0 z-40 w-full border-b backdrop-blur-md"
+      style={{
+        borderColor: `${accent}33`,
+        backgroundColor: 'var(--header-glass)',
+        '--section-nav-accent': accent,
+      }}
     >
       <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 overflow-x-auto">
         <ul className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 min-w-max mx-auto">
@@ -72,7 +76,7 @@ export default function SectionNav({ accent = '#7957A8' }) {
                   className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition cursor-pointer ${
                     isActive
                       ? 'text-white'
-                      : 'text-[#5B6475] hover:text-[color:var(--section-nav-accent)]'
+                      : 'text-[var(--text-muted)] hover:text-[color:var(--section-nav-accent)]'
                   }`}
                 >
                   {isActive &&

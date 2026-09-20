@@ -6,6 +6,7 @@ import BasicsPage from './BasicsPage';
 import ContestPage from './ContestPage';
 import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
+import { useTheme } from '../hooks/useTheme';
 
 function renderTab(activeTab, onNavigate) {
   switch (activeTab) {
@@ -26,6 +27,7 @@ function renderTab(activeTab, onNavigate) {
 
 export default function AcademicApp() {
   const [activeTab, setActiveTab] = useState('home');
+  const { theme, toggleTheme } = useTheme();
 
   const handleTabChange = useCallback((id) => {
     setActiveTab(id);
@@ -42,7 +44,12 @@ export default function AcademicApp() {
         color: SITE_THEME.textPrimary,
       }}
     >
-      <SiteHeader activeTab={activeTab} onTabChange={handleTabChange} />
+      <SiteHeader
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
       {renderTab(activeTab, handleTabChange)}
       <SiteFooter activeTab={activeTab} />
     </div>

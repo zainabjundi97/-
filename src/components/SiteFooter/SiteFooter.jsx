@@ -72,7 +72,7 @@ export default function SiteFooter({ activeTab }) {
       }}
     >
       <div className="w-full px-3 sm:px-6 flex flex-col items-center gap-3">
-        <p className="font-bold tracking-wide" style={{ color: SITE_THEME.brandDark }}>
+        <p className="font-bold tracking-wide" style={{ color: SITE_THEME.textHeading }}>
           وجهتك الأكاديمية © {year}
         </p>
         <ul className="flex items-center justify-center gap-2 list-none p-0 m-0">
@@ -83,8 +83,8 @@ export default function SiteFooter({ activeTab }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={item.label}
-                className="site-footer-social inline-flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white border border-slate-200 shadow-sm"
-                style={{ color: SITE_THEME.brandDark }}
+                className="site-footer-social inline-flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border shadow-sm"
+                style={{ color: SITE_THEME.textHeading, backgroundColor: SITE_THEME.cardBg, borderColor: SITE_THEME.cardBorder }}
               >
                 <item.Icon />
               </a>

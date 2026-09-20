@@ -26,7 +26,7 @@ export default function QuizSteps({ total, current, accent = '#7957A8' }) {
             role="listitem"
             className="relative h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full"
             style={{
-              backgroundColor: isPast ? `${accent}66` : '#cbd5e1',
+              backgroundColor: isPast ? `${accent}66` : 'var(--step-inactive)',
             }}
           >
             {isActive &&
