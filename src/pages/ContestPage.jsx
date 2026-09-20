@@ -34,7 +34,7 @@ function SectionTitle({ children }) {
 /** Puzzle phase constants */
 const PHASE = { IDLE: 0, HINT: 1, SOLUTION: 2, SOLVED: 3 };
 
-/** Runs the exact C++ watermelon logic */
+/** Runs the exact watermelon judge logic (mirrors puzzleCode) */
 function judgeWatermelon(w) {
   if (!Number.isInteger(w) || w < 1) return null;
   return w % 2 === 0 && w !== 2 ? 'YES' : 'NO';
@@ -94,7 +94,7 @@ export default function ContestPage() {
       <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
         <div className="max-w-7xl mx-auto space-y-14 sm:space-y-16">
 
-          {/* ── تفاصيل المسابقة ── */}
+          {/* ── ما هي المسابقة البرمجية؟   ── */}
           <Reveal>
             <div className="rounded-2xl border overflow-hidden shadow-sm" style={{ borderColor: `${GOLD}55` }}>
               <div
@@ -103,7 +103,7 @@ export default function ContestPage() {
               >
                 <div className="w-1 h-6 rounded-full shrink-0" style={{ backgroundColor: GOLD }} aria-hidden />
                 <h2 className="text-lg sm:text-xl font-extrabold" style={{ color: SITE_THEME.textHeading }}>
-                  تفاصيل المسابقة
+               ما هي المسابقة البرمجية؟
                 </h2>
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-3 list-none p-0 m-0 bg-white">
@@ -118,7 +118,7 @@ export default function ContestPage() {
                   <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl" style={{ backgroundColor: `${GOLD}18`, color: GOLD }}>💻</div>
                   <h3 className="text-base sm:text-lg font-bold" style={{ color: SITE_THEME.textHeading }}>المسائل</h3>
                   <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                    تتضمن المسابقة من{' '}<span className="font-extrabold" style={{ color: GOLD }}>12 إلى 15 مسألة</span>{' '}برمجية متدرجة الصعوبة.
+                    تتضمن المسابقة من{' '}<span className="font-extrabold" style={{ color: GOLD }}>12 إلى 15 مسألة</span>{' '}برمجية متفاوتة الصعوبة.
                   </p>
                 </li>
                 <li className="px-6 py-7 flex flex-col gap-3">
@@ -131,15 +131,7 @@ export default function ContestPage() {
               </ul>
             </div>
           </Reveal>
-
-          <Reveal>
-            <section className="rounded-2xl border bg-white p-5 sm:p-8 space-y-3" style={{ borderColor: `${GOLD}66` }}>
-              <SectionTitle>{content.aboutTitle}</SectionTitle>
-              <p className="text-sm sm:text-base leading-relaxed max-w-3xl" style={{ color: SITE_THEME.textPrimary }}>
-                {content.aboutBody}
-              </p>
-            </section>
-          </Reveal>
+ 
 
           <section className="space-y-6">
             <Reveal><SectionTitle>{content.benefitsTitle}</SectionTitle></Reveal>
@@ -300,7 +292,7 @@ export default function ContestPage() {
                         className="text-xs font-mono font-semibold"
                         style={{ color: SITE_THEME.textMuted }}
                       >
-                        watermelon.cpp — judge
+                        watermelon.py — judge
                       </span>
                     </div>
                     {/* Live output badge — only shown after submit */}
@@ -545,7 +537,7 @@ export default function ContestPage() {
                               className="text-xs font-mono font-semibold"
                               style={{ color: SITE_THEME.textMuted }}
                             >
-                              watermelon.cpp
+                              watermelon.py
                             </span>
                             <span className="flex gap-1.5" aria-hidden>
                               <span className="w-2.5 h-2.5 rounded-full bg-red-300 opacity-70" />
