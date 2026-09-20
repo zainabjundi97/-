@@ -39,8 +39,8 @@ export default function PageMasthead({
     <header
       className="w-full relative overflow-hidden border-b"
       style={{
-        background: `linear-gradient(120deg, ${dept.heroFrom}14 0%, ${dept.heroTo}18 45%, #F5F7FA 100%)`,
-        borderColor: 'rgba(43, 46, 113, 0.1)',
+        background: `linear-gradient(120deg, ${dept.heroFrom}14 0%, ${dept.heroTo}18 45%, var(--shell-bg) 100%)`,
+        borderColor: 'var(--card-border)',
       }}
     >
       <div
@@ -65,7 +65,7 @@ export default function PageMasthead({
 
         <h1
           className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight max-w-3xl leading-tight mb-3"
-          style={{ color: '#2B2E71' }}
+          style={{ color: 'var(--text-heading)' }}
         >
           {headingWords.map((word, index) => (
             <span
@@ -81,7 +81,7 @@ export default function PageMasthead({
 
         <p
           className="text-sm sm:text-base leading-relaxed max-w-2xl mb-6"
-          style={{ color: '#5B6475' }}
+          style={{ color: 'var(--text-muted)' }}
         >
           {subtitle}
         </p>
@@ -96,14 +96,16 @@ export default function PageMasthead({
                   href={cta.type === 'tab' ? `#${cta.href}` : cta.href}
                   onClick={(event) => handleCta(cta, event)}
                   className={`min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
-                    isPrimary
-                      ? 'text-white shadow-sm'
-                      : 'bg-white border hover:bg-[#F5F7FA]'
+                    isPrimary ? 'text-white shadow-sm' : 'border hover:opacity-80'
                   }`}
                   style={
                     isPrimary
                       ? { backgroundColor: dept.accentSecondary }
-                      : { color: dept.accent, borderColor: 'rgba(43, 46, 113, 0.14)' }
+                      : {
+                          color: dept.accent,
+                          backgroundColor: 'var(--card-bg)',
+                          borderColor: 'var(--card-border)',
+                        }
                   }
                 >
                   {cta.label}

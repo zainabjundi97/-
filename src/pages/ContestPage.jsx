@@ -88,7 +88,7 @@ export default function ContestPage() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col overflow-x-hidden bg-[#F5F7FA]">
+    <div className="w-full flex-1 flex flex-col overflow-x-hidden bg-[var(--shell-bg)]">
       <Hero departmentId="contest" />
 
       <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
@@ -106,7 +106,7 @@ export default function ContestPage() {
                ما هي المسابقة البرمجية؟
                 </h2>
               </div>
-              <ul className="grid grid-cols-1 sm:grid-cols-3 list-none p-0 m-0 bg-white">
+              <ul className="grid grid-cols-1 sm:grid-cols-3 list-none p-0 m-0 bg-[var(--card-bg)]">
                 <li className="px-6 py-7 flex flex-col gap-3 border-b sm:border-b-0 sm:border-e" style={{ borderColor: `${GOLD}33` }}>
                   <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl" style={{ backgroundColor: `${GOLD}18`, color: GOLD }}>👥</div>
                   <h3 className="text-base sm:text-lg font-bold" style={{ color: SITE_THEME.textHeading }}>الفريق</h3>
@@ -137,7 +137,7 @@ export default function ContestPage() {
             <Reveal><SectionTitle>{content.benefitsTitle}</SectionTitle></Reveal>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
               {content.benefits.map((item) => (
-                <li key={item.id} className="rounded-2xl border bg-white p-5 sm:p-6 min-h-[44px]" style={{ borderColor: `${GOLD}66` }}>
+                <li key={item.id} className="rounded-2xl border bg-[var(--card-bg)] p-5 sm:p-6 min-h-[44px]" style={{ borderColor: `${GOLD}66` }}>
                   <Reveal>
                     <h3 className="text-base sm:text-lg font-bold mb-2" style={{ color: SITE_THEME.textHeading }}>{item.title}</h3>
                     <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>{item.body}</p>
@@ -154,7 +154,7 @@ export default function ContestPage() {
             </Reveal>
             <ul className="grid grid-cols-1 md:grid-cols-3 gap-px list-none p-0 m-0 rounded-2xl overflow-hidden border" style={{ borderColor: GOLD, backgroundColor: GOLD }}>
               {content.career.map((item) => (
-                <li key={item.id} className="bg-white p-5 sm:p-6 min-h-[44px]">
+                <li key={item.id} className="bg-[var(--card-bg)] p-5 sm:p-6 min-h-[44px]">
                   <Reveal>
                     <h3 className="text-base sm:text-lg font-bold mb-2" style={{ color: GOLD }}>{item.title}</h3>
                     <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>{item.body}</p>
@@ -258,7 +258,7 @@ export default function ContestPage() {
                 {/* ── Problem statement card ── */}
                 <div
                   className="rounded-2xl border p-5 sm:p-6 space-y-1.5"
-                  style={{ borderColor: `${GOLD}55`, backgroundColor: '#FFFFFF' }}
+                  style={{ borderColor: `${GOLD}55`, backgroundColor: 'var(--card-bg)' }}
                 >
                   <p className="text-xs font-bold uppercase tracking-widest" style={{ color: GOLD }}>
                     المسألة
@@ -318,7 +318,7 @@ export default function ContestPage() {
                   </div>
 
                   {/* terminal body */}
-                  <div className="bg-white px-5 py-4 space-y-3 font-mono text-sm">
+                  <div className="bg-[var(--card-bg)] px-5 py-4 space-y-3 font-mono text-sm">
                     {/* stdin line */}
                     <div className="flex items-center gap-3">
                       <span
@@ -459,7 +459,7 @@ export default function ContestPage() {
                       type="button"
                       onClick={handleHint}
                       className="min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold border transition hover:opacity-80"
-                      style={{ borderColor: `${GOLD}66`, color: SITE_THEME.textMuted, backgroundColor: '#FFFFFF' }}
+                      style={{ borderColor: `${GOLD}66`, color: SITE_THEME.textMuted, backgroundColor: 'var(--card-bg)' }}
                     >
                       💡 {content.puzzleHintLabel}
                     </button>
@@ -469,7 +469,7 @@ export default function ContestPage() {
                       type="button"
                       onClick={handleSolution}
                       className="min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold border transition hover:opacity-80"
-                      style={{ borderColor: `${GOLD}66`, color: SITE_THEME.textMuted, backgroundColor: '#FFFFFF' }}
+                      style={{ borderColor: `${GOLD}66`, color: SITE_THEME.textMuted, backgroundColor: 'var(--card-bg)' }}
                     >
                       🔍 {content.puzzleAnswerLabel}
                     </button>
@@ -547,7 +547,7 @@ export default function ContestPage() {
                           </div>
                           <pre
                             dir="ltr"
-                            className="bg-[#F5F7FA] p-5 font-mono text-xs sm:text-sm overflow-x-auto text-left leading-relaxed"
+                            className="bg-[var(--shell-bg)] p-5 font-mono text-xs sm:text-sm overflow-x-auto text-left leading-relaxed"
                             style={{ color: SITE_THEME.textHeading }}
                           >
                             <code>{content.puzzleCode}</code>

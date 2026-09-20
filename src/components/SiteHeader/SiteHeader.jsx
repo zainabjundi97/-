@@ -21,10 +21,10 @@ function SiteLogo() {
 }
 
 /**
- * Sticky floating glassmorphic site header (light chrome).
- * @param {{ activeTab: string, onTabChange: (id: string) => void }} props
+ * Sticky floating glassmorphic site header.
+ * @param {{ activeTab: string, onTabChange: (id: string) => void, theme?: string, onToggleTheme?: () => void }} props
  */
-export default function SiteHeader({ activeTab, onTabChange }) {
+export default function SiteHeader({ activeTab, onTabChange, theme, onToggleTheme }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { play } = useUiSound();
   const activeDept = getDepartment(activeTab);
@@ -42,8 +42,8 @@ export default function SiteHeader({ activeTab, onTabChange }) {
       <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
         <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto max-w-full">
           <div
-            className="flex items-center justify-center w-10 h-10 rounded-full border backdrop-blur-md shrink-0 bg-white shadow-sm"
-            style={{ borderColor: SITE_THEME.headerBorder }}
+            className="flex items-center justify-center w-10 h-10 rounded-full border backdrop-blur-md shrink-0 shadow-sm"
+            style={{ borderColor: SITE_THEME.headerBorder, backgroundColor: SITE_THEME.cardBg }}
           >
             <SiteLogo />
           </div>
@@ -64,7 +64,10 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           aria-label="أقسام الكلية"
           className="w-full max-w-full lg:w-auto lg:flex-1 flex justify-stretch lg:justify-center order-3 lg:order-none min-w-0"
         >
-          <ul className="site-header-nav rounded-full bg-white border border-slate-200 shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-4 w-full max-w-full  lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none">
+          <ul
+            className="site-header-nav rounded-full border shadow-sm px-2 sm:px-4 lg:px-8 py-1 sm:py-2 lg:py-3 flex flex-nowrap items-center justify-start lg:justify-center gap-1 sm:gap-2 lg:gap-4 w-full max-w-full  lg:w-auto overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none"
+            style={{ backgroundColor: SITE_THEME.cardBg, borderColor: SITE_THEME.cardBorder }}
+          >
             {NAV_ITEMS.map((dept) => {
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
@@ -108,13 +111,32 @@ export default function SiteHeader({ activeTab, onTabChange }) {
           </ul>
         </nav>
 
-        <div className="hidden lg:flex shrink-0 self-auto justify-end items-center">
+        <div className="shrink-0 self-auto justify-end items-center flex gap-2">
           <p
-            className="min-h-[44px] inline-flex items-center rounded-full bg-white border border-slate-200 shadow-sm px-4 py-2.5 text-sm font-semibold whitespace-nowrap"
-            style={{ color: SITE_THEME.brandDark }}
+            className="hidden lg:inline-flex min-h-[44px] items-center rounded-full border shadow-sm px-4 py-2.5 text-sm font-semibold whitespace-nowrap"
+            style={{
+              color: SITE_THEME.textHeading,
+              backgroundColor: SITE_THEME.cardBg,
+              borderColor: SITE_THEME.cardBorder,
+            }}
           >
             جامعة اللاذقية
           </p>
+          {onToggleTheme && (
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              aria-label={theme === 'dark' ? 'التبديل للوضع الفاتح' : 'التبديل للوضع الداكن'}
+              className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-full border shadow-sm text-base shrink-0"
+              style={{
+                color: SITE_THEME.textHeading,
+                backgroundColor: SITE_THEME.cardBg,
+                borderColor: SITE_THEME.cardBorder,
+              }}
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -8,7 +8,7 @@ import { getShellContent } from '../data/shellContent';
 function SemesterCard({ semester, dept }) {
   return (
     <div
-      className="rounded-2xl border bg-white shadow-sm overflow-hidden flex flex-col"
+      className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden flex flex-col"
       style={{ borderColor: `${dept.accentSecondary}33` }}
     >
       {/* card header */}
@@ -259,7 +259,7 @@ export default function BasicsPage({ onNavigate }) {
                       <tr
                         key={row.year}
                         style={{
-                          backgroundColor: ri % 2 === 0 ? '#FFFFFF' : `${dept.heroFrom}08`,
+                          backgroundColor: ri % 2 === 0 ? 'var(--card-bg)' : `${dept.heroFrom}08`,
                         }}
                       >
                         <td
@@ -354,7 +354,7 @@ export default function BasicsPage({ onNavigate }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.4, delay: index * 0.1, ease: 'easeOut' }}
-                    className="text-right rounded-2xl border bg-white p-5 flex flex-col gap-3 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full"
+                    className="text-right rounded-2xl border bg-[var(--card-bg)] p-5 flex flex-col gap-3 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full"
                     style={{ borderColor: `${trackDept.accent}44` }}
                   >
                     <span
