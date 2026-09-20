@@ -326,9 +326,9 @@ export default function ContestPage() {
                         watermelon.cpp — judge
                       </span>
                     </div>
-                    {/* Live output badge */}
+                    {/* Live output badge — only shown after submit */}
                     <AnimatePresence mode="wait">
-                      {liveOutput !== null && (
+                      {submitted && liveOutput !== null && (
                         <MotionDiv
                           key={liveOutput}
                           initial={{ opacity: 0, scale: 0.8 }}
@@ -378,17 +378,17 @@ export default function ContestPage() {
                           }}
                           onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(); }}
                           placeholder="أدخل وزن البطيخة..."
-                          dir="ltr"
+                          dir="rtl"
                           min="1"
                           aria-label="وزن البطيخة"
                           disabled={phase === PHASE.SOLVED}
-                          className="w-full bg-transparent outline-none text-sm font-mono"
+                          className="w-full bg-transparent outline-none text-sm font-mono no-spinners"
                           style={{ color: SITE_THEME.textHeading }}
                         />
                       </MotionDiv>
                     </div>
 
-                    {/* stdout line */}
+                    {/* stdout line — only revealed after submit */}
                     <div className="flex items-center gap-3">
                       <span
                         className="shrink-0 text-xs select-none font-semibold"
@@ -398,7 +398,7 @@ export default function ContestPage() {
                       </span>
                       <div className="flex-1 min-h-[20px]">
                         <AnimatePresence mode="wait">
-                          {liveOutput !== null ? (
+                          {submitted && liveOutput !== null ? (
                             <MotionDiv
                               key={liveOutput + inputVal}
                               initial={{ opacity: 0, y: 3 }}
@@ -418,7 +418,7 @@ export default function ContestPage() {
                               className="text-xs italic"
                               style={{ color: SITE_THEME.textMuted }}
                             >
-                              {inputVal.trim() === '' ? 'في انتظار المدخل...' : 'مدخل غير صالح'}
+                              في انتظار التسليم...
                             </MotionDiv>
                           )}
                         </AnimatePresence>
@@ -440,20 +440,7 @@ export default function ContestPage() {
                         ▶ تشغيل وتسليم
                       </button>
 
-                      {/* Accepted verdict after submit */}
-                      <AnimatePresence>
-                        {submitted && phase === PHASE.SOLVED && (
-                          <MotionDiv
-                            initial={{ opacity: 0, scale: 0.85 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                            className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full"
-                            style={{ backgroundColor: `${GREEN}20`, color: GREEN, border: `1px solid ${GREEN}55` }}
-                          >
-                            ✅ Accepted
-                          </MotionDiv>
-                        )}
-                      </AnimatePresence>
+                      
                     </div>
                   </div>
                 </div>
@@ -479,9 +466,7 @@ export default function ContestPage() {
                         🎉
                       </MotionDiv>
                       <div>
-                        <p className="text-sm font-extrabold" style={{ color: GREEN }}>
-                          Accepted! — الكود مقبول
-                        </p>
+                        
                         <p className="text-xs mt-0.5" style={{ color: SITE_THEME.textMuted }}>
                           المُخرج لوزن{' '}
                           <span className="font-bold font-mono" style={{ color: GOLD }}>{parsedW}</span>
