@@ -79,7 +79,7 @@ export const DEPARTMENTS = {
     id: 'contest',
     label: 'المسابقة البرمجية',
     navActive: '#FFCC00',
-    heroFrom: '#5191CE',
+    heroFrom: '#C49A00',
     heroTo: '#FFCC00',
     accent: '#FFCC00',
     accentSecondary: '#5191CE',

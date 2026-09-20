@@ -604,6 +604,23 @@ export const specialtyContent = {
       },
     ],
   },
+  contest: {
+    hero: {
+      badge: 'أساسيات حل المشكلات — جامعة اللاذقية',
+      headingWords: [
+        { text: 'الدليل', accent: false },
+        { text: 'الشامل', accent: false },
+        { text: 'للمسابقة', accent: true },
+        { text: 'البرمجية', accent: true },
+      ],
+      subtitle:
+        'فريق ثلاثي، مسائل متنوعة، ووقت محدود — تفكير أولاً ثم كود.',
+      ctas: [
+        { label: 'ابدأ التحدي', href: '#puzzle', type: 'scroll' },
+        { label: 'كيف أبدأ؟', href: '#start', type: 'scroll' },
+      ],
+    },
+  },
 };
 
 export function getSpecialtyContent(id) {

@@ -1,5 +1,6 @@
 ﻿import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Hero from '../components/Hero/Hero';
 import Reveal from '../components/Reveal/Reveal';
 import CountUp from '../components/CountUp/CountUp';
 import { SITE_THEME } from '../lib/departments';
@@ -88,31 +89,7 @@ export default function ContestPage() {
 
   return (
     <div className="w-full flex-1 flex flex-col overflow-x-hidden bg-[#F5F7FA]">
-      <header
-        className="relative w-full overflow-hidden text-white"
-        style={{ background: `linear-gradient(to bottom right, ${BLUE}, ${GOLD})` }}
-      >
-        <div className="absolute inset-x-0 bottom-0 h-1.5" style={{ backgroundColor: GOLD }} aria-hidden />
-        <div
-          className="absolute -left-16 top-8 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-40"
-          style={{ backgroundColor: GOLD }}
-          aria-hidden
-        />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16">
-          <span
-            className="inline-block text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full border mb-4"
-            style={{ color: BLUE, backgroundColor: GOLD, borderColor: GOLD }}
-          >
-            {content.badge}
-          </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-3xl text-white">
-            {content.title}
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white/90 max-w-2xl">
-            {content.subtitle}
-          </p>
-        </div>
-      </header>
+      <Hero departmentId="contest" />
 
       <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
         <div className="max-w-7xl mx-auto space-y-14 sm:space-y-16">
@@ -213,7 +190,7 @@ export default function ContestPage() {
             </section>
           </Reveal>
 
-          <section className="space-y-6">
+          <section id="start" className="space-y-6">
             <Reveal className="space-y-2 max-w-3xl">
               <SectionTitle>{content.startTitle}</SectionTitle>
               <p className="text-sm sm:text-base pe-5" style={{ color: SITE_THEME.textMuted }}>{content.startSubtitle}</p>
@@ -242,7 +219,7 @@ export default function ContestPage() {
           </section>
 
           {/* ══ PUZZLE SECTION — interactive judge ══ */}
-          <Reveal>
+          <Reveal id="puzzle">
             <section
               className="rounded-2xl border overflow-hidden shadow-sm"
               style={{ borderColor: GOLD }}
