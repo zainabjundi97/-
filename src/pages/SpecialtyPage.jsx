@@ -32,9 +32,9 @@ function FutureGroup({ title, items, accent, borderSoft }) {
       <h3 className="text-base sm:text-lg font-bold" style={{ color: accent }}>
         {title}
       </h3>
-      <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 list-none p-0 m-0">
+      <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {items.map((item) => (
-          <li
+          <AnimatedCard
             key={item.title}
             className="bg-white p-4 sm:p-5 rounded-xl border shadow-sm min-h-[44px]"
             style={borderSoft}
@@ -43,9 +43,9 @@ function FutureGroup({ title, items, accent, borderSoft }) {
               {item.title}
             </p>
             <p className="text-xs sm:text-sm leading-relaxed text-[#5B6475]">{item.body}</p>
-          </li>
+          </AnimatedCard>
         ))}
-      </ul>
+      </StaggerGrid>
     </div>
   );
 }
@@ -242,11 +242,11 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                 </h2>
               </div>
             </Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {content.successStories?.map((story) => (
-                <Reveal
+                <AnimatedCard
                   key={story.title}
-                  className="group relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-white p-5 sm:p-6 rounded-2xl border shadow-sm transition-transform duration-300 hover:-translate-y-1"
+                  className="group relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-white p-5 sm:p-6 rounded-2xl border shadow-sm"
                   style={borderSoft}
                 >
                   <div
@@ -258,7 +258,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                       className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm"
                       style={{ backgroundColor: `${accent}1A`, color: accent }}
                     >
-                      ✨
+                      <AnimatedIcon>✨</AnimatedIcon>
                     </span>
                     <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full border" style={{ ...borderSoft, color: accent }}>
                       قصة نجاح
@@ -270,9 +270,9 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                   <p className="text-[#5B6475] text-xs sm:text-sm leading-relaxed">
                     {story.body}
                   </p>
-                </Reveal>
+                </AnimatedCard>
               ))}
-            </div>
+            </StaggerGrid>
           </section>
 
           <section id="faq" className="scroll-mt-24 space-y-6">
@@ -309,6 +309,12 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                         onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                         aria-expanded={isOpen}
                         className="w-full min-h-[56px] flex items-center gap-4 px-5 sm:px-6 py-4 text-right transition-colors"
+                        onMouseEnter={(event) => {
+                          if (!isOpen) event.currentTarget.style.backgroundColor = `${accent}08`;
+                        }}
+                        onMouseLeave={(event) => {
+                          if (!isOpen) event.currentTarget.style.backgroundColor = '#FFFFFF';
+                        }}
                         style={{ backgroundColor: isOpen ? `${accent}08` : '#FFFFFF' }}
                       >
                         {/* Index badge */}
@@ -380,9 +386,9 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                 {content.mythsTitle}
               </h2>
             </Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {content.myths.map((item) => (
-                <Reveal
+                <AnimatedCard
                   key={item.myth}
                   className="bg-white p-5 sm:p-6 rounded-xl border shadow-sm"
                   style={borderSoft}
@@ -395,9 +401,9 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     ✔ الحقيقة:
                   </span>
                   <p className="text-[#5B6475] text-xs sm:text-sm">{item.fact}</p>
-                </Reveal>
+                </AnimatedCard>
               ))}
-            </div>
+            </StaggerGrid>
           </section>
 
           <section id="courses" className="scroll-mt-24 space-y-6">
@@ -477,7 +483,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     key={role.id}
                     type="button"
                     onClick={() => setActiveStackId(role.id)}
-                    className={`relative text-right bg-[#F5F7FA] p-5 rounded-xl border space-y-3 min-h-[44px] cursor-pointer transition ${
+                    className={`group relative text-right bg-[#F5F7FA] p-5 rounded-xl border space-y-3 min-h-[44px] cursor-pointer transition ${
                       isActive ? 'ring-2 opacity-100' : 'opacity-85 hover:opacity-100'
                     }`}
                     style={{
@@ -494,7 +500,9 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                       />
                     )}
                     <div className="relative flex items-center gap-2">
-                      <span className="text-2xl">{role.icon}</span>
+                      <span className="text-2xl inline-block transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-3">
+                        {role.icon}
+                      </span>
                       <h3
                         className="font-bold text-base sm:text-lg"
                         style={{ color: role.color }}
