@@ -77,7 +77,7 @@ export default function HomePage({ onNavigate }) {
                 return (
                   <AnimatedCard
                     key={stage.id}
-                    className="rounded-2xl border bg-white shadow-sm overflow-hidden flex flex-col"
+                    className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden flex flex-col"
                     style={{ borderColor: `${accentColor}44` }}
                   >
                     {/* top accent bar */}
@@ -130,7 +130,7 @@ export default function HomePage({ onNavigate }) {
                       as="button"
                       disableHoverMotion
                       onClick={() => handlePathSelect(path.id)}
-                      className="text-right rounded-2xl border bg-white p-5 flex flex-col gap-2 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full h-full"
+                      className="text-right rounded-2xl border bg-[var(--card-bg)] p-5 flex flex-col gap-2 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full h-full"
                       style={{ borderColor: `${trackDept.accent}44` }}
                     >
                       <AnimatedIcon className="text-3xl">{path.icon}</AnimatedIcon>
@@ -170,7 +170,7 @@ export default function HomePage({ onNavigate }) {
               {content.tableData.map((row) => (
                 <div
                   key={row.year}
-                  className="rounded-2xl border bg-white shadow-sm overflow-hidden"
+                  className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden"
                   style={{ borderColor: SITE_THEME.cardBorder }}
                 >
                   <div
@@ -254,7 +254,7 @@ export default function HomePage({ onNavigate }) {
                       <tr
                         key={row.year}
                         style={{
-                          backgroundColor: ri % 2 === 0 ? '#FFFFFF' : `${dept.heroFrom}08`,
+                          backgroundColor: ri % 2 === 0 ? 'var(--card-bg)' : `${dept.heroFrom}08`,
                         }}
                       >
                         <td

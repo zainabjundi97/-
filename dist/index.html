@@ -12,9 +12,25 @@
       content="تعرّف على تخصص هندسة البرمجيات في جامعة اللاذقية: أهم المواد، الفرق بين الواجهة والخلفية، واختبار سريع هل التخصص يناسبك."
     />
     <title>هندسة البرمجيات - جامعة اللاذقية</title>
-    <script type="module" crossorigin src="/assets/index-B3vWOqAA.js"></script>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme =
+            stored === 'dark' || stored === 'light'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          /* localStorage/matchMedia unavailable — default light styles apply */
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-BfHUdQ-F.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-Bg_NI1en.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-CtfvLxxP.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-DFyXZOju.css">
   </head>
   <body>
     <div id="root"></div>
