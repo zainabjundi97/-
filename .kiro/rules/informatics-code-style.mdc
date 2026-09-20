@@ -1,0 +1,19 @@
+---
+description: React structure, co-location, and task completion checklist for the Faculty site
+alwaysApply: true
+---
+
+# Code Style & Done Checklist
+
+## Code style
+
+- Functional components + hooks only; no class components.
+- Co-locate a component's styles/subcomponents in its own folder under `src/components/`.
+- Keep components small and single-purpose; extract logic into `src/hooks/` when it grows past simple UI state.
+- No inline styles except one-off dynamic values — use CSS files/modules.
+
+## Before finishing any task
+
+1. Run `npm run lint` and fix all issues.
+2. Sanity-check responsiveness at ~375px, ~768px, and ~1280px.
+3. If new dependencies were added, confirm they are in `package.json` (not only installed locally) and note why in the PR/commit message.
