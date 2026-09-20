@@ -203,6 +203,11 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
               <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
                 {content.futureTitle}
               </h2>
+              {content.futureIntro && (
+                <p className="text-[#5B6475] leading-relaxed text-sm sm:text-base mt-3">
+                  {content.futureIntro}
+                </p>
+              )}
             </Reveal>
             <Reveal className="space-y-8">
               <FutureGroup
