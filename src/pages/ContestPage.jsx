@@ -118,7 +118,7 @@ export default function ContestPage() {
                   <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-xl" style={{ backgroundColor: `${GOLD}18`, color: GOLD }}>💻</div>
                   <h3 className="text-base sm:text-lg font-bold" style={{ color: SITE_THEME.textHeading }}>المسائل</h3>
                   <p className="text-sm leading-relaxed" style={{ color: SITE_THEME.textMuted }}>
-                    تتضمن المسابقة من{' '}<span className="font-extrabold" style={{ color: GOLD }}>12 إلى 15 مسألة</span>{' '}برمجية متدرجة الصعوبة.
+                    تتضمن المسابقة من{' '}<span className="font-extrabold" style={{ color: GOLD }}>12 إلى 15 مسألة</span>{' '}برمجية متفاوتة الصعوبة.
                   </p>
                 </li>
                 <li className="px-6 py-7 flex flex-col gap-3">
