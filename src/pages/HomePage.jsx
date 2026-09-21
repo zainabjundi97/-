@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import PageMasthead from '../components/PageMasthead/PageMasthead';
 import Reveal from '../components/Reveal/Reveal';
 import StaggerGrid from '../components/StaggerGrid/StaggerGrid';
@@ -6,21 +7,12 @@ import TiltCard from '../components/TiltCard/TiltCard';
 import GlowCallout from '../components/GlowCallout/GlowCallout';
 import MagneticButton from '../components/MagneticButton/MagneticButton';
 import CountUp from '../components/CountUp/CountUp';
+import SectionTitle from '../components/SectionTitle/SectionTitle';
+import ScrollLine from '../components/ScrollLine/ScrollLine';
 import { useUiSound } from '../hooks/useUiSound';
+import { useScrollStagger } from '../hooks/useScrollStagger';
 import { getDepartment, DEPARTMENTS, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
-
-/** Accent bar + heading — shared shape used by every section on this page. */
-function SectionTitle({ children, accentColor }) {
-  return (
-    <div className="flex items-center gap-3 mb-6">
-      <div className="w-1.5 h-7 rounded-full shrink-0" style={{ backgroundColor: accentColor }} />
-      <h2 className="text-xl sm:text-2xl font-extrabold" style={{ color: SITE_THEME.textHeading }}>
-        {children}
-      </h2>
-    </div>
-  );
-}
 
 /**
  * الصفحة الرئيسية — التعريف بالكلية
@@ -31,6 +23,8 @@ export default function HomePage({ onNavigate }) {
   const dept = getDepartment('home');
   const { hero } = content;
   const { play } = useUiSound();
+  const tableRef = useRef(null);
+  useScrollStagger(tableRef, 'tbody tr, .year-card');
 
   const handlePathSelect = (id) => {
     play('confirm');
@@ -48,15 +42,18 @@ export default function HomePage({ onNavigate }) {
         onNavigate={onNavigate}
       />
 
-      <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
-        <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20">
+      <main className="w-full px-4 sm:px-6 py-12 sm:py-20">
+        <div
+          className="max-w-5xl 3xl:max-w-6xl mx-auto space-y-16 sm:space-y-24 3xl:space-y-32"
+          style={{ '--grad-from': dept.accentSecondary, '--grad-to': dept.heroTo }}
+        >
 
           {/* ── Intro Paragraphs ── */}
           <Reveal className="space-y-4 max-w-3xl">
             {content.introParagraphs.map((para, i) => (
               <p
                 key={i}
-                className="text-base sm:text-lg leading-loose"
+                className="text-base sm:text-lg 3xl:text-xl leading-loose"
                 style={{ color: i === 0 ? SITE_THEME.textHeading : SITE_THEME.textMuted }}
               >
                 {para}
@@ -64,47 +61,73 @@ export default function HomePage({ onNavigate }) {
             ))}
           </Reveal>
 
-            
+          {/* ── Key numbers ── */}
+          <StaggerGrid className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {content.stats.map((stat) => (
+              <AnimatedCard
+                key={stat.label}
+                className="rounded-3xl border surface-card px-6 py-7 text-center flex flex-col items-center gap-2"
+                style={{ borderColor: `${dept.accentSecondary}33` }}
+              >
+                <CountUp
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  className="text-gradient text-5xl sm:text-6xl font-extrabold leading-none tabular-nums"
+                />
+                <span
+                  className="text-sm sm:text-base font-semibold"
+                  style={{ color: SITE_THEME.textMuted }}
+                >
+                  {stat.label}
+                </span>
+              </AnimatedCard>
+            ))}
+          </StaggerGrid>
+
           {/* ── Two Stages ── */}
           <section className="space-y-6">
-            <Reveal>
-              <SectionTitle accentColor={dept.accentSecondary}>مرحلتا الدراسة</SectionTitle>
-            </Reveal>
-            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <SectionTitle text="مرحلتا الدراسة" accentColor={dept.accentSecondary} />
+            {/* Timeline connecting stage 1 → stage 2 (fills as you scroll) */}
+            <ScrollLine
+              orientation="horizontal"
+              color={dept.accentSecondary}
+              className="hidden sm:block mx-[25%]"
+            />
+            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {content.stages.map((stage) => {
                 const accentColor =
                   stage.accentKey === 'accentSecondary' ? dept.accentSecondary : dept.accent;
                 return (
                   <AnimatedCard
                     key={stage.id}
-                    className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden flex flex-col"
+                    className="rounded-3xl border surface-card overflow-hidden flex flex-col h-full"
                     style={{ borderColor: `${accentColor}44` }}
                   >
                     {/* top accent bar */}
                     <div className="h-1.5 w-full" style={{ backgroundColor: accentColor }} />
-                    <div className="p-5 sm:p-6 flex flex-col gap-3 flex-1">
+                    <div className="p-6 sm:p-8 flex flex-col gap-3 flex-1">
                       <div className="flex items-center justify-between gap-2 flex-wrap">
                         <span
-                          className="text-xs font-bold uppercase tracking-widest"
+                          className="text-sm font-bold uppercase tracking-widest"
                           style={{ color: accentColor }}
                         >
                           {stage.label}
                         </span>
                         <span
-                          className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                          className="text-sm font-semibold px-3 py-1 rounded-full"
                           style={{ backgroundColor: `${accentColor}18`, color: accentColor }}
                         >
                           {stage.duration}
                         </span>
                       </div>
                       <h3
-                        className="text-lg sm:text-xl font-bold"
+                        className="text-xl sm:text-2xl font-bold"
                         style={{ color: SITE_THEME.textHeading }}
                       >
                         {stage.title}
                       </h3>
                       <p
-                        className="text-sm sm:text-base leading-relaxed flex-1"
+                        className="text-base sm:text-lg leading-relaxed flex-1"
                         style={{ color: SITE_THEME.textMuted }}
                       >
                         {stage.body}
@@ -118,9 +141,7 @@ export default function HomePage({ onNavigate }) {
 
           {/* ── Three Paths ── */}
           <section className="space-y-6">
-            <Reveal>
-              <SectionTitle accentColor={dept.accentSecondary}>{content.pathsTitle}</SectionTitle>
-            </Reveal>
+            <SectionTitle text={content.pathsTitle} accentColor={dept.accentSecondary} />
             <StaggerGrid className="grid grid-cols-1 max-w-md gap-4">
               {content.paths.map((path) => {
                 const trackDept = DEPARTMENTS[path.id];
@@ -130,24 +151,24 @@ export default function HomePage({ onNavigate }) {
                       as="button"
                       disableHoverMotion
                       onClick={() => handlePathSelect(path.id)}
-                      className="text-right rounded-2xl border bg-[var(--card-bg)] p-5 flex flex-col gap-2 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full h-full"
+                      className="text-right rounded-3xl border surface-card p-6 flex flex-col gap-2 cursor-pointer w-full h-full"
                       style={{ borderColor: `${trackDept.accent}44` }}
                     >
                       <AnimatedIcon className="text-3xl">{path.icon}</AnimatedIcon>
                       <span
-                        className="text-base sm:text-lg font-bold leading-snug mt-1"
+                        className="text-lg sm:text-xl font-bold leading-snug mt-1"
                         style={{ color: trackDept.accent }}
                       >
                         {path.title}
                       </span>
                       <p
-                        className="text-xs sm:text-sm leading-relaxed"
+                        className="text-sm sm:text-base leading-relaxed"
                         style={{ color: SITE_THEME.textMuted }}
                       >
                         {path.description}
                       </p>
                       <span
-                        className="text-xs font-semibold mt-auto pt-2 flex items-center gap-1"
+                        className="text-sm font-semibold mt-auto pt-2 flex items-center gap-1"
                         style={{ color: trackDept.accent }}
                       >
                         استكشف المسار ←
@@ -160,17 +181,15 @@ export default function HomePage({ onNavigate }) {
           </section>
 
           {/* ── Summary Curriculum Table ── */}
-          <section id="table" className="scroll-mt-24 space-y-6">
-            <Reveal>
-              <SectionTitle accentColor={dept.accentSecondary}>{content.tableTitle}</SectionTitle>
-            </Reveal>
+          <section id="table" ref={tableRef} className="scroll-mt-24 space-y-6">
+            <SectionTitle text={content.tableTitle} accentColor={dept.accentSecondary} />
 
             {/* Mobile: stacked year cards (no horizontal scroll) */}
-            <Reveal className="space-y-4 sm:hidden">
+            <div className="space-y-4 sm:hidden">
               {content.tableData.map((row) => (
                 <div
                   key={row.year}
-                  className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden"
+                  className="year-card rounded-3xl border surface-card overflow-hidden"
                   style={{ borderColor: SITE_THEME.cardBorder }}
                 >
                   <div
@@ -209,19 +228,19 @@ export default function HomePage({ onNavigate }) {
                   </div>
                 </div>
               ))}
-            </Reveal>
+            </div>
 
             {/* sm and up: full table */}
-            <Reveal className="hidden sm:block">
+            <div className="hidden sm:block">
               <div
-                className="overflow-x-auto rounded-2xl border shadow-sm"
+                className="overflow-x-auto rounded-3xl border surface-card"
                 style={{ borderColor: SITE_THEME.cardBorder }}
               >
-                <table className="w-full text-sm border-collapse min-w-[560px]">
+                <table className="w-full text-sm sm:text-base border-collapse min-w-[28rem]">
                   <thead>
                     <tr style={{ backgroundColor: `${dept.accent}10` }}>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide whitespace-nowrap"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide whitespace-nowrap"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -230,7 +249,7 @@ export default function HomePage({ onNavigate }) {
                         السنة
                       </th>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -239,7 +258,7 @@ export default function HomePage({ onNavigate }) {
                         الفصل الأول
                       </th>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -307,19 +326,19 @@ export default function HomePage({ onNavigate }) {
                   </tbody>
                 </table>
               </div>
-            </Reveal>
+            </div>
           </section>
 
           {/* ── Bridge to BasicsPage ── */}
           <GlowCallout
-            className="rounded-2xl border px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center gap-5"
+            className="rounded-3xl border px-6 py-8 sm:px-10 sm:py-10 flex flex-col sm:flex-row items-start sm:items-center gap-5"
             style={{
               background: `linear-gradient(135deg, ${dept.heroFrom}10, ${dept.heroTo}16)`,
               borderColor: `${dept.accentSecondary}44`,
             }}
           >
             <p
-              className="text-sm sm:text-base leading-relaxed flex-1"
+              className="text-base sm:text-lg leading-relaxed flex-1"
               style={{ color: SITE_THEME.textMuted }}
             >
               {content.bridgeText}
@@ -330,7 +349,7 @@ export default function HomePage({ onNavigate }) {
                 play('confirm');
                 onNavigate?.('basics');
               }}
-              className="shrink-0 min-h-[44px] px-6 py-3 rounded-xl text-sm font-bold text-white shadow-sm transition-opacity hover:opacity-90 whitespace-nowrap"
+              className="shrink-0 min-h-[44px] px-7 py-3.5 rounded-2xl text-sm sm:text-base font-bold text-white shadow-lg transition-opacity hover:opacity-90 whitespace-nowrap"
               style={{ backgroundColor: dept.accent }}
             >
               {content.bridgeCta}

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { animate } from 'motion';
+import { useInView } from 'react-intersection-observer';
 import { duration, EASE_OUT } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 /**
- * Animates an integer from 0 to `value` on mount / when value changes.
+ * Animates an integer from 0 to `value` once it scrolls into view (and again when value changes).
  * Shows the final value instantly when prefers-reduced-motion is on.
  */
 export default function CountUp({
@@ -13,10 +14,11 @@ export default function CountUp({
   className = '',
 }) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.4 });
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (prefersReducedMotion) return undefined;
+    if (prefersReducedMotion || !inView) return undefined;
 
     const controls = animate(0, value, {
       duration: duration.count,
@@ -25,12 +27,12 @@ export default function CountUp({
     });
 
     return () => controls.stop();
-  }, [value, prefersReducedMotion]);
+  }, [value, inView, prefersReducedMotion]);
 
   const shown = prefersReducedMotion ? value : display;
 
   return (
-    <span className={className}>
+    <span ref={ref} className={className}>
       {shown}
       {suffix}
     </span>

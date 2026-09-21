@@ -240,6 +240,27 @@ export const staggerContainer = {
   },
 };
 
+/**
+ * GSAP scroll presets — same timing tokens as the Motion variants above.
+ * Durations in seconds; `start` strings are ScrollTrigger positions.
+ */
+export const gsapPresets = {
+  ease: 'expo.out',
+  easeSoft: 'power3.out',
+  duration: duration.slow,
+  wordStagger: stagger.word,
+  rowStagger: stagger.card * 0.5,
+  revealStart: 'top 85%',
+  wordRise: '110%',
+  rowRise: 24,
+  /** Scrubbed hero exit as the masthead scrolls out of view. */
+  heroExit: { y: -40, opacity: 0.35, scale: 0.96 },
+  /** Backdrop blob parallax distance (percent of own height). */
+  blobParallax: 35,
+  /** Page transition between tabs. */
+  pageTransition: { duration: duration.fast, ease: EASE_OUT },
+};
+
 export const reducedMotionVariants = {
   hidden: { opacity: 1, y: 0, scale: 1, rotate: 0 },
   visible: { opacity: 1, y: 0, scale: 1, rotate: 0 },
