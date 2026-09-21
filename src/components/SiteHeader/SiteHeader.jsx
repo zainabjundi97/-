@@ -39,7 +39,7 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
         borderBottomColor: borderColor,
       }}
     >
-      <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
+      <div className="w-full max-w-[90rem] mx-auto flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 px-3 py-2 sm:px-8 sm:py-3 lg:py-4">
         <div className="flex items-center gap-3 shrink-0 self-stretch lg:self-auto w-full lg:w-auto max-w-full">
           <div
             className="flex items-center justify-center w-10 h-10 rounded-full border backdrop-blur-md shrink-0 shadow-sm"
@@ -48,11 +48,11 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
             <SiteLogo />
           </div>
           <div className="min-w-0">
-            <p className="text-xs leading-snug" style={{ color: SITE_THEME.textMuted }}>
+            <p className="text-sm leading-snug" style={{ color: SITE_THEME.textMuted }}>
               منصة طلاب البكالوريا
             </p>
             <p
-              className="hidden lg:block text-xs leading-snug tracking-wide"
+              className="hidden lg:block text-sm leading-snug tracking-wide"
               style={{ color: SITE_THEME.brandBlue }}
             >
               YOUR ACADEMIC DESTINATION
@@ -72,9 +72,7 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
               const activeTextColor =
-                dept.id === 'contest' || dept.id === 'basics'
-                  ? SITE_THEME.textPrimary
-                  : SITE_THEME.navTextActive;
+                dept.id === 'basics' ? SITE_THEME.textPrimary : SITE_THEME.navTextActive;
 
               return (
                 <li key={dept.id} className="relative shrink-0 snap-start">
@@ -84,7 +82,7 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
                       play('tap');
                       onTabChange(dept.id);
                     }}
-                    className="relative min-h-[44px] px-3 sm:px-3 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
+                    className="relative min-h-[44px] px-4 rounded-full text-sm sm:text-base font-semibold transition-colors cursor-pointer whitespace-nowrap"
                     style={{
                       color: isActive ? activeTextColor : SITE_THEME.navText,
                     }}
@@ -113,7 +111,7 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
 
         <div className="shrink-0 self-auto justify-end items-center flex gap-2">
           <p
-            className="hidden lg:inline-flex min-h-[44px] items-center rounded-full border shadow-sm px-4 py-2.5 text-sm font-semibold whitespace-nowrap"
+            className="hidden lg:inline-flex min-h-[44px] items-center rounded-full border shadow-sm px-4 py-2.5 text-sm sm:text-base font-semibold whitespace-nowrap"
             style={{
               color: SITE_THEME.textHeading,
               backgroundColor: SITE_THEME.cardBg,

@@ -1,39 +1,50 @@
+import { useRef } from 'react';
 import { motion } from 'motion/react';
 import PageMasthead from '../components/PageMasthead/PageMasthead';
 import Reveal from '../components/Reveal/Reveal';
+import StaggerGrid from '../components/StaggerGrid/StaggerGrid';
+import AnimatedCard from '../components/AnimatedCard/AnimatedCard';
+import SectionTitle from '../components/SectionTitle/SectionTitle';
+import ScrollLine from '../components/ScrollLine/ScrollLine';
+import { useScrollStagger } from '../hooks/useScrollStagger';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { duration, stagger, EASE_OUT } from '../lib/animations';
 import { DEPARTMENTS, getDepartment, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
 
+const MotionDiv = motion.div;
+
 /** ── Semester card sub-component ── */
 function SemesterCard({ semester, dept }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
   return (
     <div
-      className="rounded-2xl border bg-[var(--card-bg)] shadow-sm overflow-hidden flex flex-col"
+      className="rounded-3xl border surface-card overflow-hidden flex flex-col"
       style={{ borderColor: `${dept.accentSecondary}33` }}
     >
       {/* card header */}
       <div
-        className="px-5 py-3 flex items-center gap-3"
+        className="px-6 py-4 flex items-center gap-3"
         style={{ backgroundColor: `${dept.accentSecondary}14` }}
       >
         <div
           className="w-1 h-6 rounded-full shrink-0"
           style={{ backgroundColor: dept.accentSecondary }}
         />
-        <h4 className="text-base font-bold" style={{ color: SITE_THEME.textHeading }}>
+        <h4 className="text-lg sm:text-xl font-bold" style={{ color: SITE_THEME.textHeading }}>
           {semester.title}
         </h4>
       </div>
 
       {/* featured courses */}
-      <div className="p-5 space-y-5 flex-1">
+      <div className="p-6 space-y-6 flex-1">
         {semester.featured.map((course, ci) => (
-          <motion.div
+          <MotionDiv
             key={course.name}
-            initial={{ opacity: 0, x: 12 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, x: 12 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.35, delay: ci * 0.08, ease: 'easeOut' }}
+            transition={{ duration: duration.base, delay: ci * stagger.word, ease: EASE_OUT }}
             className="space-y-1.5"
           >
             <div className="flex items-center gap-2">
@@ -43,19 +54,19 @@ function SemesterCard({ semester, dept }) {
                 aria-hidden
               />
               <h5
-                className="text-sm sm:text-base font-bold"
+                className="text-base sm:text-lg font-bold"
                 style={{ color: SITE_THEME.textHeading }}
               >
                 {course.name}
               </h5>
             </div>
             <p
-              className="text-sm leading-relaxed pe-2"
+              className="text-sm sm:text-base leading-relaxed pe-2"
               style={{ color: SITE_THEME.textMuted }}
             >
               {course.body}
             </p>
-          </motion.div>
+          </MotionDiv>
         ))}
 
         {/* remaining courses chip list */}
@@ -64,14 +75,14 @@ function SemesterCard({ semester, dept }) {
             className="rounded-xl px-4 py-3 mt-2"
             style={{ backgroundColor: `${dept.accent}08` }}
           >
-            <p className="text-xs font-bold mb-2" style={{ color: dept.accentSecondary }}>
+            <p className="text-sm font-bold mb-2" style={{ color: dept.accentSecondary }}>
               مواد أخرى في هذا الفصل:
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 list-none p-0 m-0">
               {semester.rest.map((c) => (
                 <li
                   key={c}
-                  className="flex items-center gap-1.5 text-sm"
+                  className="flex items-center gap-1.5 text-sm sm:text-base"
                   style={{ color: SITE_THEME.textMuted }}
                 >
                   <span
@@ -98,6 +109,8 @@ export default function BasicsPage({ onNavigate }) {
   const content = getShellContent('basics');
   const dept = getDepartment('basics');
   const { hero } = content;
+  const tableRef = useRef(null);
+  useScrollStagger(tableRef, 'tbody tr');
 
   return (
     <div className="w-full flex-1 flex flex-col overflow-x-hidden">
@@ -110,123 +123,109 @@ export default function BasicsPage({ onNavigate }) {
         onNavigate={onNavigate}
       />
 
-      <main className="w-full px-4 sm:px-6 py-10 sm:py-14">
-        <div className="max-w-5xl mx-auto space-y-16 sm:space-y-20">
+      <main className="w-full px-4 sm:px-6 py-12 sm:py-20">
+        <div className="max-w-5xl 3xl:max-w-6xl mx-auto space-y-16 sm:space-y-24 3xl:space-y-32">
 
-          {/* ══ YEAR 1 ══ */}
-          <section id="year1" className="scroll-mt-24 space-y-8">
-            <Reveal>
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-1.5 h-8 rounded-full shrink-0"
-                  style={{ backgroundColor: dept.accentSecondary }}
+          {/* ══ YEARS 1 → 2, joined by a timeline that fills as you scroll ══ */}
+          <div className="flex gap-6 lg:gap-10">
+            <ScrollLine
+              color={dept.accentSecondary}
+              className="hidden md:block shrink-0 self-stretch"
+            />
+            <div className="flex-1 min-w-0 space-y-16 sm:space-y-24 3xl:space-y-32">
+
+              {/* ══ YEAR 1 ══ */}
+              <section id="year1" className="scroll-mt-24 space-y-8">
+                <SectionTitle
+                  text={content.year1.title}
+                  accentColor={dept.accentSecondary}
+                  size="lg"
+                  className="mb-0"
                 />
-                <h2
-                  className="text-2xl sm:text-3xl font-extrabold"
-                  style={{ color: SITE_THEME.textHeading }}
-                >
-                  {content.year1.title}
-                </h2>
-              </div>
-              <p
-                className="mt-3 text-base sm:text-lg leading-relaxed max-w-3xl"
-                style={{ color: SITE_THEME.textMuted }}
-              >
-                {content.year1.intro}
-              </p>
-            </Reveal>
+                <Reveal>
+                  <p
+                    className="text-base sm:text-lg leading-relaxed max-w-3xl"
+                    style={{ color: SITE_THEME.textMuted }}
+                  >
+                    {content.year1.intro}
+                  </p>
+                </Reveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <SemesterCard semester={content.year1.s1} dept={dept} />
-              <SemesterCard semester={content.year1.s2} dept={dept} />
-            </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <SemesterCard semester={content.year1.s1} dept={dept} />
+                  <SemesterCard semester={content.year1.s2} dept={dept} />
+                </div>
 
-            <Reveal>
-              <p
-                className="text-sm sm:text-base leading-relaxed max-w-3xl font-medium"
-                style={{ color: SITE_THEME.textHeading }}
-              >
-                {content.year1.closing}
-              </p>
-              <p
-                className="mt-2 text-sm sm:text-base leading-relaxed max-w-3xl"
-                style={{ color: SITE_THEME.textMuted }}
-              >
-                {content.year1.closingS2}
-              </p>
-            </Reveal>
-          </section>
+                <Reveal>
+                  <p
+                    className="text-base sm:text-lg leading-relaxed max-w-3xl font-medium"
+                    style={{ color: SITE_THEME.textHeading }}
+                  >
+                    {content.year1.closing}
+                  </p>
+                  <p
+                    className="mt-2 text-base sm:text-lg leading-relaxed max-w-3xl"
+                    style={{ color: SITE_THEME.textMuted }}
+                  >
+                    {content.year1.closingS2}
+                  </p>
+                </Reveal>
+              </section>
 
-          {/* ══ YEAR 2 ══ */}
-          <section id="year2" className="scroll-mt-24 space-y-8">
-            <Reveal>
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-1.5 h-8 rounded-full shrink-0"
-                  style={{ backgroundColor: dept.accent }}
+              {/* ══ YEAR 2 ══ */}
+              <section id="year2" className="scroll-mt-24 space-y-8">
+                <SectionTitle
+                  text={content.year2.title}
+                  accentColor={dept.accent}
+                  size="lg"
+                  className="mb-0"
                 />
-                <h2
-                  className="text-2xl sm:text-3xl font-extrabold"
-                  style={{ color: SITE_THEME.textHeading }}
-                >
-                  {content.year2.title}
-                </h2>
-              </div>
-              <p
-                className="mt-3 text-base sm:text-lg leading-relaxed max-w-3xl"
-                style={{ color: SITE_THEME.textMuted }}
-              >
-                {content.year2.intro}
-              </p>
-            </Reveal>
+                <Reveal>
+                  <p
+                    className="text-base sm:text-lg leading-relaxed max-w-3xl"
+                    style={{ color: SITE_THEME.textMuted }}
+                  >
+                    {content.year2.intro}
+                  </p>
+                </Reveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <SemesterCard semester={content.year2.s1} dept={dept} />
-              <SemesterCard semester={content.year2.s2} dept={dept} />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <SemesterCard semester={content.year2.s1} dept={dept} />
+                  <SemesterCard semester={content.year2.s2} dept={dept} />
+                </div>
+
+                <Reveal>
+                  <p
+                    className="text-base sm:text-lg leading-relaxed max-w-3xl font-medium"
+                    style={{ color: SITE_THEME.textHeading }}
+                  >
+                    {content.year2.closing}
+                  </p>
+                  <p
+                    className="mt-2 text-base sm:text-lg leading-relaxed max-w-3xl"
+                    style={{ color: SITE_THEME.textMuted }}
+                  >
+                    {content.year2.closingS2}
+                  </p>
+                </Reveal>
+              </section>
+
             </div>
-
-            <Reveal>
-              <p
-                className="text-sm sm:text-base leading-relaxed max-w-3xl font-medium"
-                style={{ color: SITE_THEME.textHeading }}
-              >
-                {content.year2.closing}
-              </p>
-              <p
-                className="mt-2 text-sm sm:text-base leading-relaxed max-w-3xl"
-                style={{ color: SITE_THEME.textMuted }}
-              >
-                {content.year2.closingS2}
-              </p>
-            </Reveal>
-          </section>
+          </div>
 
           {/* ══ FULL CURRICULUM TABLE ══ */}
-          <section id="table" className="scroll-mt-24 space-y-6">
-            <Reveal>
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="w-1.5 h-7 rounded-full shrink-0"
-                  style={{ backgroundColor: dept.accentSecondary }}
-                />
-                <h2
-                  className="text-xl sm:text-2xl font-extrabold"
-                  style={{ color: SITE_THEME.textHeading }}
-                >
-                  الخطة الدراسية
-                </h2>
-              </div>
-            </Reveal>
-            <Reveal>
+          <section id="table" ref={tableRef} className="scroll-mt-24 space-y-6">
+            <SectionTitle text="الخطة الدراسية" accentColor={dept.accentSecondary} className="mb-2" />
+            <div>
               <div
-                className="overflow-x-auto rounded-2xl border shadow-sm"
+                className="overflow-x-auto rounded-3xl border surface-card"
                 style={{ borderColor: SITE_THEME.cardBorder }}
               >
-                <table className="w-full text-sm border-collapse min-w-[600px]">
+                <table className="w-full text-sm sm:text-base border-collapse min-w-[30rem]">
                   <thead>
                     <tr style={{ backgroundColor: `${dept.accent}10` }}>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide whitespace-nowrap"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide whitespace-nowrap"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -235,7 +234,7 @@ export default function BasicsPage({ onNavigate }) {
                         السنة
                       </th>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -244,7 +243,7 @@ export default function BasicsPage({ onNavigate }) {
                         الفصل الأول
                       </th>
                       <th
-                        className="px-4 py-3 text-right font-bold text-xs uppercase tracking-wide"
+                        className="px-4 py-3 text-right font-bold text-sm uppercase tracking-wide"
                         style={{
                           color: SITE_THEME.textHeading,
                           borderBottom: `2px solid ${dept.accentSecondary}`,
@@ -312,28 +311,17 @@ export default function BasicsPage({ onNavigate }) {
                   </tbody>
                 </table>
               </div>
-            </Reveal>
+            </div>
           </section>
 
           {/* ══ SUMMARY "ماذا يعني كل ذلك؟" ══ */}
           <section className="space-y-6">
+            <SectionTitle text="ماذا يعني كل ذلك؟" accentColor={dept.accentSecondary} className="mb-4" />
             <Reveal className="space-y-4 max-w-3xl">
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  className="w-1.5 h-7 rounded-full shrink-0"
-                  style={{ backgroundColor: dept.accentSecondary }}
-                />
-                <h2
-                  className="text-xl sm:text-2xl font-extrabold"
-                  style={{ color: SITE_THEME.textHeading }}
-                >
-                  ماذا يعني كل ذلك؟
-                </h2>
-              </div>
               {content.summaryParagraphs.map((para, i) => (
                 <p
                   key={i}
-                  className="text-sm sm:text-base leading-relaxed"
+                  className="text-base sm:text-lg leading-relaxed"
                   style={{ color: SITE_THEME.textMuted }}
                 >
                   {para}
@@ -342,19 +330,15 @@ export default function BasicsPage({ onNavigate }) {
             </Reveal>
 
             {/* Specialization path cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-              {content.conclusionPaths.map((path, index) => {
+            <StaggerGrid className="grid grid-cols-1 max-w-md gap-4 pt-2">
+              {content.conclusionPaths.map((path) => {
                 const trackDept = DEPARTMENTS[path.id];
                 return (
-                  <motion.button
+                  <AnimatedCard
                     key={path.id}
-                    type="button"
+                    as="button"
                     onClick={() => onNavigate?.(path.id)}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.4, delay: index * 0.1, ease: 'easeOut' }}
-                    className="text-right rounded-2xl border bg-[var(--card-bg)] p-5 flex flex-col gap-3 cursor-pointer shadow-sm transition-shadow hover:shadow-md w-full"
+                    className="text-right rounded-3xl border surface-card p-6 flex flex-col gap-3 cursor-pointer w-full"
                     style={{ borderColor: `${trackDept.accent}44` }}
                   >
                     <span
@@ -363,40 +347,40 @@ export default function BasicsPage({ onNavigate }) {
                       aria-hidden
                     />
                     <span
-                      className="text-base font-bold leading-snug"
+                      className="text-lg sm:text-xl font-bold leading-snug"
                       style={{ color: trackDept.accent }}
                     >
                       {path.title}
                     </span>
                     <span
-                      className="text-xs font-semibold mt-auto"
+                      className="text-sm font-semibold mt-auto"
                       style={{ color: trackDept.accent }}
                     >
                       استكشف المسار ←
                     </span>
-                  </motion.button>
+                  </AnimatedCard>
                 );
               })}
-            </div>
+            </StaggerGrid>
           </section>
 
           {/* ══ NOTE ASIDE ══ */}
           <Reveal>
             <aside
-              className="rounded-2xl px-5 sm:px-8 py-6 sm:py-8 border"
+              className="rounded-3xl px-6 sm:px-10 py-8 sm:py-10 border"
               style={{
                 background: `linear-gradient(135deg, ${dept.heroFrom}12, ${dept.heroTo}18)`,
                 borderColor: `${dept.accentSecondary}44`,
               }}
             >
               <h3
-                className="text-lg sm:text-xl font-bold mb-2"
+                className="text-xl sm:text-2xl font-bold mb-3"
                 style={{ color: SITE_THEME.textHeading }}
               >
                 {content.noteTitle}
               </h3>
               <p
-                className="text-sm sm:text-base leading-relaxed max-w-3xl"
+                className="text-base sm:text-lg leading-relaxed max-w-3xl"
                 style={{ color: SITE_THEME.textMuted }}
               >
                 {content.noteBody}

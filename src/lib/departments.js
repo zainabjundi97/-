@@ -55,36 +55,6 @@ export const DEPARTMENTS = {
     accentSecondary: '#4EB67B',
     sceneVariant: 'network',
   },
-  networks: {
-    id: 'networks',
-    label: 'الشبكات',
-    navActive: '#5DBB78',
-    heroFrom: '#5DBB78',
-    heroTo: '#2B2E71',
-    accent: '#5DBB78',
-    accentSecondary: '#5191CE',
-    sceneVariant: 'networkCore',
-  },
-  ai: {
-    id: 'ai',
-    label: 'الذكاء الاصطناعي',
-    navActive: '#2E6BA8',
-    heroFrom: '#2E6BA8',
-    heroTo: '#2B2E71',
-    accent: '#2E6BA8',
-    accentSecondary: '#4EB67B',
-    sceneVariant: 'robot',
-  },
-  contest: {
-    id: 'contest',
-    label: 'المسابقة البرمجية',
-    navActive: '#FFCC00',
-    heroFrom: '#C49A00',
-    heroTo: '#FFCC00',
-    accent: '#FFCC00',
-    accentSecondary: '#5191CE',
-    sceneVariant: 'stackCrystal',
-  },
 };
 
 export const NAV_ITEMS = Object.values(DEPARTMENTS);

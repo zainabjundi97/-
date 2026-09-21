@@ -63,7 +63,7 @@ export default function SiteFooter({ activeTab }) {
 
   return (
     <footer
-      className="w-full py-4 text-center text-xs sm:text-sm flex-shrink-0 border-t"
+      className="w-full py-5 text-center text-sm sm:text-base flex-shrink-0 border-t"
       style={{
         backgroundColor: SITE_THEME.headerGlass,
         borderTopWidth: 2,
@@ -91,7 +91,7 @@ export default function SiteFooter({ activeTab }) {
             </li>
           ))}
         </ul>
-        <p className="hidden sm:block text-xs" style={{ color: SITE_THEME.textMuted }}>
+        <p className="hidden sm:block text-sm" style={{ color: SITE_THEME.textMuted }}>
           منصة مخصصة لطلاب البكالوريا لمساعدتهم في اختيار مسارهم الأكاديمي بثقة وشغف.
         </p>
       </div>

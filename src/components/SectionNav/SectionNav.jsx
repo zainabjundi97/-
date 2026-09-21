@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { layoutTransition } from '../../lib/animations';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { useUiSound } from '../../hooks/useUiSound';
+import { scrollToId } from '../../lib/smoothScroll';
 
 const MotionSpan = motion.span;
 
@@ -14,16 +15,6 @@ const SECTIONS = [
   { id: 'stack', label: 'كيف يعمل' },
   { id: 'try', label: 'جرّب' },
 ];
-
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
-}
 
 /**
  * Sticky compact section nav; active item from IntersectionObserver on section ids.
@@ -73,7 +64,7 @@ export default function SectionNav({ accent = '#7957A8' }) {
                     play('tap');
                     scrollToId(section.id);
                   }}
-                  className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition cursor-pointer ${
+                  className={`relative min-h-[44px] px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium transition cursor-pointer ${
                     isActive
                       ? 'text-white'
                       : 'text-[var(--text-muted)] hover:text-[color:var(--section-nav-accent)]'
