@@ -11,6 +11,7 @@ import MagneticButton from '../components/MagneticButton/MagneticButton';
 import CountUp from '../components/CountUp/CountUp';
 import QuizSteps from '../components/QuizSteps/QuizSteps';
 import SectionNav from '../components/SectionNav/SectionNav';
+import SplitHeading from '../components/SplitHeading/SplitHeading';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { useUiSound } from '../hooks/useUiSound';
 import { getDepartment } from '../lib/departments';
@@ -29,20 +30,20 @@ const MotionSpan = motion.span;
 function FutureGroup({ title, items, accent, borderSoft }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-base sm:text-lg font-bold" style={{ color: accent }}>
+      <h3 className="text-lg sm:text-xl font-bold" style={{ color: accent }}>
         {title}
       </h3>
       <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {items.map((item) => (
           <AnimatedCard
             key={item.title}
-            className="bg-[var(--card-bg)] p-4 sm:p-5 rounded-xl border shadow-sm min-h-[44px]"
+            className="surface-card p-4 sm:p-5 rounded-xl border shadow-sm min-h-[44px]"
             style={borderSoft}
           >
             <p className="text-sm sm:text-base font-bold mb-1.5" style={{ color: accent }}>
               {item.title}
             </p>
-            <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-muted)]">{item.body}</p>
+            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">{item.body}</p>
           </AnimatedCard>
         ))}
       </StaggerGrid>
@@ -58,7 +59,7 @@ function roleColor(tone, accent) {
 }
 
 /**
- * Shared specialty landing (software | networks | ai).
+ * Shared specialty landing (software).
  * @param {{ departmentId?: string }} props
  */
 export default function SpecialtyPage({ departmentId = 'software' }) {
@@ -173,26 +174,26 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
   return (
     <LayoutGroup>
       <div
-        className="w-full flex-1 bg-[var(--shell-bg)] text-[var(--text-primary)] font-sans flex flex-col overflow-x-hidden relative"
+        className="w-full flex-1 text-[var(--text-primary)] font-sans flex flex-col overflow-x-hidden relative"
         dir="rtl"
       >
         <Hero departmentId={departmentId} />
         <SectionNav accent={accent} />
 
-        <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 space-y-12 md:space-y-16">
+        <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1 space-y-14 md:space-y-20 3xl:space-y-28">
           <Reveal
             id="about"
-            className="scroll-mt-24 transition duration-300 bg-[var(--card-bg)] p-6 md:p-8 rounded-2xl border shadow-sm space-y-4"
+            className="scroll-mt-24 transition duration-300 surface-card p-6 md:p-8 rounded-3xl border space-y-4"
             style={borderSoft}
           >
             <section>
-              <h2
-                className="text-xl sm:text-2xl font-bold flex items-center gap-2"
+              <SplitHeading
+                as="h2"
+                text={content.aboutTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
                 style={textAccent}
-              >
-                {content.aboutTitle}
-              </h2>
-              <p className="text-[var(--text-muted)] leading-relaxed text-sm sm:text-base mt-4">
+              />
+              <p className="text-[var(--text-muted)] leading-relaxed text-base sm:text-lg mt-4">
                 {content.aboutBody}
               </p>
             </section>
@@ -200,11 +201,14 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
           <section id="future" className="scroll-mt-24 space-y-6">
             <Reveal>
-              <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                {content.futureTitle}
-              </h2>
+              <SplitHeading
+                as="h2"
+                text={content.futureTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
+                style={textAccent}
+              />
               {content.futureIntro && (
-                <p className="text-[var(--text-muted)] leading-relaxed text-sm sm:text-base mt-3">
+                <p className="text-[var(--text-muted)] leading-relaxed text-base sm:text-lg mt-3">
                   {content.futureIntro}
                 </p>
               )}
@@ -237,16 +241,19 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base shadow-sm bg-[var(--card-bg)]" style={borderSoft}>
                   🚀
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                  {content.successStoriesTitle}
-                </h2>
+                <SplitHeading
+                as="h2"
+                text={content.successStoriesTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
+                style={textAccent}
+              />
               </div>
             </Reveal>
             <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {content.successStories?.map((story) => (
                 <AnimatedCard
                   key={story.title}
-                  className="group relative overflow-hidden bg-[var(--card-bg)] p-5 sm:p-6 rounded-2xl border shadow-sm"
+                  className="group relative overflow-hidden surface-card p-5 sm:p-6 rounded-3xl border"
                   style={borderSoft}
                 >
                   <div
@@ -260,14 +267,14 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     >
                       <AnimatedIcon>✨</AnimatedIcon>
                     </span>
-                    <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full border" style={{ ...borderSoft, color: accent }}>
+                    <span className="text-sm sm:text-base font-semibold px-2 py-1 rounded-full border" style={{ ...borderSoft, color: accent }}>
                       قصة نجاح
                     </span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2" style={textAccent}>
+                  <h3 className="font-bold text-xl mb-2" style={textAccent}>
                     {story.title}
                   </h3>
-                  <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed">
+                  <p className="text-[var(--text-muted)] text-sm sm:text-base leading-relaxed">
                     {story.body}
                   </p>
                 </AnimatedCard>
@@ -285,15 +292,18 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                   ❓
                 </div>
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                    {content.faqTitle}
-                  </h2>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">اضغط على السؤال لعرض الإجابة</p>
+                  <SplitHeading
+                as="h2"
+                text={content.faqTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
+                style={textAccent}
+              />
+                  <p className="text-sm text-[var(--text-muted)] mt-0.5">اضغط على السؤال لعرض الإجابة</p>
                 </div>
               </div>
             </Reveal>
 
-            <div className="rounded-2xl border overflow-hidden shadow-sm" style={{ borderColor: `${accent}33` }}>
+            <div className="rounded-3xl border overflow-hidden surface-card" style={{ borderColor: `${accent}33` }}>
               {content.faqs?.map((item, index) => {
                 const isOpen = openFaqIndex === index;
                 const isLast = index === (content.faqs?.length ?? 0) - 1;
@@ -382,15 +392,18 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
           <section id="myths" className="scroll-mt-24 space-y-4 md:space-y-6">
             <Reveal>
-              <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                {content.mythsTitle}
-              </h2>
+              <SplitHeading
+                as="h2"
+                text={content.mythsTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
+                style={textAccent}
+              />
             </Reveal>
             <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {content.myths.map((item) => (
                 <AnimatedCard
                   key={item.myth}
-                  className="bg-[var(--card-bg)] p-5 sm:p-6 rounded-xl border shadow-sm"
+                  className="surface-card p-5 sm:p-6 rounded-xl border shadow-sm"
                   style={borderSoft}
                 >
                   <span className="text-[#c45c5c] font-bold text-sm">❌ خرافة:</span>
@@ -400,7 +413,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                   <span className="text-[#4EB67B] font-bold text-sm mt-3 block">
                     ✔ الحقيقة:
                   </span>
-                  <p className="text-[var(--text-muted)] text-xs sm:text-sm">{item.fact}</p>
+                  <p className="text-[var(--text-muted)] text-sm sm:text-base">{item.fact}</p>
                 </AnimatedCard>
               ))}
             </StaggerGrid>
@@ -408,13 +421,13 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
           <section id="courses" className="scroll-mt-24 space-y-6">
             <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <h2
-                className="text-xl sm:text-2xl font-bold flex items-center gap-2"
+              <SplitHeading
+                as="h2"
+                text={content.coursesTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
                 style={textAccent}
-              >
-                {content.coursesTitle}
-              </h2>
-              <span className="text-xs font-medium" style={textAccent}>
+              />
+              <span className="text-sm font-medium" style={textAccent}>
                 ✨ اضغط على المادة لقراءة الشرح المبسط
               </span>
             </Reveal>
@@ -433,18 +446,18 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     }
                     transition={layoutTransition}
                     onClick={() => setSelectedCourse(course)}
-                    className="text-right bg-[var(--card-bg)] p-6 rounded-2xl border shadow-sm cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full hover:shadow-md"
+                    className="text-right surface-card p-6 rounded-3xl border cursor-pointer group flex flex-col justify-between min-h-[44px] h-full w-full"
                     style={borderSoft}
                   >
                     <div>
                       <AnimatedIcon className="text-4xl mb-4">{course.icon}</AnimatedIcon>
                       <h3
-                        className="font-bold text-lg mb-2"
+                        className="font-bold text-xl mb-2"
                         style={textAccent}
                       >
                         {course.name}
                       </h3>
-                      <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed mb-4">
+                      <p className="text-[var(--text-muted)] text-sm sm:text-base leading-relaxed mb-4">
                         {course.desc}
                       </p>
                     </div>
@@ -462,17 +475,17 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
           <Reveal
             id="stack"
-            className="scroll-mt-24 bg-[var(--card-bg)] p-6 md:p-8 rounded-2xl border shadow-sm space-y-6"
+            className="scroll-mt-24 surface-card p-6 md:p-8 rounded-3xl border space-y-6"
             style={borderSoft}
           >
             <div className="text-center max-w-2xl mx-auto space-y-2">
-              <h2
-                className="text-xl sm:text-2xl font-bold flex items-center justify-center gap-2"
+              <SplitHeading
+                as="h2"
+                text={content.stackTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug text-center"
                 style={textAccent}
-              >
-                {content.stackTitle}
-              </h2>
-              <p className="text-xs sm:text-sm text-[var(--text-muted)]">{content.stackHint}</p>
+              />
+              <p className="text-sm sm:text-base text-[var(--text-muted)]">{content.stackHint}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -510,7 +523,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                         {role.title}
                       </h3>
                     </div>
-                    <p className="relative text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed">
+                    <p className="relative text-[var(--text-muted)] text-sm sm:text-base leading-relaxed">
                       {role.body}
                     </p>
                   </button>
@@ -527,7 +540,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                 variants={enterVariants}
               >
                 <GlowCallout
-                  className="p-3 sm:p-4 rounded-lg border text-xs sm:text-sm"
+                  className="p-3 sm:p-4 rounded-lg border text-sm sm:text-base"
                   style={{
                     backgroundColor: `${activeStack.color}18`,
                     borderColor: `${activeStack.color}40`,
@@ -546,26 +559,26 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
             className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start"
           >
             <section
-              className="bg-[var(--card-bg)] p-5 sm:p-6 rounded-2xl border shadow-sm space-y-4 h-full flex flex-col justify-between"
+              className="surface-card p-5 sm:p-6 rounded-3xl border space-y-4 h-full flex flex-col justify-between"
               style={borderSoft}
             >
               <div>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
-                  <h2 className="text-lg sm:text-xl font-bold text-[#4EB67B]">
+                  <h2 className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold text-[#4EB67B]">
                     {content.tryTitle}
                   </h2>
                   <MagneticButton
                     type="button"
                     onClick={runCode}
                     disabled={isRunning}
-                    className="w-full sm:w-auto min-h-[44px] bg-[#4EB67B] hover:bg-[#3fa06a] text-white px-4 py-2.5 rounded-lg font-medium text-xs sm:text-sm transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md active:scale-95"
+                    className="w-full sm:w-auto min-h-[44px] bg-[#4EB67B] hover:bg-[#3fa06a] text-white px-4 py-2.5 rounded-lg font-medium text-sm sm:text-base transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md active:scale-95"
                   >
                     {isRunning ? '⏳ جاري التشغيل...' : '▶ تشغيل (Run)'}
                   </MagneticButton>
                 </div>
 
                 <div
-                  className="bg-[var(--shell-bg)] p-4 rounded-lg font-mono text-xs sm:text-sm border text-[var(--text-muted)] overflow-x-auto text-left"
+                  className="bg-[var(--shell-bg)] p-4 rounded-lg font-mono text-sm sm:text-base border text-[var(--text-muted)] overflow-x-auto text-left"
                   style={borderSoft}
                   dir="ltr"
                 >
@@ -584,7 +597,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                       maxLength={80}
                       dir="ltr"
                       aria-label="نص الرسالة داخل console.log"
-                      className="min-w-[12ch] flex-1 max-w-full bg-transparent border-b border-[#4EB67B]/50 focus:border-[#4EB67B] outline-none text-[var(--text-heading)] font-mono text-xs sm:text-sm px-0.5 py-0.5 disabled:opacity-60"
+                      className="min-w-[12ch] flex-1 max-w-full bg-transparent border-b border-[#4EB67B]/50 focus:border-[#4EB67B] outline-none text-[var(--text-heading)] font-mono text-sm sm:text-base px-0.5 py-0.5 disabled:opacity-60"
                       onKeyDown={(event) => {
                         if (event.key === 'Enter' && !isRunning) {
                           event.preventDefault();
@@ -605,7 +618,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     animate="visible"
                     exit="exit"
                     variants={enterVariants}
-                    className="bg-[var(--shell-bg)] p-4 rounded-lg font-mono text-xs sm:text-sm border border-[#4EB67B]/40 text-[var(--text-heading)] mt-4"
+                    className="bg-[var(--shell-bg)] p-4 rounded-lg font-mono text-sm sm:text-base border border-[#4EB67B]/40 text-[var(--text-heading)] mt-4"
                   >
                     <span className="text-[var(--text-muted)] block text-xs mb-1">
                       &gt; الشاشة الناتجة (Output):
@@ -622,12 +635,15 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
             <section
               id="quiz"
-              className="scroll-mt-24 bg-[var(--card-bg)] p-5 sm:p-6 rounded-2xl border text-center space-y-6 shadow-sm h-full flex flex-col justify-center"
+              className="scroll-mt-24 surface-card p-5 sm:p-6 rounded-2xl border text-center space-y-6 shadow-sm h-full flex flex-col justify-center"
               style={borderSoft}
             >
-              <h2 className="text-xl sm:text-2xl font-bold" style={textAccent}>
-                {content.quizTitle}
-              </h2>
+              <SplitHeading
+                as="h2"
+                text={content.quizTitle}
+                className="text-2xl sm:text-3xl 3xl:text-4xl font-extrabold leading-snug"
+                style={textAccent}
+              />
 
               {!showResult && (
                 <div className="space-y-3 max-w-md mx-auto w-full">
@@ -636,7 +652,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     current={currentQuestion}
                     accent={accent}
                   />
-                  <div className="text-xs sm:text-sm text-[var(--text-muted)]">
+                  <div className="text-sm sm:text-base text-[var(--text-muted)]">
                     السؤال {currentQuestion + 1} من {content.questions.length}
                   </div>
                 </div>
@@ -707,7 +723,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
 
                     {score >= 75 && (
                       <MotionSpan
-                        className="inline-flex items-center gap-2 rounded-full bg-[#4EB67B]/15 border border-[#4EB67B]/40 text-[var(--text-heading)] text-xs sm:text-sm font-semibold px-3 py-1.5"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#4EB67B]/15 border border-[#4EB67B]/40 text-[var(--text-heading)] text-sm sm:text-base font-semibold px-3 py-1.5"
                         initial="hidden"
                         animate="visible"
                         variants={
@@ -726,7 +742,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                     <button
                       type="button"
                       onClick={resetQuiz}
-                      className="min-h-[44px] bg-[var(--shell-bg)] hover:bg-[var(--card-bg)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg text-xs sm:text-sm transition cursor-pointer border"
+                      className="min-h-[44px] bg-[var(--shell-bg)] hover:bg-[var(--card-bg)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg text-sm sm:text-base transition cursor-pointer border"
                       style={borderSoft}
                     >
                       إعادة الاختبار
@@ -794,7 +810,7 @@ export default function SpecialtyPage({ departmentId = 'software' }) {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="min-h-[44px] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm transition cursor-pointer font-medium hover:opacity-90"
+                    className="min-h-[44px] text-white px-5 py-2.5 rounded-xl text-sm sm:text-base transition cursor-pointer font-medium hover:opacity-90"
                     style={{ backgroundColor: accentHover }}
                   >
                     فهمت المبدأ 👍

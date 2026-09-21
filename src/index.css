@@ -1,6 +1,7 @@
 :root {
   font-family: 'Cairo', system-ui, sans-serif;
-  font-size: 20px;
+  /* Fluid root: ~18px phones, 20px @1280, 24px @1920, ~36px @4K — every rem scales with it. */
+  font-size: clamp(18px, 0.625vw + 12px, 40px);
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -20,6 +21,10 @@
   --nav-inactive-hover: rgba(43, 46, 113, 0.14);
   --nav-text: rgba(43, 46, 113, 0.7);
   --step-inactive: #cbd5e1;
+  --card-glass: rgba(255, 255, 255, 0.72);
+  --shadow-soft: 0 1px 2px rgba(23, 26, 36, 0.04), 0 8px 24px -12px rgba(43, 46, 113, 0.18);
+  --shadow-lift: 0 2px 4px rgba(23, 26, 36, 0.05), 0 24px 48px -20px rgba(43, 46, 113, 0.32);
+  --texture-dot: rgba(43, 46, 113, 0.07);
 }
 
 :root[data-theme='dark'] {
@@ -34,6 +39,10 @@
   --nav-inactive-hover: rgba(255, 255, 255, 0.14);
   --nav-text: rgba(255, 255, 255, 0.7);
   --step-inactive: #3a3f52;
+  --card-glass: rgba(27, 30, 41, 0.72);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.3), 0 24px 48px -20px rgba(0, 0, 0, 0.75);
+  --texture-dot: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -42,7 +51,55 @@ body {
   min-height: 100vh;
   font-size: 1rem;
   background-color: var(--shell-bg);
+  background-image: radial-gradient(var(--texture-dot) 1px, transparent 1px);
+  background-size: 1.5rem 1.5rem;
   transition: background-color 0.2s ease;
+}
+
+/* ── Shared surface styles ── */
+.surface-card {
+  background-color: var(--card-glass);
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+}
+.surface-card:hover {
+  box-shadow: var(--shadow-lift);
+}
+
+/* Gradient text for accent words — --grad-from / --grad-to are set inline per department. */
+.text-gradient {
+  background-image: linear-gradient(120deg, var(--grad-from), var(--grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Masked word reveal (SplitHeading) — padding keeps Arabic ascenders/descenders unclipped. */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+}
+.word-inner {
+  display: inline-block;
+}
+
+/* Slow ambient drift for backdrop blobs. */
+@keyframes blob-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 4% -6%;
+  }
+}
+.blob-drift {
+  animation: blob-drift 14s ease-in-out infinite;
 }
 
 button:focus-visible {

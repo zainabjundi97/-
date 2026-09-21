@@ -14,7 +14,10 @@ import {
   subtitleDelay,
   reducedMotionVariants,
   parallax,
+  gsapPresets,
 } from '../../lib/animations';
+import { gsap, useGSAP, MOTION_OK } from '../../lib/gsap';
+import { scrollToId } from '../../lib/smoothScroll';
 import { getDepartment } from '../../lib/departments';
 import { getSpecialtyContent } from '../../data/specialtyContent';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
@@ -84,12 +87,27 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
       onNavigate(cta.href);
       return;
     }
-    const id = cta.href?.startsWith('#') ? cta.href.slice(1) : cta.href;
-    document.getElementById(id)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    scrollToId(cta.href?.startsWith('#') ? cta.href.slice(1) : cta.href);
   };
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        gsap.to('.hero-exit', {
+          ...gsapPresets.heroExit,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      });
+    },
+    { scope: headerRef }
+  );
 
   useEffect(() => {
     if (!inView) {
@@ -158,7 +176,7 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
       ref={setHeaderRefs}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      className="w-full py-12 md:py-20 text-center px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[22rem] sm:min-h-[28rem]"
+      className="w-full py-14 md:py-24 3xl:py-32 text-center px-4 sm:px-6 lg:px-8 relative overflow-hidden min-h-[22rem] sm:min-h-[28rem]"
       style={{
         background: `linear-gradient(to bottom, ${dept.heroFrom}, ${dept.heroTo}cc, transparent)`,
       }}
@@ -194,77 +212,79 @@ export default function Hero({ departmentId = 'software', onNavigate }) {
         }}
       />
 
-      <MotionDiv
-        className="max-w-7xl mx-auto relative z-10 pointer-events-none"
-        style={prefersReducedMotion ? undefined : { x: textX, y: textY }}
-      >
-        <MotionSpan
-          initial="hidden"
-          animate="visible"
-          variants={badgeVariants}
-          className="text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border inline-block mb-4 backdrop-blur-md text-white"
-          style={{
-            backgroundColor: `${dept.accentSecondary}44`,
-            borderColor: `${dept.accent}44`,
-          }}
+      <div className="hero-exit relative z-10 origin-top">
+        <MotionDiv
+          className="max-w-7xl mx-auto relative pointer-events-none"
+          style={prefersReducedMotion ? undefined : { x: textX, y: textY }}
         >
-          {hero.badge}
-        </MotionSpan>
-
-        <MotionH1
-          className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 tracking-tight text-white drop-shadow-md flex flex-wrap justify-center gap-x-[0.35em] gap-y-1"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          {headingWords.map((word) => (
-            <MotionSpan
-              key={word.text}
-              variants={wordVariants}
-              style={word.accent ? { color: '#F5F7FA' } : undefined}
-            >
-              {word.text}
-            </MotionSpan>
-          ))}
-        </MotionH1>
-
-        <MotionP
-          initial="hidden"
-          animate="visible"
-          variants={subtitleVariants}
-          transition={subtitleTransition}
-          className="text-white/90 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed"
-        >
-          {hero.subtitle}
-        </MotionP>
-
-        {ctas.length > 0 && (
-          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pointer-events-auto">
-            {ctas.map((cta, index) => {
-              const isPrimary = index === 0;
-              return (
-                <a
-                  key={cta.label}
-                  href={cta.type === 'tab' ? `#${cta.href}` : cta.href}
-                  onClick={(event) => handleCta(cta, event)}
-                  className={`min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
-                    isPrimary
-                      ? 'text-white shadow-md'
-                      : 'bg-white/20 hover:bg-white/30 text-white border backdrop-blur-md'
-                  }`}
-                  style={
-                    isPrimary
-                      ? { backgroundColor: dept.accentSecondary }
-                      : { borderColor: 'rgba(245,247,250,0.35)' }
-                  }
-                >
-                  {cta.label}
-                </a>
-              );
-            })}
-          </div>
-        )}
-      </MotionDiv>
+          <MotionSpan
+            initial="hidden"
+            animate="visible"
+            variants={badgeVariants}
+            className="text-sm sm:text-base font-semibold px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border inline-block mb-4 backdrop-blur-md text-white"
+            style={{
+              backgroundColor: `${dept.accentSecondary}44`,
+              borderColor: `${dept.accent}44`,
+            }}
+          >
+            {hero.badge}
+          </MotionSpan>
+  
+          <MotionH1
+            className="text-4xl sm:text-5xl md:text-6xl 3xl:text-7xl font-extrabold mb-4 tracking-tight text-white drop-shadow-md flex flex-wrap justify-center gap-x-[0.35em] gap-y-1"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
+            {headingWords.map((word) => (
+              <MotionSpan
+                key={word.text}
+                variants={wordVariants}
+                style={word.accent ? { color: '#F5F7FA' } : undefined}
+              >
+                {word.text}
+              </MotionSpan>
+            ))}
+          </MotionH1>
+  
+          <MotionP
+            initial="hidden"
+            animate="visible"
+            variants={subtitleVariants}
+            transition={subtitleTransition}
+            className="text-white/90 max-w-3xl mx-auto text-base sm:text-lg lg:text-xl 3xl:text-2xl leading-relaxed"
+          >
+            {hero.subtitle}
+          </MotionP>
+  
+          {ctas.length > 0 && (
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pointer-events-auto">
+              {ctas.map((cta, index) => {
+                const isPrimary = index === 0;
+                return (
+                  <a
+                    key={cta.label}
+                    href={cta.type === 'tab' ? `#${cta.href}` : cta.href}
+                    onClick={(event) => handleCta(cta, event)}
+                    className={`min-h-[44px] inline-flex items-center justify-center px-6 py-3 rounded-2xl text-sm sm:text-base font-bold transition hover:-translate-y-0.5 ${
+                      isPrimary
+                        ? 'text-white shadow-md'
+                        : 'bg-white/20 hover:bg-white/30 text-white border backdrop-blur-md'
+                    }`}
+                    style={
+                      isPrimary
+                        ? { backgroundColor: dept.accentSecondary }
+                        : { borderColor: 'rgba(245,247,250,0.35)' }
+                    }
+                  >
+                    {cta.label}
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </MotionDiv>
+      </div>
 
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 max-w-5xl h-[1px] z-10"
