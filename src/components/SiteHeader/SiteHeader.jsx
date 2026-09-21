@@ -72,9 +72,7 @@ export default function SiteHeader({ activeTab, onTabChange, theme, onToggleThem
               const isActive = activeTab === dept.id;
               const activeBg = dept.navActive ?? dept.accent;
               const activeTextColor =
-                dept.id === 'contest' || dept.id === 'basics'
-                  ? SITE_THEME.textPrimary
-                  : SITE_THEME.navTextActive;
+                dept.id === 'basics' ? SITE_THEME.textPrimary : SITE_THEME.navTextActive;
 
               return (
                 <li key={dept.id} className="relative shrink-0 snap-start">

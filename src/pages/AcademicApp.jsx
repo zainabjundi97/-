@@ -3,7 +3,6 @@ import SiteHeader from '../components/SiteHeader/SiteHeader';
 import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
 import BasicsPage from './BasicsPage';
-import ContestPage from './ContestPage';
 import SpecialtyPage from './SpecialtyPage';
 import { SITE_THEME } from '../lib/departments';
 import { useTheme } from '../hooks/useTheme';
@@ -15,11 +14,7 @@ function renderTab(activeTab, onNavigate) {
     case 'basics':
       return <BasicsPage key="basics" onNavigate={onNavigate} />;
     case 'software':
-    case 'networks':
-    case 'ai':
-      return <SpecialtyPage key={activeTab} departmentId={activeTab} />;
-    case 'contest':
-      return <ContestPage key="contest" />;
+      return <SpecialtyPage key="software" departmentId="software" />;
     default:
       return <HomePage key="home" onNavigate={onNavigate} />;
   }
@@ -38,7 +33,7 @@ export default function AcademicApp() {
     <div
       dir="rtl"
       lang="ar"
-      className="min-h-screen w-full flex flex-col font-sans overflow-x-hidden"
+      className="min-h-screen w-full flex flex-col font-sans overflow-x-clip"
       style={{
         backgroundColor: SITE_THEME.shellBg,
         color: SITE_THEME.textPrimary,

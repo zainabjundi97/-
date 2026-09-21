@@ -4,6 +4,9 @@ import Reveal from '../components/Reveal/Reveal';
 import { DEPARTMENTS, getDepartment, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
 
+const MotionDiv = motion.div;
+const MotionButton = motion.button;
+
 /** ── Semester card sub-component ── */
 function SemesterCard({ semester, dept }) {
   return (
@@ -28,7 +31,7 @@ function SemesterCard({ semester, dept }) {
       {/* featured courses */}
       <div className="p-5 space-y-5 flex-1">
         {semester.featured.map((course, ci) => (
-          <motion.div
+          <MotionDiv
             key={course.name}
             initial={{ opacity: 0, x: 12 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -55,7 +58,7 @@ function SemesterCard({ semester, dept }) {
             >
               {course.body}
             </p>
-          </motion.div>
+          </MotionDiv>
         ))}
 
         {/* remaining courses chip list */}
@@ -342,11 +345,11 @@ export default function BasicsPage({ onNavigate }) {
             </Reveal>
 
             {/* Specialization path cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="grid grid-cols-1 max-w-md gap-4 pt-2">
               {content.conclusionPaths.map((path, index) => {
                 const trackDept = DEPARTMENTS[path.id];
                 return (
-                  <motion.button
+                  <MotionButton
                     key={path.id}
                     type="button"
                     onClick={() => onNavigate?.(path.id)}
@@ -374,7 +377,7 @@ export default function BasicsPage({ onNavigate }) {
                     >
                       استكشف المسار ←
                     </span>
-                  </motion.button>
+                  </MotionButton>
                 );
               })}
             </div>

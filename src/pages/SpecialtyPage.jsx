@@ -58,7 +58,7 @@ function roleColor(tone, accent) {
 }
 
 /**
- * Shared specialty landing (software | networks | ai).
+ * Shared specialty landing (software).
  * @param {{ departmentId?: string }} props
  */
 export default function SpecialtyPage({ departmentId = 'software' }) {

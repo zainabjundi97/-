@@ -121,7 +121,7 @@ export default function HomePage({ onNavigate }) {
             <Reveal>
               <SectionTitle accentColor={dept.accentSecondary}>{content.pathsTitle}</SectionTitle>
             </Reveal>
-            <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <StaggerGrid className="grid grid-cols-1 max-w-md gap-4">
               {content.paths.map((path) => {
                 const trackDept = DEPARTMENTS[path.id];
                 return (
