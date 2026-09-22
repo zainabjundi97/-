@@ -59,25 +59,30 @@ export const DEPARTMENTS = {
 
 export const NAV_ITEMS = Object.values(DEPARTMENTS);
 
-/** Tracks shown as path cards but hosted on external sites (not nav tabs). */
-export const EXTERNAL_TRACKS = {
+/**
+ * Tracks reachable from path cards but NOT header tabs
+ * (external site, or an internal coming-soon page).
+ */
+export const SECONDARY_TRACKS = {
   networks: {
     id: 'networks',
     label: 'الشبكات',
     accent: '#5DBB78',
     accentSecondary: '#5191CE',
   },
+  ai: {
+    id: 'ai',
+    label: 'هندسة الذكاء الصنعي',
+    navActive: '#2E6BA8',
+    heroFrom: '#2E6BA8',
+    heroTo: '#2B2E71',
+    accent: '#2E6BA8',
+    accentSecondary: '#4EB67B',
+    sceneVariant: 'brain',
+  },
 };
 
 /** @param {string} id */
 export function getDepartment(id) {
-  return DEPARTMENTS[id] ?? DEPARTMENTS.software;
-}
-
-/**
- * Theme for a path card: internal department first, then external track.
- * @param {string} id
- */
-export function getTrackTheme(id) {
-  return DEPARTMENTS[id] ?? EXTERNAL_TRACKS[id] ?? DEPARTMENTS.software;
+  return DEPARTMENTS[id] ?? SECONDARY_TRACKS[id] ?? DEPARTMENTS.software;
 }

@@ -9,7 +9,7 @@ import ScrollLine from '../components/ScrollLine/ScrollLine';
 import { useScrollStagger } from '../hooks/useScrollStagger';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { duration, stagger, EASE_OUT } from '../lib/animations';
-import { getDepartment, getTrackTheme, SITE_THEME } from '../lib/departments';
+import { getDepartment, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
 
 const MotionDiv = motion.div;
@@ -330,9 +330,9 @@ export default function BasicsPage({ onNavigate }) {
             </Reveal>
 
             {/* Specialization path cards */}
-            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl gap-4 pt-2">
+            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
               {content.conclusionPaths.map((path) => {
-                const trackDept = getTrackTheme(path.id);
+                const trackDept = getDepartment(path.id);
                 // External tracks render as a real link; internal ones switch the tab.
                 const linkProps = path.href
                   ? { as: 'a', href: path.href, rel: 'noopener noreferrer' }
@@ -341,7 +341,7 @@ export default function BasicsPage({ onNavigate }) {
                   <AnimatedCard
                     key={path.id}
                     {...linkProps}
-                    className="text-right rounded-3xl border surface-card p-6 flex flex-col gap-3 cursor-pointer w-full h-full"
+                    className="text-right rounded-3xl border surface-card p-6 flex flex-col gap-3 cursor-pointer w-full h-full sm:last:col-span-2 lg:last:col-span-1"
                     style={{ borderColor: `${trackDept.accent}44` }}
                   >
                     <span

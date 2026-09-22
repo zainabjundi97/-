@@ -11,7 +11,7 @@ import SectionTitle from '../components/SectionTitle/SectionTitle';
 import ScrollLine from '../components/ScrollLine/ScrollLine';
 import { useUiSound } from '../hooks/useUiSound';
 import { useScrollStagger } from '../hooks/useScrollStagger';
-import { getDepartment, getTrackTheme, SITE_THEME } from '../lib/departments';
+import { getDepartment, SITE_THEME } from '../lib/departments';
 import { getShellContent } from '../data/shellContent';
 
 /**
@@ -142,15 +142,15 @@ export default function HomePage({ onNavigate }) {
           {/* ── Three Paths ── */}
           <section className="space-y-6">
             <SectionTitle text={content.pathsTitle} accentColor={dept.accentSecondary} />
-            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 max-w-3xl gap-4">
+            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {content.paths.map((path) => {
-                const trackDept = getTrackTheme(path.id);
+                const trackDept = getDepartment(path.id);
                 // External tracks render as a real link; internal ones switch the tab.
                 const linkProps = path.href
                   ? { as: 'a', href: path.href, rel: 'noopener noreferrer', onClick: () => play('confirm') }
                   : { as: 'button', onClick: () => handlePathSelect(path.id) };
                 return (
-                  <TiltCard key={path.id} className="h-full">
+                  <TiltCard key={path.id} className="h-full sm:last:col-span-2 lg:last:col-span-1">
                     <AnimatedCard
                       {...linkProps}
                       disableHoverMotion

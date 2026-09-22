@@ -61,6 +61,12 @@ export const shellContent = {
         description: 'تصميم وتأمين الطريق الذي تنتقل عبره البيانات بين الأجهزة.',
         href: 'https://classy-choux-b2b9c0.netlify.app/',
       },
+      {
+        id: 'ai',
+        icon: '🤖',
+        title: 'هندسة الذكاء الصنعي',
+        description: 'بناء أنظمة تتعلم من البيانات وتتخذ قرارات ذكية.',
+      },
     ],
     tableTitle: 'الخطة الدراسية — نظرة عامة',
     tableData: [
@@ -287,6 +293,7 @@ export const shellContent = {
         title: 'هندسة الشبكات والنظم الذكية',
         href: 'https://classy-choux-b2b9c0.netlify.app/',
       },
+      { id: 'ai', title: 'هندسة الذكاء الصنعي' },
     ],
 
     noteTitle: 'ماذا بعد السنتين الأساسيتين؟',

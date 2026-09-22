@@ -96,6 +96,26 @@ export const cursorBlink = {
   },
 };
 
+/** Ambient loops — pass to `animate`; never render them under prefers-reduced-motion. */
+export const floatLoop = {
+  y: [0, -10, 0],
+  rotate: [0, 3, 0, -3, 0],
+  transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+};
+
+/** Expanding ring that fades out — transform/opacity only. */
+export const pulseRing = {
+  scale: [1, 1.6],
+  opacity: [0.6, 0],
+  transition: { duration: 2, repeat: Infinity, ease: 'easeOut' },
+};
+
+/** Second ring half a period behind the first. */
+export const pulseRingOffset = {
+  ...pulseRing,
+  transition: { ...pulseRing.transition, delay: 1 },
+};
+
 export const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: {

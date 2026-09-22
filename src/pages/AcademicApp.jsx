@@ -5,6 +5,7 @@ import SiteFooter from '../components/SiteFooter/SiteFooter';
 import HomePage from './HomePage';
 import BasicsPage from './BasicsPage';
 import SpecialtyPage from './SpecialtyPage';
+import ComingSoonPage from './ComingSoonPage';
 import { SITE_THEME } from '../lib/departments';
 import { fadeIn, reducedMotionVariants } from '../lib/animations';
 import { ScrollTrigger } from '../lib/gsap';
@@ -22,6 +23,8 @@ function renderTab(activeTab, onNavigate) {
       return <BasicsPage onNavigate={onNavigate} />;
     case 'software':
       return <SpecialtyPage departmentId="software" />;
+    case 'ai':
+      return <ComingSoonPage departmentId="ai" onNavigate={onNavigate} />;
     default:
       return <HomePage onNavigate={onNavigate} />;
   }
