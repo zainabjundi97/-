@@ -54,6 +54,13 @@ export const shellContent = {
         title: 'هندسة البرمجيات ونظم المعلومات',
         description: 'تصميم وبناء التطبيقات والأنظمة البرمجية من الفكرة حتى التنفيذ.',
       },
+      {
+        id: 'networks',
+        icon: '🌐',
+        title: 'هندسة الشبكات والنظم الذكية',
+        description: 'تصميم وتأمين الطريق الذي تنتقل عبره البيانات بين الأجهزة.',
+        href: 'https://classy-choux-b2b9c0.netlify.app/',
+      },
     ],
     tableTitle: 'الخطة الدراسية — نظرة عامة',
     tableData: [
@@ -275,6 +282,11 @@ export const shellContent = {
     ],
     conclusionPaths: [
       { id: 'software', title: 'هندسة البرمجيات ونظم المعلومات' },
+      {
+        id: 'networks',
+        title: 'هندسة الشبكات والنظم الذكية',
+        href: 'https://classy-choux-b2b9c0.netlify.app/',
+      },
     ],
 
     noteTitle: 'ماذا بعد السنتين الأساسيتين؟',

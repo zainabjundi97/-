@@ -59,7 +59,25 @@ export const DEPARTMENTS = {
 
 export const NAV_ITEMS = Object.values(DEPARTMENTS);
 
+/** Tracks shown as path cards but hosted on external sites (not nav tabs). */
+export const EXTERNAL_TRACKS = {
+  networks: {
+    id: 'networks',
+    label: 'الشبكات',
+    accent: '#5DBB78',
+    accentSecondary: '#5191CE',
+  },
+};
+
 /** @param {string} id */
 export function getDepartment(id) {
   return DEPARTMENTS[id] ?? DEPARTMENTS.software;
+}
+
+/**
+ * Theme for a path card: internal department first, then external track.
+ * @param {string} id
+ */
+export function getTrackTheme(id) {
+  return DEPARTMENTS[id] ?? EXTERNAL_TRACKS[id] ?? DEPARTMENTS.software;
 }

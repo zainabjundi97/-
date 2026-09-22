@@ -8,6 +8,7 @@ import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const MotionDiv = motion.div;
 const MotionButton = motion.button;
+const MotionA = motion.a;
 const MotionSpan = motion.span;
 
 export function AnimatedIcon({ children, className = '' }) {
@@ -24,13 +25,15 @@ export function AnimatedIcon({ children, className = '' }) {
 
 /**
  * Card with scroll-in cardItem variants and hover lift+glow.
- * Use as="button" for clickable course cards.
+ * Use as="button" for clickable course cards, as="a" with href for link cards.
  */
 export default function AnimatedCard({
   children,
   className = '',
   as = 'div',
   onClick,
+  href,
+  rel,
   type = 'button',
   disableHoverMotion = false,
   skipVariants = false,
@@ -57,6 +60,14 @@ export default function AnimatedCard({
       <MotionButton type={type} {...sharedProps}>
         {children}
       </MotionButton>
+    );
+  }
+
+  if (as === 'a') {
+    return (
+      <MotionA href={href} rel={rel} {...sharedProps}>
+        {children}
+      </MotionA>
     );
   }
 
