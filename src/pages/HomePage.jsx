@@ -359,6 +359,49 @@ export default function HomePage({ onNavigate }) {
             </MagneticButton>
           </GlowCallout>
 
+          {/* ── Useful links (external) ── */}
+          <section className="space-y-6">
+            <SectionTitle text={content.linksTitle} accentColor={dept.accentSecondary} />
+            <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {content.links.map((link) => {
+                const linkDept = getDepartment(link.id);
+                return (
+                  <TiltCard key={link.id} className="h-full">
+                    <AnimatedCard
+                      as="a"
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      disableHoverMotion
+                      onClick={() => play('confirm')}
+                      className="text-right rounded-3xl border surface-card p-6 flex flex-col gap-2 cursor-pointer w-full h-full"
+                      style={{ borderColor: `${linkDept.accent}44` }}
+                    >
+                      <AnimatedIcon className="text-3xl">{link.icon}</AnimatedIcon>
+                      <span
+                        className="text-lg sm:text-xl font-bold leading-snug mt-1"
+                        style={{ color: linkDept.accent }}
+                      >
+                        {link.title}
+                      </span>
+                      <p
+                        className="text-sm sm:text-base leading-relaxed"
+                        style={{ color: SITE_THEME.textMuted }}
+                      >
+                        {link.description}
+                      </p>
+                      <span
+                        className="text-sm font-semibold mt-auto pt-2 flex items-center gap-1"
+                        style={{ color: linkDept.accent }}
+                      >
+                        {link.cta} ↗
+                      </span>
+                    </AnimatedCard>
+                  </TiltCard>
+                );
+              })}
+            </StaggerGrid>
+          </section>
         </div>
       </main>
     </div>
