@@ -22,6 +22,19 @@ const SOCIAL_LINKS = [
   },
 ];
 
+const EXTRA_LINKS = [
+  {
+    id: 'contest',
+    href: 'https://code-for-icpc-web.vercel.app/',
+    label: 'المسابقة البرمجية',
+  },
+  {
+    id: 'team',
+    href: 'https://it-team-puce.vercel.app/',
+    label: 'فريق العمل',
+  },
+];
+
 function TelegramIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -87,6 +100,21 @@ export default function SiteFooter({ activeTab }) {
                 style={{ color: SITE_THEME.textHeading, backgroundColor: SITE_THEME.cardBg, borderColor: SITE_THEME.cardBorder }}
               >
                 <item.Icon />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <ul className="flex flex-wrap items-center justify-center gap-2 list-none p-0 m-0">
+          {EXTRA_LINKS.map((item) => (
+            <li key={item.id}>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="site-footer-link inline-flex items-center gap-1 min-h-[44px] px-4 rounded-full border shadow-sm text-sm font-semibold"
+                style={{ color: SITE_THEME.textHeading, backgroundColor: SITE_THEME.cardBg, borderColor: SITE_THEME.cardBorder }}
+              >
+                {item.label} ↗
               </a>
             </li>
           ))}

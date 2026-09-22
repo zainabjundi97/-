@@ -33,6 +33,7 @@ export default function AnimatedCard({
   as = 'div',
   onClick,
   href,
+  target,
   rel,
   type = 'button',
   disableHoverMotion = false,
@@ -65,7 +66,7 @@ export default function AnimatedCard({
 
   if (as === 'a') {
     return (
-      <MotionA href={href} rel={rel} {...sharedProps}>
+      <MotionA href={href} target={target} rel={rel} {...sharedProps}>
         {children}
       </MotionA>
     );
