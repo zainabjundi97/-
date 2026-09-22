@@ -80,6 +80,18 @@ export const SECONDARY_TRACKS = {
     accentSecondary: '#4EB67B',
     sceneVariant: 'brain',
   },
+  contest: {
+    id: 'contest',
+    label: 'المسابقة البرمجية',
+    accent: '#C49A00',
+    accentSecondary: '#FFCC00',
+  },
+  team: {
+    id: 'team',
+    label: 'فريق العمل',
+    accent: '#5191CE',
+    accentSecondary: '#4EB67B',
+  },
 };
 
 /** @param {string} id */
